@@ -1,0 +1,14 @@
+.porterbuddy-widget {
+	display: none;
+	background-color: #efefef;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
+.porterbuddy-show {
+	display: inherit;
+}
+.porterbuddy-error {
+	color: red;
+	margin-left: 0.2rem;
+	margin-top: 0.2rem;
+}
