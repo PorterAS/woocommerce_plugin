@@ -94,7 +94,7 @@ jQuery( function( $ ) {
 						$(geosubtn).after('<p class="porterbuddy-warning">'+objectL10n.geoError+'</p>');
 						setTimeout(function(){
 							$(geosubtn).next().remove();
-						}, 3000);
+						}, 6000);
 
 					} else {
 						console.log( 'Unable to get location.' );

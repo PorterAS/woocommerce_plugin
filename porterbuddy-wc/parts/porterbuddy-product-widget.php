@@ -1,8 +1,4 @@
 <?php
-if(
-	(isset($settings['enabled']) && $settings['enabled'] == 'yes') &&
-	(isset($settings['product_page_widget_enabled']) && $settings['product_page_widget_enabled'] == 'yes')
-) add_action( 'woocommerce_product_meta_end', 'pb_product_display', 5 );
 
 function pb_product_display() {
 
