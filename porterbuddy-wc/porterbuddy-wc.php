@@ -217,15 +217,15 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 							$product->has_weight() ? wc_get_weight($product->get_weight(), 'g') : wc_get_weight($this->settings['default_product_weight'], 'g')
 						);
 					}
-
-					$delivery_windows = $buddy->checkAvailability(
+					/*
+					var_dump(json_encode($buddy->checkAvailability(
 						$origin_address,
 						$destination_address,
 						$windows,
 						$parcels,
 						['delivery', 'express']
-					);
-
+					)));
+					*/
 					$rate = array(
 						'id' => $this->id,
 						'label' => $this->title,
