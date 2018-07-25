@@ -116,8 +116,15 @@ if(get_api_key($settings) != '')
 			$parcels,
 			['delivery', 'express']
 		);
-		$result['success'] = true;
-		$result['data'] = $windows;
+		if(isset($res->deliveryWindows))
+		{
+			$result['success'] = true;
+			$result['data'] = $res->deliveryWindows;
+		}
+		else
+		{
+			$result['data'] = $res;
+		}
 	}
 	else $result['data'] = ['error' => 'Postcode and/or country is not valid'];
 }
