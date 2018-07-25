@@ -1,13 +1,21 @@
 <?php 
 
-wp_enqueue_script( 'wp-porterbuddy-widget' );
+function pb_cart_display() {
+
+	// if PorterBuddy shipping is selected, display widget
+	if ( WC()->session->get('chosen_shipping_methods')[0] == PORTERBUDDY_PLUGIN_NAME ) :
+
+		// fetch settings
+		$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
+		// enqueue scripts
+		wp_enqueue_script( 'wp-porterbuddy-widget' );
 
 ?>
 
 <div id="porterbuddy-widget" class="porterbuddy-widget">
 
 	<div class="porterbuddy-widget-logo-wrapper">
-		<img src="<?php echo plugins_url("../assets/", __FILE__); ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
+		<img src="<?= plugins_url("../assets/", __FILE__) ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
 	</div>
 	
 	<h3 class="porterbuddy-widget-title"><?= $settings['title'] ?></h3>
@@ -55,3 +63,11 @@ wp_enqueue_script( 'wp-porterbuddy-widget' );
 		<textarea id="porterbuddy_comment" placeholder="Evt. beskjet til budet" maxlength="512"></textarea>
 	</div>
 </div>
+
+
+<?php 
+
+	endif;
+}
+
+?>
