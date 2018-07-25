@@ -78,7 +78,7 @@ jQuery( function( $ ) {
 				function geo_success(position) {
 					console.log("Location set");
 					PBsetCookie('pb_location', '['+position.coords.latitude+','+position.coords.longitude+']', 30);
-					window.location.assign(window.location.href + " ");
+					window.location.reload();
 				}
 
 				function geo_error() {
@@ -226,7 +226,7 @@ jQuery( function( $ ) {
 					PBsetCookie('pb_postcode', postcodeVal.val(), 60);
 					PBsetCookie('pb_country', countryVal.val(), 60);
 					
-					window.location.assign(window.location.href + " ");
+					window.location.reload();
 					
 				},
 				complete: function() {
