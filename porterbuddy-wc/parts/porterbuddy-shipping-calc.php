@@ -15,11 +15,11 @@ if( is_product() ):
 			WC()->customer->get_shipping_country() != null ? WC()->customer->get_shipping_country() : ( 
 				isset($_COOKIE['pb_country']) ? $_COOKIE['pb_country'] : ''
 			)
-		);
+		);df
 
 	?>
 
-	<form class="woocommerce-shipping-calculator" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
+	<form class="woocommerce-shipping-calculator" <?= "data-geo=".$settings["geo_widget"]; ?> action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
 
 		<p><a href="#" class="shipping-calculator-button"><?php if ($form_postcode == null) esc_html_e( 'Check eligibility', 'porterbuddy-wc' ); else esc_html_e( 'Change postcode', 'porterbuddy-wc' ); ?></a></p>
 

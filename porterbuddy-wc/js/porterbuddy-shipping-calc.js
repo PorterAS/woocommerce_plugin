@@ -51,6 +51,8 @@ jQuery( function( $ ) {
 		var currentPostCode = $('.shipping-calculator-form').find('input[name="calc_shipping_postcode"]');
 		currentPostCodeOldVal = currentPostCode.val();
 
+		var geoSetting = $('.woocommerce-shipping-calculator').data("geo");
+
 		// clear out location data if true
 		if ( $clear == true ) {
 			PBsetCookie('pb_country','x',1);
@@ -69,7 +71,7 @@ jQuery( function( $ ) {
 			if ( curloc.length > 5 ) {
 				window.location.assign(window.location.href + " ");
 			}
-			else if ( navigator.geolocation ) {
+			else if ( geoSetting == "yes" && navigator.geolocation ) {
 
 				// fetch location data and place in cookie for PHP handling
 
