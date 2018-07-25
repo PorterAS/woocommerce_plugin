@@ -70,7 +70,7 @@ if(get_api_key($settings) != '')
 				$product->get_width() == '' ? $settings['default_product_width'] : $product->get_width(),
 				$product->get_height() == '' ? $settings['default_product_height'] : $product->get_height(),
 				$product->get_length() == '' ? $settings['default_product_depth'] : $product->get_length(),
-				$product->get_weight() == '' || $product->get_weight() == 0 ? $settings['default_product_weight']/1000 :  wc_get_weight($product->get_weight(),'g'),
+				$product->get_weight() == '' || $product->get_weight() == 0 ? $settings['default_product_weight']*1000 :  wc_get_weight($product->get_weight(),'g'),
 				''
 			);
 			for ($i = 0; $i < $item['quantity']; $i++) {

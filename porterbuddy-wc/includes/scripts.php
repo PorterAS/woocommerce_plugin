@@ -14,6 +14,13 @@ function porterbuddy_scripts( $page )
 		'postcodeError' => esc_html__( 'Postcode must be 3 or more numbers!', 'wp-porterbuddy' ),
 		'geoError' => esc_html__( 'You have blocked GEO requests in your browser and must change your settings to use your location for this.', 'wp-porterbuddy' ),
 	) );
+	wp_localize_script( 'wp-porterbuddy-widget', 'pbWidgetPHP', array(
+		'ajaxphp'	=> admin_url( 'admin-ajax.php' ),
+		'ajaxEndpoint'	=> plugins_url('../availability.php', __FILE__),
+		'translations'	=> array(
+			'ThankYou'	=>	__('Thank you', 'wp-porterbuddy' ),
+		),
+	) );
 
 	// Register styles in WP
 	wp_register_style( 'wp-porterbuddy-styles', plugins_url( '../css/porterbuddy-styles.css', __FILE__) );
