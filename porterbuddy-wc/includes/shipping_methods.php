@@ -105,7 +105,7 @@ function porterbuddy_shipping_method() {
 				$cost = $this->cost;
 
 				$weight = wc_get_weight( $weight, 'kg' );
-
+				/*
 				$buddy = new Buddy($this->get_api_key());
 
 				$origin_address = new Address(
