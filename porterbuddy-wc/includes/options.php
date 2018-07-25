@@ -556,7 +556,7 @@ return array(
 		'title' => __( 'Max product weight', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'In kg, max weight for shipments with PorterBuddy' ),
-		'default' => __( 50, 'porterbuddy-wc' )
+		'default' => __( 2, 'porterbuddy-wc' )
 	),
 
 	/*
