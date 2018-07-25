@@ -35,13 +35,13 @@ load_plugin_textdomain( 'porterbuddy-wc', FALSE, basename( dirname( __FILE__ ) )
 
 // plugin requires WC plugin
 include_once 'includes/requirements.php';
+
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
 	include_once 'includes/shipping_method_class.php';
 
 	// Fetch the settings
 	$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
-
 
 	// Order Validator
 	include_once 'includes/validate_order.php';
@@ -60,19 +60,18 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	// if PorterBuddy shipping is enabled, display the widget
 	if(isset($settings['enabled']) && $settings['enabled'] == 'yes') add_action( 'woocommerce_proceed_to_checkout', 'pb_cart_display', 10 );
-
-	function pb_cart_display() {
-
+	function pb_cart_display() 
+	{
 		// if PorterBuddy shipping is selected, display widget
 		if ( WC()->session->get('chosen_shipping_methods')[0] == PORTERBUDDY_PLUGIN_NAME )
 		{
 			include('parts/porterbuddy-cart-widget.php');
 		}
-
 	}
+
+	// Global actions and filters
+	include_once 'includes/hooks.php';
 
 	// CSS and JS includes
 	include_once 'includes/scripts.php';
-
-
 }
