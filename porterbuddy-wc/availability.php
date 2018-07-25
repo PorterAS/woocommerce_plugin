@@ -10,7 +10,7 @@ $settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 
 // Result template
 $result = [
-	'success' => true,
+	'success' => false,
 	'mode' => $settings['mode'],
 	'country' => \WC()->customer->get_shipping_country(),
 	'postcode' => \WC()->customer->get_shipping_postcode(),
@@ -42,86 +42,85 @@ function get_opening_hours($settings)
 	];
 }
 
-if(isset(\WC()->countries->countries[$result['country']]) && strlen($result['postcode']) > 2 )
+if(get_api_key($settings) != '')
 {
-	// Postcode and Country is set
-	$origin_address = new Address(
-		get_option( 'woocommerce_store_address', false ),
-		get_option( 'woocommerce_store_address_2', false ),
-		get_option( 'woocommerce_store_postcode', false ),
-		get_option( 'woocommerce_store_city', false ),
-		\WC()->countries->countries[ substr(get_option( 'woocommerce_default_country', 'NO' ), 0, 2) ]
-	);
-	$destination_address = new Address(
-		null,
-		null,
-		$result['postcode'],
-		null,
-		\WC()->countries->countries[ $result['country'] ]
-	);
-
-	$parcels = [];
-	foreach ($cart as $item)
+	if(isset(\WC()->countries->countries[$result['country']]) && strlen($result['postcode']) > 2 )
 	{
-		$product = wc_get_product($item['product_id']);
-		$parcel = new Parcel(
-			$product->get_width() == '' ? $settings['default_product_width'] : $product->get_width(),
-			$product->get_height() == '' ? $settings['default_product_height'] : $product->get_height(),
-			$product->get_length() == '' ? $settings['default_product_depth'] : $product->get_length(),
-			wc_get_weight($product->get_weight(), 'g'),
-			''
+		// Postcode and Country is set
+		$origin_address = new Address(
+			get_option( 'woocommerce_store_address', false ),
+			get_option( 'woocommerce_store_address_2', false ),
+			get_option( 'woocommerce_store_postcode', false ),
+			get_option( 'woocommerce_store_city', false ),
+			\WC()->countries->countries[ substr(get_option( 'woocommerce_default_country', 'NO' ), 0, 2) ]
 		);
-		for ($i = 0; $i < $item['quantity']; $i++) {
-			$parcels[] = $parcel;
-		}
+		$destination_address = new Address(
+			null,
+			null,
+			$result['postcode'],
+			null,
+			\WC()->countries->countries[ $result['country'] ]
+		);
 
-	}
-
-	$days = is_numeric($settings['days_ahead']) ? $settings['days_ahead'] : 3;
-	$opening_hours = get_opening_hours($settings);
-	$windows = [];
-
-	$prep_time = $settings['available_until']+$settings['packing_time'];
-	$now = new DateTime('now', new DateTimeZone('Europe/Oslo'));
-
-	$i = 1;
-	$j = 0;
-	while($i <= $days && $j < $days*7) {
-
-		$opening = new \DateTime('now', new DateTimeZone('Europe/Oslo'));
-		$opening->modify('+'.($j*24).' hours');
-		$opening_time = $opening_hours[$opening->format('l')]['open'];
-		$opening->setTime(substr($opening_time,0,2),substr($opening_time,2,2), '00');
-
-		$closing = new \DateTime('now', new DateTimeZone('Europe/Oslo'));
-		$closing->modify('+'.($j*24).' hours');
-		$closing_time = $opening_hours[$closing->format('l')]['close'];
-		$closing->setTime(substr($closing_time,0,2),substr($closing_time,2,2), '00');
-
-		$j++;
-		if($opening < $closing)
+		$parcels = [];
+		foreach ($cart as $item)
 		{
-			$i++;
-			$closing->modify('-'.$prep_time.' minutes');
-			$windows[] = new Window($opening->format('c'), $closing->format('c'));
+			$product = wc_get_product($item['product_id']);
+			$parcel = new Parcel(
+				$product->get_width() == '' ? $settings['default_product_width'] : $product->get_width(),
+				$product->get_height() == '' ? $settings['default_product_height'] : $product->get_height(),
+				$product->get_length() == '' ? $settings['default_product_depth'] : $product->get_length(),
+				$product->get_weight() == '' || $product->get_weight() == 0 ? $settings['default_product_weight']/1000 :  wc_get_weight($product->get_weight(),'g'),
+				''
+			);
+			for ($i = 0; $i < $item['quantity']; $i++) {
+				$parcels[] = $parcel;
+			}
+
 		}
+
+		$days = is_numeric($settings['days_ahead']) ? $settings['days_ahead'] : 3;
+		$opening_hours = get_opening_hours($settings);
+		$windows = [];
+
+		$prep_time = $settings['available_until']+$settings['packing_time'];
+		$now = new DateTime('now', new DateTimeZone('Europe/Oslo'));
+
+		$i = 1;
+		$j = 0;
+		while($i <= $days && $j < $days*7) {
+
+			$opening = new \DateTime('now', new DateTimeZone('Europe/Oslo'));
+			$opening->modify('+'.($j*24).' hours');
+			$opening_time = $opening_hours[$opening->format('l')]['open'];
+			$opening->setTime(substr($opening_time,0,2),substr($opening_time,2,2), '00');
+
+			$closing = new \DateTime('now', new DateTimeZone('Europe/Oslo'));
+			$closing->modify('+'.($j*24).' hours');
+			$closing_time = $opening_hours[$closing->format('l')]['close'];
+			$closing->setTime(substr($closing_time,0,2),substr($closing_time,2,2), '00');
+
+			$j++;
+			if($opening < $closing)
+			{
+				$i++;
+				$closing->modify('-'.$prep_time.' minutes');
+				$windows[] = new Window($opening->format('c'), $closing->format('c'));
+			}
+		}
+		$buddy = new Buddy(get_api_key($settings), get_url($settings));
+		$res = $buddy->checkAvailability(
+			$origin_address,
+			$destination_address,
+			$windows,
+			$parcels,
+			['delivery', 'express']
+		);
+		$result['success'] = true;
+		$result['data'] = $res->deliveryWindows;
 	}
-	$buddy = new Buddy(get_api_key($settings), get_url($settings));
-	$res = $buddy->checkAvailability(
-		$origin_address,
-		$destination_address,
-		$windows,
-		$parcels,
-		['delivery', 'express']
-	);
-	$result['success'] = true;
-	$result['data'] = $res->deliveryWindows;
+	else $result['data'] = ['error' => 'Postcode and/or country is not valid'];
 }
-else
-{
-	// Postcode and Country is not set
-	$result['success'] = false;
-	$result['data'] = ['error' => 'Postcode and/or country is not valid'];
-}
+else $result['data'] = ['error' => 'API-Key is missing'];
 
 echo json_encode($result);
