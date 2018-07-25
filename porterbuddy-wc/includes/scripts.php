@@ -7,6 +7,7 @@ function porterbuddy_scripts( $page )
 	wp_register_script( 'wp-porterbuddy-shipping-calc', plugins_url( '../js/porterbuddy-shipping-calc.js', __FILE__ ), array( 'jquery' ) );
 	wp_register_script( 'wp-porterbuddy-scripts', plugins_url( '../js/porterbuddy-scripts.js', __FILE__ ), array( 'jquery' ) );
 	wp_register_script( 'wp-porterbuddy-widget', plugins_url( '../js/porterbuddy-widget.js', __FILE__ ), array( 'jquery' ) );
+	wp_register_script( 'wp-porterbuddy-moment', plugins_url( '../libraries/moment-min.js', __FILE__ ) );
 
 	// localise scripts
 	wp_localize_script( 'wp-porterbuddy-scripts', 'objectL10n', array(
@@ -26,7 +27,8 @@ function porterbuddy_scripts( $page )
 	wp_register_style( 'wp-porterbuddy-styles', plugins_url( '../css/porterbuddy-styles.css', __FILE__) );
 
 	// Enqueue defaults
-	wp_enqueue_script( 'wp-porterbuddy-scripts' );
 	wp_enqueue_style( 'wp-porterbuddy-styles' );
+	wp_enqueue_script( 'wp-porterbuddy-moment' );
+	wp_enqueue_script( 'wp-porterbuddy-scripts' );
 
 }

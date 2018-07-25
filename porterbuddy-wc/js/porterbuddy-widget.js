@@ -37,10 +37,48 @@ jQuery( function( $ ) {
 
 	$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function(){
 		event.preventDefault();
-		console.log("hei");
+		//getAvailability();
 
-		getAvailability();
+		if ( $(this).hasClass('next-date') )
+		{
+			console.log("next");
+			$( '#selected-date' ).text( date.next );
+			
+		}
 
+		if ( $(this).hasClass('prev-date') )
+		{
+			console.log("prev");
+			$( '#selected-date' ).text( date.prev );
+		}
 	})
+
+	var date = {
+
+		init: function() {
+
+			date = new Date;
+
+			date.next = this.next.bind( this );
+			date.prev = this.prev.bind( this );
+
+			$( '#selected-date' ).text( moment(date).format('LL') );
+
+		},
+
+		next: function() {
+			date.setDate(date.getDate() + 1);
+			return moment(date).format('LL');
+		},
+
+		prev: function() {
+			date.setDate(date.getDate() - 1);
+			return moment(date).format('LL');
+		}
+
+	};
+
+	date.init();
+
 
 });
