@@ -15,7 +15,7 @@ if( is_product() ):
 			WC()->customer->get_shipping_country() != null ? WC()->customer->get_shipping_country() : ( 
 				isset($_COOKIE['pb_country']) ? $_COOKIE['pb_country'] : ''
 			)
-		);df
+		);
 
 	?>
 

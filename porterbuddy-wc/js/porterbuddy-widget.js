@@ -41,7 +41,7 @@ jQuery( function( $ ) {
 	function showLoader ( $this=false )
 	{
 		if ( $this ) {
-			var selectedObject = window
+			//
 		} 
 		$().addClass( 'isActive' );
 	}
