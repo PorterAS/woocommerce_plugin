@@ -168,22 +168,15 @@ return array(
 	),
 
 	'geo_widget' => array(
-		'title' => __( 'Show Geo-based availability widget', 'porterbuddy-wc' ),
+		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
 		'type' => 'select',
 		'default' => 'yes',
+		'description' => __( 'Ask the customer to use their location when setting delivery postcode' ),
 		'options' => array(
 			'yes' => __( 'Yes' ),
 			'no' => __ ( 'No' ),
 		)
 	),
-
-	'location_link' => array(
-		'title' => __( 'Click to see text', 'porterbuddy-wc' ),
-		'type' => 'text',
-		'description' => __( 'Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders', 'porterbuddy-wc' ),
-		'default' => __( "Deliver to {{location}} <a class='button'>Change</a>", 'porterbuddy-wc' )
-	),
-
 
 	'product_page_widget' => array(
 		'type'        => 'title',
@@ -216,7 +209,7 @@ return array(
 	'postcode_unavailable_text' => array(
 		'title' => __( 'Postcode not available text', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders', 'porterbuddy-wc' ),
+		'description' => __( 'Can use {{postcode}} placeholder (works as both country and postcode)', 'porterbuddy-wc' ),
 		'default' => __( 'Sorry, same day delivery is not currently available to {{postcode}}', 'porterbuddy-wc' )
 	),
 
@@ -368,98 +361,98 @@ return array(
 	'monday_open' => array(
 		'title' => __( 'Opening monday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '0900', 'porterbuddy-wc' ),
+		'default' => '0900',
 		'options' => $hour_dropdown
 	),
 
 	'monday_close' => array(
 		'title' => __( 'Closing monday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '1800', 'porterbuddy-wc' ),
+		'default' => '1800',
 		'options' => $hour_dropdown
 	),
 
 	'tuesday_open' => array(
 		'title' => __( 'Opening tuesday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '0900', 'porterbuddy-wc' ),
+		'default' => '0900',
 		'options' => $hour_dropdown
 	),
 
 	'tuesday_close' => array(
 		'title' => __( 'Closing tuesday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '1800', 'porterbuddy-wc' ),
+		'default' => '1800',
 		'options' => $hour_dropdown
 	),
 
 	'wednesday_open' => array(
 		'title' => __( 'Opening wednesday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '0900', 'porterbuddy-wc' ),
+		'default' => '0900',
 		'options' => $hour_dropdown
 	),
 
 	'wednesday_close' => array(
 		'title' => __( 'Closing wednesday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '1800', 'porterbuddy-wc' ),
+		'default' => '1800',
 		'options' => $hour_dropdown
 	),
 
 	'thursday_open' => array(
 		'title' => __( 'Opening thursday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '0900', 'porterbuddy-wc' ),
+		'default' => '0900',
 		'options' => $hour_dropdown
 	),
 
 	'thursday_close' => array(
 		'title' => __( 'Closing thursday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '1800', 'porterbuddy-wc' ),
+		'default' => '1800',
 		'options' => $hour_dropdown
 	),
 
 	'friday_open' => array(
 		'title' => __( 'Opening friday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '0900', 'porterbuddy-wc' ),
+		'default' => '0900',
 		'options' => $hour_dropdown
 	),
 
 	'friday_close' => array(
 		'title' => __( 'Closing friday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '1800', 'porterbuddy-wc' ),
+		'default' => '1800',
 		'options' => $hour_dropdown
 	),
 
 	'saturday_open' => array(
 		'title' => __( 'Opening saturday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '1000', 'porterbuddy-wc' ),
+		'default' => '0000',
 		'options' => $hour_dropdown
 	),
 
 	'saturday_close' => array(
 		'title' => __( 'Closing saturday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '1500', 'porterbuddy-wc' ),
+		'default' => '0000',
 		'options' => $hour_dropdown
 	),
 
 	'sunday_open' => array(
 		'title' => __( 'Opening saturday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '0000', 'porterbuddy-wc' ),
+		'default' => '0000',
 		'options' => $hour_dropdown
 	),
 
 	'sunday_close' => array(
 		'title' => __( 'Closing saturday', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => __( '0000', 'porterbuddy-wc' ),
+		'default' => '0000',
 		'options' => $hour_dropdown
 	),
 
