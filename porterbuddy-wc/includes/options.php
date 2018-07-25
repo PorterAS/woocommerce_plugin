@@ -170,22 +170,10 @@ return array(
 	'geo_widget' => array(
 		'title' => __( 'Show Geo-based availability widget', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'default' => 'always',
+		'default' => 'yes',
 		'options' => array(
-			'hide' => __( 'Hide' ),
-			'available' => __ ( 'Show when available' ),
-			'always' => __( 'Always show' )
-		)
-	),
-
-	'location_discovery' => array(
-		'title' => __( 'Location discovery', 'porterbuddy-wc' ),
-		'type' => 'multiselect',
-		'description' => __( 'Select methods for location discovery', 'porterbuddy-wc' ),
-		'default' => array('browser', 'ip'),
-		'options' => array(
-			'browser' => __( 'Browser location API lookup' ),
-			'ip' => __ ( 'IP location lookup' ),
+			'yes' => __( 'Yes' ),
+			'no' => __ ( 'No' ),
 		)
 	),
 
@@ -374,7 +362,7 @@ return array(
 		'title' => __( 'PorterBuddy available until', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Latest pickup before closing, in minutes'),
-		'default' => __( 270, 'porterbuddy-wc' ),
+		'default' => __( 45, 'porterbuddy-wc' ),
 	),
 
 	'monday_open' => array(
