@@ -1,11 +1,7 @@
 .porterbuddy-widget {
-	display: none;
 	background-color: #efefef;
 	padding: 1rem;
 	margin-bottom: 1rem;
-}
-.porterbuddy-show {
-	display: inherit;
 }
 .porterbuddy-error {
 	color: red;
