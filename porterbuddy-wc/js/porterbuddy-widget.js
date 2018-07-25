@@ -3,7 +3,6 @@
  */
 
 jQuery( function( $ ) {
-	
 
 	// make the request 	
 	function getAvailability ()
@@ -19,17 +18,15 @@ jQuery( function( $ ) {
 			},
 			beforeSend: function () 
 			{
-				//
+				showLoader();
 			},
 			complete: function ()
 			{
-				//
+				hideLoader();
 			},
 			success: function ( response )
 			{
 				console.log( response );
-
-
 			},
 			error: function ( error )
 			{
@@ -38,17 +35,12 @@ jQuery( function( $ ) {
 		})
 	};
 
-	function showLoader ( $this=false )
-	{
-		if ( $this ) {
-			//
-		} 
-		$().addClass( 'isActive' );
-	}
-	
-	function hideLoader ()
-	{
-		$(this).removeClass( 'isActive' );
-	}	
+	$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function(){
+		event.preventDefault();
+		console.log("hei");
+
+		getAvailability();
+
+	})
 
 });

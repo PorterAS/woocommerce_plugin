@@ -23,9 +23,9 @@ function pb_cart_display() {
 	<p class="porterbuddy-widget-description"><?= $settings['description'] ?></p>
 	
 	<div class="porterbuddy-widget-date-selectors">
-		<a href="javascript: void(0);" class="porterbuddy-widget-date-selector prev-date available">Forrige dag</a>
+		<a href="#" class="porterbuddy-widget-date-selector prev-date available">Forrige dag</a>
 		<span id="selected-date" class="porterbuddy-widget-selected-date selected-date" data-datetime="2018-07-13T11:00:00+02:00">fredag 13. juli</span>
-		<a href="javascript: void(0);" class="porterbuddy-widget-date-selector next-date available">Neste dag</a>
+		<a href="#" class="porterbuddy-widget-date-selector next-date available">Neste dag</a>
 	</div>
 
 	<div id="timeslots" class="porterbuddy-widget-timeslots">
