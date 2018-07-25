@@ -4,32 +4,51 @@
 
 jQuery( function( $ ) {
 	
-	//
-	$.ajax({
-		url: pbWidgetPHP['ajaxEndpoint'],
-		type: 'GET',
-		dataType: 'json',
-		cache: false,
-		data:
-		{
-			//action: 'getDays',
-		},
-		beforeSend: function () 
-		{
+
+	// make the request 	
+	function getAvailability ()
+	{
+		$.ajax({
+			url: pbWidgetPHP['ajaxEndpoint'],
+			type: 'GET',
+			dataType: 'json',
+			cache: true,
+			data:
+			{
+				//action: 'getDays',
+			},
+			beforeSend: function () 
+			{
+				//
+			},
+			complete: function ()
+			{
+				//
+			},
+			success: function ( response )
+			{
+				console.log( response );
+
+
+			},
+			error: function ( error )
+			{
+				//
+			},
+		})
+	};
+
+	function showLoader ( $this=false )
+	{
+		if ( $this ) {
 			//
-		},
-		complete: function ()
-		{
-			//
-		},
-		success: function ( response )
-		{
-			console.log( response );
-		},
-		error: function ( error )
-		{
-			//
-		},
-	})
+		} 
+		$().addClass( 'isActive' );
+	}
+	
+	function hideLoader ()
+	{
+		$(this).removeClass( 'isActive' );
+	}	
 
 });
