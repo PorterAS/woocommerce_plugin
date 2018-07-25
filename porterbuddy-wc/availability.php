@@ -86,7 +86,7 @@ if(get_api_key($settings) != '')
 		$prep_time = $settings['available_until']+$settings['packing_time'];
 		$now = new DateTime('now', new DateTimeZone('Europe/Oslo'));
 
-		$i = 1;
+		$i = 0;
 		$j = 0;
 		while($i <= $days && $j < $days*7) {
 
