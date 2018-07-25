@@ -86,7 +86,7 @@ if(get_api_key($settings) != '')
 		$prep_time = $settings['available_until']+$settings['packing_time'];
 		$now = new DateTime('now', new DateTimeZone('Europe/Oslo'));
 
-		$i = 0;
+		$i = 1;
 		$j = 0;
 		while($i <= $days && $j < $days*7) {
 
@@ -117,7 +117,7 @@ if(get_api_key($settings) != '')
 			['delivery', 'express']
 		);
 		$result['success'] = true;
-		$result['data'] = $res->deliveryWindows;
+		$result['data'] = $windows;
 	}
 	else $result['data'] = ['error' => 'Postcode and/or country is not valid'];
 }
