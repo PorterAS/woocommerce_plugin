@@ -74,4 +74,86 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		isset($settings['enabled']) && $settings['enabled'] == 'yes'
 	) add_action( 'woocommerce_proceed_to_checkout', 'pb_cart_display', 10 );
 
+
+	// Checkout Widget
+	function pb_checkout_display()
+	{
+		echo "Here";
+	}
+	if(isset($settings['enabled']) && $settings['enabled'] == 'yes' ) add_action( 'woocommerce_review_order_after_payment', 'pb_checkout_display', 10 );
+
+	// Order Placed Hook
+	function pb_order_status_processing( $order_id ) {
+		// Send API Request to PB
+	}
+	add_action( 'woocommerce_order_status_processing', 'pb_order_status_completed', 10, 1 );
+
+	// Before order is placed.
+	/**
+	 * @param $order WC_Order
+	 * @param $data array
+	 */
+	function pb_before_checkout_create_order( $order, $data ) {
+		if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
+			$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
+			$items = $order->get_items('shipping');
+			foreach ($items as $item)
+			{
+				if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
+				{
+					$item->add_meta_data('_porterbuddy_window', 'ts', true);
+					$item->add_meta_data('_porterbuddy_idcheck', 'tf', true);
+				}
+			}
+		}
+		$order->save();
+	}
+	add_action('woocommerce_checkout_create_order', 'pb_before_checkout_create_order', 20, 2);
+
+	// Checkout: Order Complete
+	add_action('woocommerce_thankyou', 'pb_display_order_complete', 10, 1);
+	function pb_display_order_complete( $order_id ) {
+
+		if ( ! $order_id ) return;
+		$order = wc_get_order( $order_id );
+
+		if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
+			add_filter( 'woocommerce_get_order_item_totals', 'pb_add_shipping_information', 10, 2 );
+			$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
+			$items = $order->get_items('shipping');
+			foreach ($items as $item)
+			{
+				if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
+				{
+					// Displaying something
+					echo '<h2>Porterbuddy Delivery</h2>';
+					echo "<p>The order will be delivered between XX.XX and XX.XX on Month. XX</p>";
+				}
+			}
+		}
+	}
+	function pb_add_shipping_information( $total_rows, $order )
+	{
+		$total_rows['shipping']['value'] = $total_rows['shipping']['value'].'<br><small>Delivered between XX.XX and XX.XX on Month. XX</small>';
+		return $total_rows;
+	}
+
+	// Admin: order
+	add_action( 'woocommerce_admin_order_data_after_shipping_address', 'pb_admin_display', 10, 1 );
+
+	function pb_admin_display($order){
+		if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
+			$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
+			$items = $order->get_items('shipping');
+			foreach ($items as $item)
+			{
+				if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
+				{
+					// Displaying something
+					echo '<h3>Porterbuddy Details</h3>';
+					echo "<p>The order will be picked up by a courier between XX.XX and XX.XX on Month XXth</p>";
+				}
+			}
+		}
+	}
 }
