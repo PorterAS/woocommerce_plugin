@@ -101,8 +101,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			{
 				if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 				{
-					$item->add_meta_data('_porterbuddy_window', 'ts', true);
-					$item->add_meta_data('_porterbuddy_idcheck', 'tf', true);
+					$item->add_meta_data('_pb_window_start', 'ts', true);
+					$item->add_meta_data('_pb_window_end', 'tf', true);
+					$item->add_meta_data('_pb_price', 'tf', true);
+					$item->add_meta_data('_pb_idcheck', 'tf', true);
+					$item->add_meta_data('Will be picked up', 'Between XX.XX and XX.XX on Month. XX', true);
 				}
 			}
 		}
@@ -156,4 +159,15 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			}
 		}
 	}
+
+	// Hide our custom meta data
+	function pb_woocommerce_hidden_order_itemmeta($arr) {
+		$arr[] = '_pb_window_start';
+		$arr[] = '_pb_window_end';
+		$arr[] = '_pb_price';
+		$arr[] = '_pb_idcheck';
+		return $arr;
+	}
+
+	add_filter('woocommerce_hidden_order_itemmeta', 'pb_woocommerce_hidden_order_itemmeta', 10, 1);
 }
