@@ -11,15 +11,15 @@ function porterbuddy_scripts( $page )
 
 	// localise scripts
 	wp_localize_script( 'wp-porterbuddy-scripts-js', 'objectL10n', array(
-		'countryError' => esc_html__( 'You have to select a country', 'wp-porterbuddy' ),
-		'postcodeError' => esc_html__( 'Postcode must be 3 or more numbers!', 'wp-porterbuddy' ),
-		'geoError' => esc_html__( 'You have blocked GEO requests in your browser and must change your settings to use your location for this.', 'wp-porterbuddy' ),
+		'countryError' => esc_html__( 'You have to select a country', PORTERBUDDY_PLUGIN_NAME ),
+		'postcodeError' => esc_html__( 'Postcode must be 3 or more numbers!', PORTERBUDDY_PLUGIN_NAME ),
+		'geoError' => esc_html__( 'You have blocked GEO requests in your browser and must change your settings to use your location for this.', PORTERBUDDY_PLUGIN_NAME ),
 	) );
 	wp_localize_script( 'wp-porterbuddy-widget-js', 'pbWidgetPHP', array(
 		'ajaxphp'	=> admin_url( 'admin-ajax.php' ),
 		'ajaxEndpoint'	=> plugins_url('../availability.php', __FILE__),
 		'translations'	=> array(
-			'ThankYou'	=>	__('Thank you', 'wp-porterbuddy' ),
+			'ThankYou'	=>	__('Thank you', PORTERBUDDY_PLUGIN_NAME ),
 		),
 	) );
 

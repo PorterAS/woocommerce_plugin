@@ -26,17 +26,24 @@
     content: " ";
     display: inline-block;
     vertical-align: middle;
-    background: url(../assets/porterbuddy-arrow.svg) 0 0 no-repeat;
 	transform: scale(0.8);
+	margin-left: 0.1rem;
+
+	-webkit-mask: url(../assets/porterbuddy-arrow.svg) no-repeat 50% 50%;
+	mask: url(../assets/porterbuddy-arrow.svg) no-repeat 50% 50%;
+	-webkit-mask-size: cover;
+	mask-size: cover;
+
+	background-color: rgba(0,0,0,0.8);
 }
 .porterbuddy-widget-date-selector.next-date:after {
     transform: scale(0.8) rotate(180deg);
 }
-.porterbuddy-widget-selected-date .unavailable {
+.porterbuddy-widget-selected-date.unavailable, .porterbuddy-widget-date-selector.unavailable {
 	color: rgba(0,0,0,0.3);
 }
-.porterbuddy-widget-date-selector .unavailable :before, .porterbuddy-widget-date-selector .unavailable :after {
-
+.porterbuddy-widget-date-selector.unavailable:before, .porterbuddy-widget-date-selector.unavailable:after {
+	background-color: rgba(0,0,0,0.3);
 }
 
 /**
@@ -63,6 +70,7 @@
     padding-right: 0.8rem;
     box-sizing: border-box;
     background-color: #fdfdfd;
+    cursor: pointer;
 }
 .porterbuddy-widget-timeslot div{
 	flex-basis: 4rem;
@@ -88,6 +96,12 @@
 .porterbuddy-widget-timeslot.active {
 	background-color: #99e8e1;
 }
+.porterbuddy-widget-timeslot:hover {
+	background-color: #d7f6f3;
+}
+.porterbuddy-widget-timeslot.active:hover {
+	background-color: #99e8e1;
+}
 
 /**
  * Widget form styles
@@ -110,7 +124,9 @@
 	margin-left: 0.2rem;
 	margin-top: 0.2rem;
 }
-
+.porterbuddy-hide {
+	display: none;
+}
 
 /**
  * Porterbuddy loader icon
@@ -138,7 +154,7 @@
 	height: 4px;
 	margin: 2px 0;
 	display: block;
-	animation: resize-x 1s ease-in-out infinite;
+	animation: porterbuddy-resize-x 1s ease-in-out infinite;
 }
 .porterbuddy-loader:after {
 	content: '';
@@ -147,7 +163,7 @@
 	height: 4px;
 	margin: 2px 0;
 	display: block;
-	animation: resize-x 1s ease-in-out infinite;
+	animation: porterbuddy-resize-x 1s ease-in-out infinite;
 	animation-delay: .2s;
 }
 
@@ -155,7 +171,7 @@
 /**
  * Animations
  */
-@keyframes resize-x {
+@keyframes porterbuddy-resize-x {
 	0%
 	{
 		transform: scale( 0, 1 );
