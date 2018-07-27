@@ -85,7 +85,7 @@
 .porterbuddy-widget-timeslot .price {
 	font-weight: normal;
 }
-.porterbuddy-widget-timeslot .active {
+.porterbuddy-widget-timeslot.active {
 	background-color: #99e8e1;
 }
 
@@ -125,7 +125,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: fixed;
+	position: relative;
 	top: calc( 50% - (50px / 2) );
 	left: calc( 50% - (50px / 2) );
 	pointer-events: none;
@@ -138,7 +138,7 @@
 	height: 4px;
 	margin: 2px 0;
 	display: block;
-	animation: resizeX 1s ease-in-out infinite;
+	animation: resize-x 1s ease-in-out infinite;
 }
 .porterbuddy-loader:after {
 	content: '';
@@ -147,7 +147,7 @@
 	height: 4px;
 	margin: 2px 0;
 	display: block;
-	animation: resizeX 1s ease-in-out infinite;
+	animation: resize-x 1s ease-in-out infinite;
 	animation-delay: .2s;
 }
 
@@ -155,7 +155,7 @@
 /**
  * Animations
  */
-@keyframes resizeX {
+@keyframes resize-x {
 	0%
 	{
 		transform: scale( 0, 1 );

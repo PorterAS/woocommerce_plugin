@@ -5,7 +5,7 @@ function pb_cart_display() {
 	// fetch settings
 	$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 	// enqueue scripts
-	wp_enqueue_script( 'wp-porterbuddy-widget' );
+	wp_enqueue_script( 'wp-porterbuddy-widget-js' );
 
 	// if PorterBuddy shipping is selected, display widget
 	if ( WC()->session->get('chosen_shipping_methods')[0] == PORTERBUDDY_PLUGIN_NAME ) :

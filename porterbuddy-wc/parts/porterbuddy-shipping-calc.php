@@ -3,7 +3,7 @@
 if( is_product() ):
 
 	wp_enqueue_script( 'wc-country-select' );
-	wp_enqueue_script( 'wp-porterbuddy-shipping-calc' );
+	wp_enqueue_script( 'wp-porterbuddy-shipping-calc-js' );
 
 	$form_postcode = isset($_COOKIE['pb_postcode']) && $_COOKIE['pb_postcode'] == 'x' ? null : (
 			WC()->customer->get_shipping_postcode() != null ? WC()->customer->get_shipping_postcode() : ( 
