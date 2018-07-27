@@ -192,6 +192,27 @@ jQuery( function( $ ) {
 		else {
 			$('.porterbuddy-widget-date-selectors .next-date').addClass('unavailable');
 		}
+
+		// hide all slots
+		var allSlots = $('div[data-value^="pbdelivery_"]');
+		if ( allSlots[0] )
+		{
+			// display active date's options
+			$.each(allSlots, function() {
+				$(this).addClass('porterbuddy-hide');
+			});			
+		}
+
+		// show new timeslots
+		var slots = $('div[data-value^="pbdelivery_'+moment( dateChosen ).format('YYYY-MM-DD')+'"]');
+		if ( slots[0] )
+		{
+			// display active date's options
+			$.each(slots, function() {
+				$(this).removeClass('porterbuddy-hide');
+			});			
+		}
+
 	}
 
 
