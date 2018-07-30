@@ -117,8 +117,10 @@ jQuery( function( $ ) {
 	// populate timeslots into divs that are selectable
 	function populateTimeslots ( element, data )
 	{
+
+		console.log( data );
 		// set first and last available date
-		var firstAvailableDate = $(data).get(1).start;
+		var firstAvailableDate = $(data).get(0).start;
 		var lastAvailableDate = $(data).get(-1).start;
 		availableDates = {firstAvailableDate, lastAvailableDate};
 
@@ -171,8 +173,8 @@ jQuery( function( $ ) {
 		// console.log("date.iso: " + dateChosen);
 		// console.log("firstAvailableDate: " + dateFirst);
 		// console.log("lastAvailableDate: " + dateLast);
-		//console.log(  "datovalg er etter førstedato: " + moment( dateChosen ).isAfter( moment(dateFirst),'day')  );
-		//console.log(  "datovalg er før sistedato: " + moment( dateChosen ).isBefore( moment(dateLast),'day')  );
+		// console.log(  "datovalg er etter førstedato: " + moment( dateChosen ).isAfter( moment(dateFirst),'day')  );
+		// console.log(  "datovalg er før sistedato: " + moment( dateChosen ).isBefore( moment(dateLast),'day')  );
 		
 
 		// set date prev selector 
