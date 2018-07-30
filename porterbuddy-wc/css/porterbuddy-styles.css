@@ -52,15 +52,15 @@
 .porterbuddy-widget-timeslots {
 	display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: normal;
     margin-left: -0.2rem;
     margin-right: -0.2rem;
     margin-bottom: 1.5rem;
 }
 .porterbuddy-widget-timeslot {
 	border: 1px solid #cdcdcd;
-    flex-basis: 4.2rem;
-    height: 4rem;
+    flex-basis: 7rem;
+    height: 4.5rem;
     text-align: center;
     margin: 0.2rem;
     display: flex;
@@ -84,6 +84,7 @@
     font-weight: 700;
     margin: 0;
     white-space: nowrap;
+    line-height: 1.1rem;
 }
 .porterbuddy-widget-timeslot p {
 	font-size: 0.9rem;

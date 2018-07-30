@@ -4,9 +4,10 @@
 
 jQuery( function( $ ) {
 
-	// set locale
+	// set js library locale
 	moment.locale("nb_NO");
 
+	// scope outside for all functions
 	var availableDates;
 
 	/**
@@ -28,8 +29,8 @@ jQuery( function( $ ) {
 				formatted: moment(date).format('dddd Do MMM')
 			};
 
+			// set widget date
 			$( '#selected-date' ).text( dateObject["formatted"] );
-
 		},
 
 		set: function(day) {
@@ -69,18 +70,22 @@ jQuery( function( $ ) {
 		},
 	};
 
+	// initiate date variable
 	date.init();
 
-	// When Porterbuddy widget is available
-	ready('#porterbuddy-widget', function(element) {
-	    
-	    console.log("PorterBuddy loaded");
-
+	
+	/**
+	 * Get available timeslots from the API (via backend)
+	 */
+	ready('#porterbuddy-widget', function(element) 
+	{
 	    getAvailability( this );
-
 	});
 
-	// make the request 	
+
+	/**
+	 * Get available timeslots from the API (via backend)
+	 */
 	function getAvailability ( element )
 	{
 		$.ajax({
@@ -113,15 +118,14 @@ jQuery( function( $ ) {
 	};
 
 	
-
-	// populate timeslots into divs that are selectable
+	/**
+	 * Populate timeslots with data from the API
+	 */
 	function populateTimeslots ( element, data )
 	{
-
-		console.log( data );
 		// set first and last available date
-		var firstAvailableDate = $(data).get(0).start;
-		var lastAvailableDate = $(data).get(-1).start;
+		var firstAvailableDate = $(data.delivery).get(0).start;
+		var lastAvailableDate = $(data.delivery).get(-1).start;
 		availableDates = {firstAvailableDate, lastAvailableDate};
 
 		// delete any previous divs
@@ -132,12 +136,25 @@ jQuery( function( $ ) {
 
 		// set date to first available slot and make available
 		$( '#selected-date' ).text( moment(availableDates['firstAvailableDate']).format('dddd Do MMM') ).removeClass('unavailable');
-
 		// set date object to available
 		date.set( moment(availableDates['firstAvailableDate']).format('D') ); // #RPT: might need work due to js setDate functionality
 
-		// add timeslot element for every timeslot returned by api
-		$.each( data, function() 
+
+		// add available express timeslots
+		$.each( data.express, function() 
+		{
+			$('<div/>', {
+			    "class": 'porterbuddy-widget-timeslot ' + hidden,
+			    html: '<h6>' + 'Express' + '</h6>' + 
+			    	'<p><span class="price">' + this.price.string + '</span></p>',
+			    click: function() {
+			    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
+			    }
+			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end).attr('timeslot', this.start).appendTo(element);
+		});
+
+		// add delivery timeslots and add metadata for filtration
+		$.each( data.delivery, function() 
 		{
 			// hide those elements not to be shown today
 			hidden = "";
@@ -159,6 +176,10 @@ jQuery( function( $ ) {
 		return availableDates;
 	}
 
+
+	/**
+	 * Update which timeslots to display, and navigational controls.
+	 */
 	function upDateTimesControl ()
 	{
 		// format dates to same time 
@@ -168,13 +189,6 @@ jQuery( function( $ ) {
 		dateFirst = moment( dateFirst ).format();
 		var dateLast = moment( availableDates['lastAvailableDate'] ).format('YYYY-MM-DD');
 		dateLast = moment( dateLast ).format();
-
-
-		// console.log("date.iso: " + dateChosen);
-		// console.log("firstAvailableDate: " + dateFirst);
-		// console.log("lastAvailableDate: " + dateLast);
-		// console.log(  "datovalg er etter førstedato: " + moment( dateChosen ).isAfter( moment(dateFirst),'day')  );
-		// console.log(  "datovalg er før sistedato: " + moment( dateChosen ).isBefore( moment(dateLast),'day')  );
 		
 
 		// set date prev selector 
@@ -195,6 +209,7 @@ jQuery( function( $ ) {
 			$('.porterbuddy-widget-date-selectors .next-date').addClass('unavailable');
 		}
 
+
 		// hide all slots
 		var allSlots = $('div[data-value^="pbdelivery_"]');
 		if ( allSlots[0] )
@@ -202,7 +217,7 @@ jQuery( function( $ ) {
 			// display active date's options
 			$.each(allSlots, function() {
 				$(this).addClass('porterbuddy-hide');
-			});			
+			});
 		}
 
 		// show new timeslots
@@ -212,14 +227,17 @@ jQuery( function( $ ) {
 			// display active date's options
 			$.each(slots, function() {
 				$(this).removeClass('porterbuddy-hide');
-			});			
+			});
 		}
 
 	}
 
 
-
-	$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function(){
+	/**
+	 * On "prev" and "next" click events, change data accordingly and update controls
+	 */
+	$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function()
+	{
 		event.preventDefault();
 
 		if ( $(this).hasClass('prev-date') && !$(this).hasClass('unavailable') )
@@ -236,7 +254,6 @@ jQuery( function( $ ) {
 
 		// update controls accordingly
 		upDateTimesControl();
-
 	})
 
 });
