@@ -141,4 +141,5 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 }
 else $result['cached'] = true;
 
+header('Content-Type: application/json');
 echo json_encode($result);
