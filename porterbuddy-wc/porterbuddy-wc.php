@@ -82,13 +82,5 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	}
 	if(isset($settings['enabled']) && $settings['enabled'] == 'yes' ) add_action( 'woocommerce_review_order_after_payment', 'pb_checkout_display', 10 );
 
-	// Order Placed Hook
-	function pb_order_status_processing( $order_id ) {
-		// IF NOT meta key order ID exist: Send API Request to PB
-
-		// Set a meta key with the order ID
-	}
-	add_action( 'woocommerce_order_status_processing', 'pb_order_status_completed', 10, 1 );
-
 	include_once 'includes/display_filters.php';
 }

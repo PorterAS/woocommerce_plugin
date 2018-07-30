@@ -35,15 +35,23 @@ function pb_woocommerce_hidden_order_itemmeta($arr) {
 add_filter('woocommerce_hidden_order_itemmeta', 'pb_woocommerce_hidden_order_itemmeta', 10, 1);
 
 // Checkout: Order Complete
-add_action('woocommerce_thankyou', 'pb_display_order_complete', 10, 1);
+function pb_add_shipping_information( $total_rows, $order )
+{
+	$total_rows['shipping']['value'] = $total_rows['shipping']['value'].'<br><small>Delivered between XX.XX and XX.XX on Month. XX</small>';
+	return $total_rows;
+}
 function pb_display_order_complete( $order_id ) {
 
 	if ( ! $order_id ) return;
 	$order = wc_get_order( $order_id );
 
 	if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
+
+		// IF NOT meta key order ID exist: Send API Request to PB
+
+		// Set a meta key with the order ID
+		
 		add_filter( 'woocommerce_get_order_item_totals', 'pb_add_shipping_information', 10, 2 );
-		$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
 		$items = $order->get_items('shipping');
 		foreach ($items as $item)
 		{
@@ -56,11 +64,7 @@ function pb_display_order_complete( $order_id ) {
 		}
 	}
 }
-function pb_add_shipping_information( $total_rows, $order )
-{
-	$total_rows['shipping']['value'] = $total_rows['shipping']['value'].'<br><small>Delivered between XX.XX and XX.XX on Month. XX</small>';
-	return $total_rows;
-}
+add_action('woocommerce_thankyou', 'pb_display_order_complete', 10, 1);
 
 // Admin: order
 function pb_admin_display($order){
