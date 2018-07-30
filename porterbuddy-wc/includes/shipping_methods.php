@@ -49,7 +49,7 @@ function porterbuddy_shipping_method() {
 						'type'              => 'text',
 						'placeholder'       => '',
 						'description'       => 'Default cost before address is checked.',
-						'default'           => '50',
+						'default'           => '149',
 						'desc_tip'          => true,
 						'sanitize_callback' => array( $this, 'sanitize_cost' ),
 					),
@@ -101,82 +101,12 @@ function porterbuddy_shipping_method() {
 			 */
 			public function calculate_shipping( $package  = array() ) {
 
-				$weight = 0;
-				$cost = $this->cost;
+				$cost = $this->get_instance_option('cost');
 
-				$weight = wc_get_weight( $weight, 'kg' );
-				/*
-				$buddy = new Buddy($this->get_api_key());
-
-				$origin_address = new Address(
-					get_option( 'woocommerce_store_address', false ),
-					get_option( 'woocommerce_store_address_2', false ),
-					get_option( 'woocommerce_store_postcode', false ),
-					get_option( 'woocommerce_store_city', false ),
-					\WC()->countries->countries[ substr(get_option( 'woocommerce_default_country', 'NO' ), 0, 2) ]
-				);
-
-				$destination_address = new Address(
-					$package[ 'destination' ][ 'address' ],
-					$package[ 'destination' ][ 'address_2' ],
-					$package[ 'destination' ][ 'postcode' ],
-					$package[ 'destination' ][ 'city' ],
-					\WC()->countries->countries[ $package[ 'destination' ][ 'country' ] ]
-				);
-
-				$days = is_numeric($this->get_option('days_ahead')) ? $this->get_option('days_ahead') : 3;
-				$opening_hours = $this->formatClosingHours();
-				$windows = [];
-
-				$prep_time = $this->get_option('available_until')+$this->get_option('packing_time');
-				$now = new DateTime('now', new DateTimeZone('Europe/Oslo'));
-
-				$i = 1;
-				$j = 0;
-				while($i <= $days && $j < $days*7) {
-
-					$opening = new \DateTime('now', new DateTimeZone('Europe/Oslo'));
-					$opening->modify('+'.($j*24).' hours');
-					$opening_time = $opening_hours[$opening->format('l')]['open'];
-					$opening->setTime(substr($opening_time,0,2),substr($opening_time,2,2), '00');
-
-					$closing = new \DateTime('now', new DateTimeZone('Europe/Oslo'));
-					$closing->modify('+'.($j*24).' hours');
-					$closing_time = $opening_hours[$closing->format('l')]['close'];
-					$closing->setTime(substr($closing_time,0,2),substr($closing_time,2,2), '00');
-
-					$j++;
-					if($opening < $closing)
-					{
-						$i++;
-						$closing->modify('-'.$prep_time.' minutes');
-						$windows[] = new Window($opening->format('c'), $closing->format('c'));
-					}
-				}
-				$parcels = [];
-				foreach ($package['contents'] as $pack)
-				{
-					$product = $pack['data'];
-					$parcels[] = new Parcel(
-						$product->get_width() == '' ? $this->settings['default_product_width'] : $product->get_width(),
-						$product->get_height() == '' ? $this->settings['default_product_height'] : $product->get_height(),
-						$product->get_length() == '' ? $this->settings['default_product_depth'] : $product->get_length(),
-						$product->has_weight() ? wc_get_weight($product->get_weight(), 'g') : wc_get_weight($this->settings['default_product_weight'], 'g')
-					);
-				}
-				/*
-				var_dump(json_encode($buddy->checkAvailability(
-					$origin_address,
-					$destination_address,
-					$windows,
-					$parcels,
-					['delivery', 'express']
-				)));
-				*/
 				$rate = array(
 					'id' => $this->id,
 					'label' => $this->title,
-					'cost' => $cost
+					'cost' => $this->sanitize_cost($cost)
 				);
 
 				$this->add_rate( $rate );
