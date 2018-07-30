@@ -122,8 +122,11 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 			{
 				$result['locale'] = $wp_locale;
 				$result['success'] = true;
-				$result['data'] = $res->deliveryWindows;
-				foreach ($result['data'] as $win) $win->price->string = number_format_i18n( $win->price->fractionalDenomination/100, 2 );
+				$result['data'] = [];
+				foreach ($res->deliveryWindows as $win) {
+					$win->price->string = number_format_i18n( $win->price->fractionalDenomination/100, 2 );
+					$result['data'][$win->product][] = $win;
+				}
 				if($settings['mode'] != 'development') set_transient( 'pb_availability', $result, is_numeric($settings['update_delivery']) ? $settings['update_delivery']*60 : 5*60 );
 			}
 			else
