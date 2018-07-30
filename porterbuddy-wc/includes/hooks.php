@@ -29,3 +29,32 @@ add_action( 'woocommerce_add_cart_item_data', function()
 	}
 }, 50);
 
+
+/**
+ * Add AJAX endpoints to save shipping data
+ */
+add_action( 'wp_ajax_setShippingSelection', 'setShippingSelection' );
+add_action( 'wp_ajax_nopriv_setShippingSelection', 'setShippingSelection' );
+function setShippingSelection()
+{
+	// validate nonce and sanitize input
+	if ( 
+		isset( $_POST['pb_nonce'] ) &&
+		wp_verify_nonce($_POST['pb_nonce'], 'porterbuddy_widget_options') 
+	) {
+		WC()->session->set( 'pb_type' , sanitize_text_field($_POST['pb_type']) );
+		WC()->session->set( 'pb_windowStart' , sanitize_text_field($_POST['pb_windowStart']) );
+		WC()->session->set( 'pb_returnOnDemand' , sanitize_text_field($_POST['pb_returnOnDemand']) );
+		WC()->session->set( 'pb_leaveDoorStep' , sanitize_text_field($_POST['pb_leaveDoorStep']) );
+		WC()->session->set( 'pb_message' , sanitize_text_field($_POST['pb_message']) );
+
+		return true;
+	}
+	else
+	{
+		echo json_encode( "Nonce could not be validated!" );
+	}
+	
+	// required to terminate immediately after returning a proper response
+	wp_die(); 
+}

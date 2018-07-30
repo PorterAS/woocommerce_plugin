@@ -1,10 +1,9 @@
-/*
- * PorterBuddy WooCommerce widget scripts
+/**
+ * PorterBuddy WooCommerce cart & checkout widget functions
  */
-
 jQuery( function( $ ) {
 
-	// set js library locale
+	// set js moment library locale
 	moment.locale("nb_NO");
 
 	// scope outside for all functions
@@ -75,9 +74,9 @@ jQuery( function( $ ) {
 
 	
 	/**
-	 * Get available timeslots from the API (via backend)
+	 * When loaded, check availability
 	 */
-	ready('#porterbuddy-widget', function(element) 
+	ready('#porterbuddy-widget', function() 
 	{
 	    getAvailability( this );
 	});
@@ -95,24 +94,31 @@ jQuery( function( $ ) {
 			cache: true,
 			data:
 			{
-				//action: 'getDays',
+				//action: '',
 			},
 			beforeSend: function () 
 			{
-				showLoader( element );
+				block( element );
 			},
 			complete: function ()
 			{
-				hideLoader( element );
+				unblock( element );
 			},
 			success: function ( response )
 			{
-				populateTimeslots( '#timeslots', response['data'] ); // generates availableDates
-				upDateTimesControl();
+				if ( response['data']['delivery'] != undefined )
+				{
+					populateTimeslots( '#timeslots', response['data'] ); // generates availableDates
+					upDateTimesControl();
+				} 
+				else
+				{
+					return false;
+				}
 			},
 			error: function ( error )
 			{
-				return null;
+				return false;
 			},
 		})
 	};
@@ -136,6 +142,7 @@ jQuery( function( $ ) {
 
 		// set date to first available slot and make available
 		$( '#selected-date' ).text( moment(availableDates['firstAvailableDate']).format('dddd Do MMM') ).removeClass('unavailable');
+		
 		// set date object to available
 		date.set( moment(availableDates['firstAvailableDate']).format('D') ); // #RPT: might need work due to js setDate functionality
 
@@ -148,9 +155,15 @@ jQuery( function( $ ) {
 			    html: '<h6>' + 'Express' + '</h6>' + 
 			    	'<p><span class="price">' + this.price.string + '</span></p>',
 			    click: function() {
+			    	// set active class on click
 			    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
+					// update shipping information
+					setShippingSelection();
 			    }
-			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end).attr('timeslot', this.start).appendTo(element);
+			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
+				.attr('timeslot', this.start)
+				.attr('type', 'express')
+				.appendTo(element);
 		});
 
 		// add delivery timeslots and add metadata for filtration
@@ -168,9 +181,15 @@ jQuery( function( $ ) {
 			    html: '<h6>' + moment(this.start).locale("nb_NO").format("LT") + ' - ' + moment(this.end).format("LT") + '</h6>' + 
 			    	'<p><span class="price">' + this.price.string + '</span></p>',
 			    click: function() {
+			    	// set active class on click
 			    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
+					// update shipping information
+					setShippingSelection();
 			    }
-			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end).attr('timeslot', this.start).appendTo(element);
+			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
+				.attr('timeslot', this.start)
+				.attr('type', "delivery")
+				.appendTo(element);
 		});
 
 		return availableDates;
@@ -230,6 +249,12 @@ jQuery( function( $ ) {
 			});
 		}
 
+		if ( $('.porterbuddy-widget-timeslot').hasClass('active') == false )
+		{
+			MakeActive = $('.porterbuddy-widget-timeslot').get(0);
+			$(MakeActive).addClass('active');
+		}
+
 	}
 
 
@@ -260,16 +285,25 @@ jQuery( function( $ ) {
 	/**
 	 * Update woo session with PorterBuddy shipping selection
 	 */
-	function setShippingSelection ( windowStart, returnOnDemand, leaveDoorStep, comment )
+	function setShippingSelection ()
 	{
+		var nonce = $('#porterbuddy-widget').data('wpnonce');
+		var type = $('.porterbuddy-widget-timeslot.active').prop('type');
+		var windowStart = $('.porterbuddy-widget-timeslot.active').attr('timeslot');
+		var returnOnDemand = $('#porterbuddy_return').prop("checked");
+		var leaveDoorStep = $('#porterbuddy_leave_doorstep').prop("checked");
+		var comment = $('#porterbuddy_comment').val();
+
 		$.ajax({
 			url: pbWidgetPHP['ajaxphp'],
-			type: 'GET',
+			type: 'POST',
 			dataType: 'json',
-			cache: true,
+			cache: false,
 			data:
 			{
 				action: 'setShippingSelection',
+				pb_nonce: nonce,
+				pb_type: type,
 				pb_windowStart: windowStart,
 				pb_returnOnDemand: returnOnDemand,
 				pb_leaveDoorStep: leaveDoorStep,
@@ -277,26 +311,85 @@ jQuery( function( $ ) {
 			},
 			beforeSend: function () 
 			{
-				showLoader( element );
+				block( $( 'div.cart_totals' ) );
 			},
 			complete: function ()
 			{
-				hideLoader( element );
-
-				console.log(windowStart + ' : ' + returnOnDemand + ' : ' + leaveDoorStep + ' : ' + comment);
-
+				unblock( $( 'div.cart_totals' ) );
+				// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
+				// $( document.body ).trigger( 'updated_shipping_method' );
 			},
 			success: function ( response )
 			{
-				console.log("data was saved");
+				//console.log( response );
+				return true;
 			},
 			error: function ( error )
 			{
-				console.log("error: data was not saved");
-				return null;
+				//console.log( error );
+				return false;
 			},
 		})
 	}
 
+	/**
+	 * function to update timeslot prices if "return on-delivery" is checked
+	 */
+	function updateTimeBlockPrices ()
+	{
+		
+		if ( $('#porterbuddy_return').prop("checked") == true )
+		{
+			$('.porterbuddy-widget-timeslot').each( function()
+			{
+				if ( $( this ).data('returnPrice') == undefined || $( this ).data('returnPrice') === 0 )
+				{
+					let price = parseInt( $('.price', this).text() );
+					let extraPrice = parseInt( $('.price', '.porterbuddy-widget-return').text() );
+					
+					$('.price', this).text(price+extraPrice);
+					$(this).data('returnPrice',1);
+				}
+			});
+		} 
+		else
+		{
+			$('.porterbuddy-widget-timeslot').each( function()
+			{
+				if ( $( this ).data('returnPrice') === 1 )
+				{
+					let price = parseInt( $('.price', this).text() );
+					let extraPrice = parseInt( $('.price', '.porterbuddy-widget-return').text() );
+					
+					$('.price', this).text(price-extraPrice);
+					$(this).data('returnPrice',0);
+				}
+			});
+		}
+	}
+
+
+	/**
+	 * Update woo session with PorterBuddy shipping selection
+	 */
+	$( '#porterbuddy-widget' ).on(
+		'click',
+		'label #porterbuddy_return, label #porterbuddy_leave_doorstep',
+		function () 
+		{
+			// update timeblock prices
+			updateTimeBlockPrices();
+			// set shipping selection
+			setShippingSelection();	
+		},
+	);
+	$( '#porterbuddy-widget' ).on(
+		'blur',
+		'.porterbuddy-widget-comment',
+		function () 
+		{
+			setShippingSelection();
+		},
+	);
 
 });

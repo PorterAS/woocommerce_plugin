@@ -1,43 +1,7 @@
-
-// Utility functions for the file.
-
+/**
+ * functions for shipping calculator embedded on product detail page
+ */
 jQuery( function( $ ) {
-
-	/**
-	 * Check if a node is blocked for processing.
-	 *
-	 * @param {JQuery Object} $node
-	 * @return {bool} True if the DOM Element is UI Blocked, false if not.
-	 */
-	var is_blocked = function( $node ) {
-		return $node.is( '.processing' ) || $node.parents( '.processing' ).length;
-	};
-
-	/**
-	 * Block a node visually for processing.
-	 *
-	 * @param {JQuery Object} $node
-	 */
-	var block = function( $node ) {
-		if ( ! is_blocked( $node ) ) {
-			$node.addClass( 'processing' ).block( {
-				message: null,
-				overlayCSS: {
-					background: '#fff',
-					opacity: 0.6
-				}
-			} );
-		}
-	};
-
-	/**
-	 * Unblock a node after processing is complete.
-	 *
-	 * @param {JQuery Object} $node
-	 */
-	var unblock = function( $node ) {
-		$node.removeClass( 'processing' ).unblock();
-	};
 
 	/**
 	 * Check location and act on node.

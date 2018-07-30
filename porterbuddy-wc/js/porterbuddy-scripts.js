@@ -21,34 +21,43 @@ function PBgetCookie (name) {
   if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-/**
- * General loading icon
- */
-function showLoader ( element )
-{
-	if ( element != undefined )
-	{
-		jQuery( element ).prepend('<span class="porterbuddy-loader"></span>');
-	}
-	else 
-	{
-		jQuery( 'body' ).prepend('<span class="porterbuddy-loader"></span>');
-	}
-	
-}
-function hideLoader ( element )
-{
 
-	if ( element != undefined )
-	{
-		jQuery( element ).find('span').remove('.porterbuddy-loader');
+/**
+ * Check if a node is blocked for processing.
+ *
+ * @param {JQuery Object} $node
+ * @return {bool} True if the DOM Element is UI Blocked, false if not.
+ */
+var is_blocked = function( $node ) {
+	return jQuery($node).is( '.processing' ) || jQuery($node).parents( '.processing' ).length;
+};
+
+/**
+ * Block a node visually for processing.
+ *
+ * @param {JQuery Object} $node
+ */
+var block = function( $node ) {
+	if ( ! is_blocked( $node ) ) {
+		jQuery($node).addClass( 'processing' ).block( {
+			message: null,
+			overlayCSS: {
+				background: '#fff',
+				opacity: 0.6
+			}
+		} );
 	}
-	else 
-	{
-		jQuery( 'span' ).remove('.porterbuddy-loader');		
-	}
-	
-}
+};
+
+/**
+ * Unblock a node after processing is complete.
+ *
+ * @param {JQuery Object} $node
+ */
+var unblock = function( $node ) {
+	jQuery($node).removeClass( 'processing' ).unblock();
+};
+
 
 /** 
  * Continously check if elements are ready
@@ -107,3 +116,5 @@ ready('element-identifier'), function(element) {
     win.ready = ready;
             
 })(this);
+
+

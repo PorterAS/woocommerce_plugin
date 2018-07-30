@@ -12,7 +12,7 @@ function pb_cart_display() {
 
 		?>
 
-<div id="porterbuddy-widget" class="porterbuddy-widget">
+<div id="porterbuddy-widget" class="porterbuddy-widget" data-wpnonce="<?php echo wp_create_nonce('porterbuddy_widget_options'); ?>">
 
 	<div class="porterbuddy-widget-logo-wrapper">
 		<img src="<?= plugins_url("../assets/", __FILE__) ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
@@ -34,8 +34,8 @@ function pb_cart_display() {
 
 	<div class="porterbuddy-widget-return">
 		<label>
-			<input type="checkbox" value="1" id="porterbuddy_return">
-			Retur on-demand; Budet venter inntil 10 minutter og tar varer med seg varer i retur on ønskelig (pris <span class="price">79,00</span>)
+			<input type="checkbox" value="0" id="porterbuddy_return">
+			Retur on-demand; Budet venter inntil 10 minutter og tar varer med seg varer i retur on ønskelig (pris <span class="price"><?= $settings['return_price'] ?></span>)
 		</label>
 	</div>
 
@@ -49,9 +49,10 @@ function pb_cart_display() {
 	<div class="porterbuddy-widget-comment">
 		<textarea id="porterbuddy_comment" placeholder="Evt. beskjet til budet" maxlength="512"></textarea>
 	</div>
+
 </div>
 
-		<?php 
+		<?php
 
 	endif;
 }
