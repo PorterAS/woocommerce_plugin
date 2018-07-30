@@ -144,7 +144,7 @@ jQuery( function( $ ) {
 		$.each( data.express, function() 
 		{
 			$('<div/>', {
-			    "class": 'porterbuddy-widget-timeslot ' + hidden,
+			    "class": 'porterbuddy-widget-timeslot ',
 			    html: '<h6>' + 'Express' + '</h6>' + 
 			    	'<p><span class="price">' + this.price.string + '</span></p>',
 			    click: function() {
@@ -255,5 +255,48 @@ jQuery( function( $ ) {
 		// update controls accordingly
 		upDateTimesControl();
 	})
+
+
+	/**
+	 * Update woo session with PorterBuddy shipping selection
+	 */
+	function setShippingSelection ( windowStart, returnOnDemand, leaveDoorStep, comment )
+	{
+		$.ajax({
+			url: pbWidgetPHP['ajaxphp'],
+			type: 'GET',
+			dataType: 'json',
+			cache: true,
+			data:
+			{
+				action: 'setShippingSelection',
+				pb_windowStart: windowStart,
+				pb_returnOnDemand: returnOnDemand,
+				pb_leaveDoorStep: leaveDoorStep,
+				pb_message: comment,
+			},
+			beforeSend: function () 
+			{
+				showLoader( element );
+			},
+			complete: function ()
+			{
+				hideLoader( element );
+
+				console.log(windowStart + ' : ' + returnOnDemand + ' : ' + leaveDoorStep + ' : ' + comment);
+
+			},
+			success: function ( response )
+			{
+				console.log("data was saved");
+			},
+			error: function ( error )
+			{
+				console.log("error: data was not saved");
+				return null;
+			},
+		})
+	}
+
 
 });
