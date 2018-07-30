@@ -47,16 +47,23 @@ function pb_display_order_complete( $order_id ) {
 
 	if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
 
-		// IF NOT meta key order ID exist: Send API Request to PB
-
-		// Set a meta key with the order ID
-		
 		add_filter( 'woocommerce_get_order_item_totals', 'pb_add_shipping_information', 10, 2 );
 		$items = $order->get_items('shipping');
 		foreach ($items as $item)
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
+				// IF NOT meta key order ID exist: Send API Request to PB
+				$pb_order_id = wc_get_order_item_meta($item->get_id(), '_pb_order_id', true);
+				if($pb_order_id && $pb_order_id != '')
+				{
+					// Call PB
+
+
+					// Set a meta key with the order ID
+					wc_add_order_item_meta( $item->get_id(), '_pb_order_id', 'it is set', true );
+				}
+
 				// Displaying something
 				echo '<h2>Porterbuddy Delivery</h2>';
 				echo "<p>The order will be delivered between XX.XX and XX.XX on Month. XX</p>";
