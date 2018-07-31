@@ -124,6 +124,27 @@ return array(
 		'default' => __( 'Deliver with PorterBuddy', 'porterbuddy-wc' )
 	),
 
+	'store_name' => array(
+		'title' => __( 'The store name', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Displayed as the sender of the parcel', 'porterbuddy-wc' ),
+		'default' => __( 'Store Name', 'porterbuddy-wc' )
+	),
+
+	'store_phone' => array(
+		'title' => __( 'Store Phone', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Phone that the courier can reach the store', 'porterbuddy-wc' ),
+		'default' => __( '99999999', 'porterbuddy-wc' )
+	),
+
+	'store_email' => array(
+		'title' => __( 'Store email', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'E-mail for porterbuddy to contact you', 'porterbuddy-wc' ),
+		'default' => __( 'something@store.com', 'porterbuddy-wc' )
+	),
+
 	'description' => array(
 		'title' => __( 'Description', 'porterbuddy-wc' ),
 		'type' => 'text',

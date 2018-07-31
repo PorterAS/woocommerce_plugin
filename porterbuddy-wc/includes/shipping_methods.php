@@ -101,7 +101,31 @@ function porterbuddy_shipping_method() {
 			 */
 			public function calculate_shipping( $package  = array() ) {
 
-				$cost = $this->get_instance_option('cost');
+				// Sanitizing the values
+				$window_start = WC()->session->get('pb_windowStart');
+				$return_on_demand = WC()->session->get('pb_returnOnDemand') == 'true';
+				$type = WC()->session->get('pb_type') == 'express' ? 'express' : 'delivery';
+
+				if(isset($window_start) && strlen($window_start) > 6)
+				{
+					$window = null;
+					$api_result = include dirname(__FILE__).'/availability.php';
+					if(isset($api_result['data'][$type]))
+					{
+						foreach ($api_result['data'][$type] as $win) {
+							if ($win->start == $window_start) $window = $win;
+							break;
+						}
+						if($window == null) $cost = $this->get_instance_option('cost');
+						else
+						{
+							$cost = $window->price->fractionalDenomination/100;
+							if($return_on_demand) $cost += $this->get_option('return_price', 79);
+						}
+					}
+					else $cost = $this->get_instance_option('cost');
+				}
+				else $cost = $this->get_instance_option('cost');
 
 				$rate = array(
 					'id' => $this->id,

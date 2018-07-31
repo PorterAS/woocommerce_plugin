@@ -78,7 +78,16 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	// Checkout Widget
 	function pb_checkout_display()
 	{
-		echo "Here";
+		echo 'Window Start:<br>';
+		var_dump(WC()->session->get('pb_windowStart'));
+		echo '<br>Return on Demand:<br>';
+		var_dump(WC()->session->get('pb_returnOnDemand'));
+		echo '<br>Type:<br>';
+		var_dump(WC()->session->get('pb_type'));
+		echo '<br>Leave Doorstep:<br>';
+		var_dump(WC()->session->get('pb_leaveDoorStep'));
+		echo '<br>Message:<br>';
+		var_dump(WC()->session->get('pb_message'));
 	}
 	if(isset($settings['enabled']) && $settings['enabled'] == 'yes' ) add_action( 'woocommerce_review_order_after_payment', 'pb_checkout_display', 10 );
 
