@@ -86,7 +86,7 @@ function pb_display_order_complete( $order_id ) {
 							if(isset($api_result['data'][$type]))
 							{
 								foreach ($api_result['data'][$type] as $win) {
-									if ($win->start == $window_start) $window = $win;
+									if ($win->start == $window_start) $window = Window::load($win);
 									break;
 								}
 							}
@@ -115,8 +115,6 @@ function pb_display_order_complete( $order_id ) {
 								\WC()->countries->countries[ $shipping_address['country'] ]
 							);
 
-							$window = new Window( '2019-02-12T10:00+01:00', '2019-02-12T18:00+01:00' );
-
 							$origin = new Origin(
 								$settings['store_name'],
 								$originAddress,
@@ -142,6 +140,8 @@ function pb_display_order_complete( $order_id ) {
 								]
 							);
 
+							$parcels = [];
+
 							foreach ($order->get_items() as $pitem)
 							{
 								$product = wc_get_product($pitem['product_id']);
@@ -165,9 +165,11 @@ function pb_display_order_complete( $order_id ) {
 								$type,
 								$message
 							);
-							die(var_dump($result));
-							// Set a meta key with the order ID
-							wc_add_order_item_meta( $item->get_id(), '_pb_order_id', 'it is set', true );
+							if(isset($result->orderId)) wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $result->orderId, true );
+							else echo "Poorterbuddy order failed";
+							if(isset($result->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $result->deliveryReference, true );
+							if(isset($result->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $result->overviewUrl, true );
+
 						}
 					}
 					else die('API-Key missing for '.$settings['mode']);
