@@ -288,7 +288,7 @@ jQuery( function( $ ) {
 	function setShippingSelection ()
 	{
 		var nonce = $('#porterbuddy-widget').data('wpnonce');
-		var type = $('.porterbuddy-widget-timeslot.active').prop('type');
+		var type = $('.porterbuddy-widget-timeslot.active').attr('type');
 		var windowStart = $('.porterbuddy-widget-timeslot.active').attr('timeslot');
 		var returnOnDemand = $('#porterbuddy_return').prop("checked");
 		var leaveDoorStep = $('#porterbuddy_leave_doorstep').prop("checked");
