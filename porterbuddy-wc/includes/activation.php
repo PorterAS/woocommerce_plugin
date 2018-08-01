@@ -1,5 +1,10 @@
 <?php
+if(!defined('ABSPATH') || ! defined( 'WPINC' )) {
+	die;
+}
+
 function porterbuddy_activate() {
+	global $wpdb;
 	$zone_name = 'Oslo (PorterBuddy)';
 	$available_zones = WC_Shipping_Zones::get_zones();
 
@@ -16,15 +21,19 @@ function porterbuddy_activate() {
 		$new_zone->set_zone_name( $zone_name );
 		$new_zone->add_location( 'NO', 'country' );
 
-		$file = include_once 'includes/postal_codes.php';
+		$file = include_once dirname(__FILE__).'/postal_codes.php';
 		$lines = explode("\n", $file);
 		foreach ($lines as $line)
 		{
 			$new_zone->add_location( $line, 'postcode' );
 		}
 
-		$new_zone->add_shipping_method(PORTERBUDDY_PLUGIN_NAME);
+		$instance_id = $new_zone->add_shipping_method(PORTERBUDDY_PLUGIN_NAME);
 		$new_zone->save();
+
+		if ( $wpdb->update( "{$wpdb->prefix}woocommerce_shipping_zone_methods", array( 'is_enabled' => false ), array( 'instance_id' => $instance_id ) ) ) {
+			do_action( 'woocommerce_shipping_zone_method_status_toggled', $instance_id, PORTERBUDDY_PLUGIN_NAME, $new_zone->get_id(), false );
+		}
 	}
 }
-register_activation_hook( __FILE__, 'porterbuddy_activate' );
+register_activation_hook( dirname(dirname(__FILE__)).'/porterbuddy-wc.php', 'porterbuddy_activate' );

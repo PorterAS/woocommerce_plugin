@@ -106,16 +106,10 @@ return array(
 	'general_settings' => array(
 		'type'        => 'title',
 		'title'       => __( 'General Settings', 'porterbuddy-wc' ),
-		'description' => __( 'General settings for PorterBuddy Shipping', 'porterbuddy-wc' ),
+		'description' => __( 'General settings for PorterBuddy Shipping. <br><br>To enable the plugin, navigate to Shipping/Shipping Zones and activate PorterBuddy inside the zone named "Oslo (PorterBuddy)"', 'porterbuddy-wc' ),
 		'class'       => 'separated_title_tab',
 	),
 
-	'enabled' => array(
-		'title' => __( 'Enable', 'porterbuddy-wc' ),
-		'type' => 'checkbox',
-		'description' => __( 'Enable this shipping method.', 'porterbuddy-wc' ),
-		'default' => 'no'
-	),
 
 	'title' => array(
 		'title' => __( 'Title', 'porterbuddy-wc' ),
@@ -155,36 +149,18 @@ return array(
 	'express' => array(
 		'title' => __( 'Express Delivery Name', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'default' => __( 'Express shipping', 'porterbuddy-wc' )
+		'default' => __( 'EXPRESS', 'porterbuddy-wc' )
 	),
 
 	'mode' => array(
 		'title' => __( 'PorterBuddy Mode', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'description' => __( 'Choose operating mode', 'porterbuddy-wc' ),
+		'description' => __( 'Choose operating mode. Development and Testing will use porterbuddy-test.com, and development will display debugging information.', 'porterbuddy-wc' ),
 		'default' => 'testing',
 		'options' => array(
 			'development' => __( 'Development' ),
 			'testing' => __( 'Testing' ),
 			'production' => __( 'Production' )
-		)
-	),
-
-	'sort_order' => array(
-		'title' => __( 'Sort / Ordering', 'porterbuddy-wc' ),
-		'type' => 'text',
-		'description' => __( 'Sort / Ordering Description', 'porterbuddy-wc' ),
-		'default' => __( 'Sort / Ordering Default', 'porterbuddy-wc' )
-	),
-
-	'debug' => array(
-		'title' => __( 'Debugging', 'porterbuddy-wc' ),
-		'type' => 'select',
-		'description' => __( 'Display debugging information', 'porterbuddy-wc' ),
-		'default' => 0,
-		'options' => array(
-			0 => __( 'No' ),
-			1 => __( 'Yes' ),
 		)
 	),
 
@@ -240,21 +216,21 @@ return array(
 		'description' => __( 'Modify the messages PorterBuddy is displaying to your customers', 'porterbuddy-wc' ),
 		'class'       => 'separated_title_tab',
 	),
-
+/*
 	'out_of_stock_text' => array(
 		'title' => __( 'Product is out of stock text', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders', 'porterbuddy-wc' ),
 		'default' => __( 'Sorry, product is out of stock', 'porterbuddy-wc' )
 	),
-
+*/
 	'no_available_dates' => array(
 		'title' => __( 'No available dates text', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders', 'porterbuddy-wc' ),
 		'default' => __( 'Sorry, same day delivery is not currently available', 'porterbuddy-wc' )
 	),
-
+/*
 	'popup_title' => array(
 		'title' => __( 'Popup Title', 'porterbuddy-wc' ),
 		'type' => 'text',
@@ -279,7 +255,7 @@ return array(
 			'confirmation' => __ ( 'Confirmation Page' ),
 		)
 	),
-
+*/
 	'days_ahead' => array(
 		'title' => __( 'Available days ahead', 'porterbuddy-wc' ),
 		'type' => 'text',
@@ -304,13 +280,13 @@ return array(
 		'description' => __( 'Text shown for the return option', 'porterbuddy-wc' ),
 		'default' => __( 'I would like to return items that do not match me', 'porterbuddy-wc' )
 	),
-
+/*
 	'return_text_short' => array(
 		'title' => __( 'Short text for return', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'default' => __( '+ included return', 'porterbuddy-wc' )
 	),
-
+*/
 	'return_price' => array(
 		'title' => __( 'Return price', 'porterbuddy-wc' ),
 		'type' => 'text',
@@ -321,7 +297,7 @@ return array(
 	'update_delivery' => array(
 		'title' => __( 'Update delivery alternative', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Given in minutes', 'porterbuddy-wc' ),
+		'description' => __( 'Given in minutes (caching, default 5)', 'porterbuddy-wc' ),
 		'default' => __( 5, 'porterbuddy-wc' )
 	),
 
@@ -352,7 +328,7 @@ return array(
 		'default' => __( '', 'porterbuddy-wc' )
 	),
 
-
+/*
 	'delivery_discount' => array(
 		'title' => __( 'Delivery discount', 'porterbuddy-wc' ),
 		'type' => 'select',
@@ -364,7 +340,7 @@ return array(
 			'percentage' => __( 'Percentage' ),
 		)
 	),
-
+*/
 	'opening_hours' => array(
 		'type'        => 'title',
 		'title'       => __( 'Opening Hours', 'porterbuddy-wc' ),
@@ -618,14 +594,14 @@ return array(
 		'description' => __( 'API Key for testing', 'porterbuddy-wc' ),
 		'default' => __( '', 'porterbuddy-wc' )
 	),
-
+/*
 	'google_maps_api_key' => array(
 		'title' => __( 'Google Maps API key', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can be obtained from _LINK_' ),
 		'default' => __( '', 'porterbuddy-wc' )
 	),
-
+*/
 	'mapbox_api_key' => array(
 		'title' => __( 'MapBox API key', 'porterbuddy-wc' ),
 		'type' => 'text',
