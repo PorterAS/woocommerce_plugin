@@ -175,7 +175,21 @@ function pb_display_order_complete( $order_id ) {
 
 				// Displaying something
 				echo '<h2>Porterbuddy Delivery</h2>';
-				if(isset($order) && !isset($order->orderId)) var_dump($order);
+				if(isset($order) && !isset($order->orderId))
+				{
+					// Debug
+					echo '<strong>Window Start:</strong> ';
+					var_dump(WC()->session->get('pb_windowStart'));
+					echo '<br><strong>Return on Demand:</strong> ';
+					var_dump(WC()->session->get('pb_returnOnDemand'));
+					echo '<br><strong>Type:</strong> ';
+					var_dump(WC()->session->get('pb_type'));
+					echo '<br><strong>Leave Doorstep:</strong> ';
+					var_dump(WC()->session->get('pb_leaveDoorStep'));
+					echo '<br><strong>Message:</strong> ';
+					var_dump(WC()->session->get('pb_message'));
+					var_dump($order);
+				}
 				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
 			}
 		}
