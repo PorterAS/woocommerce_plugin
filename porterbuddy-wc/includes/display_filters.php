@@ -86,90 +86,88 @@ function pb_display_order_complete( $order_id ) {
 									break;
 								}
 							}
-						}
 
-						if($window != null) {
-							if ( $return_on_demand ) {
-								null;
-							} // Do something here
+							if($window != null) {
+								if ( $return_on_demand ) {
+									null;
+								} // Do something here
 
-							$shipping_address = $order->get_address( 'shipping' );
+								$shipping_address = $order->get_address( 'shipping' );
 
-							$originAddress = new Address(
-								get_option( 'woocommerce_store_address', false ),
-								get_option( 'woocommerce_store_address_2', false ),
-								get_option( 'woocommerce_store_postcode', false ),
-								get_option( 'woocommerce_store_city', false ),
-								\WC()->countries->countries[ substr( get_option( 'woocommerce_default_country', 'NO' ), 0, 2 ) ]
-							);
-
-							$destination_address = new Address(
-								$shipping_address['address_1'],
-								$shipping_address['address_2'],
-								$shipping_address['postcode'],
-								$shipping_address['city'],
-								\WC()->countries->countries[ $shipping_address['country'] ]
-							);
-
-							$origin = new Origin(
-								$settings['store_name'],
-								$originAddress,
-								$settings['store_email'],
-								$settings['default_phone_country_code'],
-								$settings['store_phone'],
-								[$window]
-							);
-
-							$destination = new Destination(
-								$shipping_address['first_name'] . ' ' . $shipping_address['last_name'],
-								$destination_address,
-								$order->get_billing_email(),
-								$settings['default_phone_country_code'],
-								$order->get_billing_phone(),
-								$window,
-								[
-									'minimumAgeCheck'  => $settings['min_age'],
-									'leaveAtDoorstep'  => $leaveDoorStep,
-									'idCheck'          => $settings['id_verification'] == 1,
-									'requireSignature' => $settings['signature_required'] == 1,
-									'onlyToRecipient'  => $settings['only_to_recipient'] == 1
-								]
-							);
-
-							$parcels = [];
-
-							foreach ($order->get_items() as $pitem)
-							{
-								$product = wc_get_product($pitem['product_id']);
-								$parcel = new Parcel(
-									$product->get_width() == '' ? $settings['default_product_width'] : $product->get_width(),
-									$product->get_height() == '' ? $settings['default_product_height'] : $product->get_height(),
-									$product->get_length() == '' ? $settings['default_product_depth'] : $product->get_length(),
-									$product->get_weight() == '' || $product->get_weight() == 0 ? $settings['default_product_weight']*1000 :  wc_get_weight($product->get_weight(),'g'),
-									$product->get_description() == '' ? 'No decription available' : $product->get_description()
+								$originAddress = new Address(
+									get_option( 'woocommerce_store_address', false ),
+									get_option( 'woocommerce_store_address_2', false ),
+									get_option( 'woocommerce_store_postcode', false ),
+									get_option( 'woocommerce_store_city', false ),
+									\WC()->countries->countries[ substr( get_option( 'woocommerce_default_country', 'NO' ), 0, 2 ) ]
 								);
-								for ($i = 0; $i < $pitem['quantity']; $i++) {
-									$parcels[] = $parcel;
+
+								$destination_address = new Address(
+									$shipping_address['address_1'],
+									$shipping_address['address_2'],
+									$shipping_address['postcode'],
+									$shipping_address['city'],
+									\WC()->countries->countries[ $shipping_address['country'] ]
+								);
+
+								$origin = new Origin(
+									$settings['store_name'],
+									$originAddress,
+									$settings['store_email'],
+									$settings['default_phone_country_code'],
+									$settings['store_phone'],
+									[$window]
+								);
+
+								$destination = new Destination(
+									$shipping_address['first_name'] . ' ' . $shipping_address['last_name'],
+									$destination_address,
+									$order->get_billing_email(),
+									$settings['default_phone_country_code'],
+									$order->get_billing_phone(),
+									$window,
+									[
+										'minimumAgeCheck'  => $settings['min_age'],
+										'leaveAtDoorstep'  => $leaveDoorStep,
+										'idCheck'          => $settings['id_verification'] == 1,
+										'requireSignature' => $settings['signature_required'] == 1,
+										'onlyToRecipient'  => $settings['only_to_recipient'] == 1
+									]
+								);
+
+								$parcels = [];
+
+								foreach ($order->get_items() as $pitem)
+								{
+									$product = wc_get_product($pitem['product_id']);
+									$parcel = new Parcel(
+										$product->get_width() == '' ? $settings['default_product_width'] : $product->get_width(),
+										$product->get_height() == '' ? $settings['default_product_height'] : $product->get_height(),
+										$product->get_length() == '' ? $settings['default_product_depth'] : $product->get_length(),
+										$product->get_weight() == '' || $product->get_weight() == 0 ? $settings['default_product_weight']*1000 :  wc_get_weight($product->get_weight(),'g'),
+										$product->get_description() == '' ? 'No decription available' : $product->get_description()
+									);
+									for ($i = 0; $i < $pitem['quantity']; $i++) {
+										$parcels[] = $parcel;
+									}
+
 								}
 
+								$order = $buddy->placeOrder(
+									$origin,
+									$destination,
+									$parcels,
+									$type,
+									$message
+								);
+								if(isset($order->orderId)) {
+									wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $order->orderId, true );
+									if(isset($order->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $order->deliveryReference, true );
+									if(isset($order->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $order->overviewUrl, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_window_start', $window->start, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_window_end', $window->end, true );
+								}
 							}
-
-							$result = $buddy->placeOrder(
-								$origin,
-								$destination,
-								$parcels,
-								$type,
-								$message
-							);
-							if(isset($result->orderId)) {
-								wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $result->orderId, true );
-								if(isset($result->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $result->deliveryReference, true );
-								if(isset($result->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $result->overviewUrl, true );
-								wc_add_order_item_meta( $item->get_id(), '_pb_window_start', $window->start, true );
-								wc_add_order_item_meta( $item->get_id(), '_pb_window_end', $window->end, true );
-							}
-							else die("Porterbuddy order failed: ".print_r($result));
-
 						}
 					}
 					else die('API-Key missing for '.$settings['mode']);
@@ -177,6 +175,7 @@ function pb_display_order_complete( $order_id ) {
 
 				// Displaying something
 				echo '<h2>Porterbuddy Delivery</h2>';
+				if(isset($order) && !isset($order->orderId)) var_dump($order);
 				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
 			}
 		}
