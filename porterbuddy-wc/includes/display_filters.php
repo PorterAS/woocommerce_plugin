@@ -22,8 +22,8 @@ add_action('woocommerce_checkout_create_order', 'pb_before_checkout_create_order
 
 // Hide our custom meta data (Related to the data above)
 function pb_woocommerce_hidden_order_itemmeta($arr) {
-	$arr[] = '_pb_window_start';
-	$arr[] = '_pb_window_end';
+	//$arr[] = '_pb_window_start';
+	//$arr[] = '_pb_window_end';
 	$arr[] = '_pb_price';
 	$arr[] = '_pb_idcheck';
 	return $arr;
@@ -165,11 +165,10 @@ function pb_display_order_complete( $order_id ) {
 								wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $result->orderId, true );
 								if(isset($result->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $result->deliveryReference, true );
 								if(isset($result->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $result->overviewUrl, true );
-								$item->add_meta_data('_pb_window_start', $window->start, true);
-								$item->add_meta_data('_pb_window_end', $window->end, true);
-								$item->add_meta_data('Will be picked up', 'Between XX.XX and XX.XX on Month. XX', true);
+								wc_add_order_item_meta( $item->get_id(), '_pb_window_start', $window->start, true );
+								wc_add_order_item_meta( $item->get_id(), '_pb_window_end', $window->end, true );
 							}
-							else echo "Poorterbuddy order failed";
+							else die("Porterbuddy order failed: ".print_r($result));
 
 						}
 					}
@@ -178,7 +177,7 @@ function pb_display_order_complete( $order_id ) {
 
 				// Displaying something
 				echo '<h2>Porterbuddy Delivery</h2>';
-				echo "<p>The order will be delivered between XX.XX and XX.XX on Month. XX</p>";
+				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
 			}
 		}
 	}
@@ -195,11 +194,18 @@ function pb_admin_display($order){
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
 				// Displaying something
-				echo '<h3>Porterbuddy Details</h3>';
-				echo "<p>The order will be picked up by a courier between XX.XX and XX.XX on Month XXth</p>";
+				var_dump(wc_get_order_item_meta($item->get_id(), '_pb_order_id', true));
+				echo '<p><strong>Porterbuddy Details</strong></p>';
+				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
 			}
 		}
 	}
+}
+function render_delivery_message($start, $end)
+{
+	$start_dto = new DateTime($start);
+	$end_dto = new DateTime($end);
+	return sprintf( __( 'The order will be delivered between %s and %s on %s'), $start_dto->format('H:i'), $end_dto->format('H:i'), $start_dto->format('l jS F'));
 }
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'pb_admin_display', 10, 1 );
 

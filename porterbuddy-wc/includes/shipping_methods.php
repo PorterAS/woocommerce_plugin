@@ -113,8 +113,10 @@ function porterbuddy_shipping_method() {
 					if(isset($api_result['data'][$type]))
 					{
 						foreach ($api_result['data'][$type] as $win) {
-							if ($win->start == $window_start) $window = $win;
-							break;
+							if ($win->start == $window_start) {
+								$window = $win;
+								break;
+							}
 						}
 						if($window == null) $cost = $this->get_instance_option('cost');
 						else
