@@ -12,11 +12,7 @@ function pb_before_checkout_create_order( $order, $data ) {
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
-				$item->add_meta_data('_pb_window_start', 'ts', true);
-				$item->add_meta_data('_pb_window_end', 'tf', true);
-				$item->add_meta_data('_pb_price', 'tf', true);
-				$item->add_meta_data('_pb_idcheck', 'tf', true);
-				$item->add_meta_data('Will be picked up', 'Between XX.XX and XX.XX on Month. XX', true);
+				// Nothing?
 			}
 		}
 	}
@@ -165,10 +161,15 @@ function pb_display_order_complete( $order_id ) {
 								$type,
 								$message
 							);
-							if(isset($result->orderId)) wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $result->orderId, true );
+							if(isset($result->orderId)) {
+								wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $result->orderId, true );
+								if(isset($result->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $result->deliveryReference, true );
+								if(isset($result->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $result->overviewUrl, true );
+								$item->add_meta_data('_pb_window_start', $window->start, true);
+								$item->add_meta_data('_pb_window_end', $window->end, true);
+								$item->add_meta_data('Will be picked up', 'Between XX.XX and XX.XX on Month. XX', true);
+							}
 							else echo "Poorterbuddy order failed";
-							if(isset($result->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $result->deliveryReference, true );
-							if(isset($result->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $result->overviewUrl, true );
 
 						}
 					}
