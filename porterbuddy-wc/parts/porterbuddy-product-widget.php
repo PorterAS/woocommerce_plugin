@@ -50,7 +50,7 @@ function pb_product_display() {
 	}
 	if($postcode != null && strlen($postcode) > 2)
 	{
-
+		global $wp_locale;
 		// Check if the postcode is valid for PB
 		global $wpdb;
 		$zones = $wpdb->get_results( "SELECT zone_id FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'porterbuddy-wc'", ARRAY_A );
@@ -75,7 +75,7 @@ function pb_product_display() {
 				// We can deliver today!
 				$interval  = $today->diff( $now );
 				$countdown = createCountdown( $interval->d, $interval->h, $interval->i );
-				$date      = 'Today';
+				$date      = __('Today', 'porterbuddy-wc');
 			}
 			else
 			{
@@ -89,7 +89,7 @@ function pb_product_display() {
 					// We can deliver tomorrow!
 					$interval  = $tomorrow->diff( $now );
 					$countdown = createCountdown( $interval->d, $interval->h, $interval->i );
-					$date      = 'Tomorrow';
+					$date      = __('Tomorrow', 'porterbuddy-wc');
 				}
 				else {
 					// Can we deliver any other day of the week?
@@ -108,13 +108,12 @@ function pb_product_display() {
 						$next->modify('-'.$prep_time.' minutes');
 						$interval  = $next->diff( $now );
 						$countdown = createCountdown( $interval->d, $interval->h, $interval->i );
-						$date      = $next->format('l');
+						$date      = __( $next->format('l'), 'porterbuddy-wc');
 					}
 				}
 			}
 			if(isset($date) && isset($countdown))
 			{
-
 				echo str_replace(['{{date}}', '{{countdown}}'], [$date, $countdown], $settings['availability_text']);
 			}
 		}
@@ -142,10 +141,10 @@ function pb_product_display() {
 function createCountdown($d, $h, $m)
 {
 	$string = [];
-	if($d > 0) $string[] = $d.' days';
-	if($h > 0) $string[] = $h.' hours';
-	if($d == 0 && $m > 0) $string[] = $m.' minutes';
-	return implode(' and ', $string);
+	if($d > 0) $string[] = $d.' '. __( 'days', 'porterbuddy-wc'  );
+	if($h > 0) $string[] = $h.' '. __( 'hours', 'porterbuddy-wc' );
+	if($d == 0 && $m > 0) $string[] = $m.' '.__( 'minutes', 'porterbuddy-wc' );
+	return implode(' '.__( 'and', 'porterbuddy-wc' ).' ', $string);
 }
 
 // Format the opening/closing hours

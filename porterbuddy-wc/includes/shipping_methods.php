@@ -23,7 +23,7 @@ function porterbuddy_shipping_method() {
 
 				$this->title = isset( $this->settings['title'] ) ? $this->settings['title'] : __( 'PorterBuddy Shipping', $this->id );
 				$this->init();
-				$this->enabled = isset( $this->settings['enabled'] ) ? $this->settings['enabled'] : 'no';
+				$this->enabled = isset( $this->settings['enabled'] ) ? $this->settings['enabled'] : 'yes';
 			}
 
 			/**

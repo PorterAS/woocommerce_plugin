@@ -110,6 +110,12 @@ return array(
 		'class'       => 'separated_title_tab',
 	),
 
+	'enabled' => array(
+		'title' => __( 'Enable', 'porterbuddy-wc' ),
+		'type' => 'checkbox',
+		'description' => __( 'Enable this shipping method.', 'porterbuddy-wc' ),
+		'default' => 'yes'
+	),
 
 	'title' => array(
 		'title' => __( 'Title', 'porterbuddy-wc' ),

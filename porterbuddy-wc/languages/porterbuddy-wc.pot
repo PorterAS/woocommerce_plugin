@@ -577,3 +577,55 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://ellera.no/"
 msgstr ""
+
+#: parts/porterbuddy-product-widget.php:78
+msgid "Today"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:92
+msgid "Tomorrow"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Monday"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Tuesday"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Wednesday"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Thursday"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Friday"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Saturday"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Sunday"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:144
+msgid "days"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:145
+msgid "hours"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:146
+msgid "minutes"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:147
+msgid "and"
+msgstr ""

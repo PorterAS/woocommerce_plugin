@@ -4,16 +4,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
-"POT-Creation-Date: 2018-08-01 15:46+0200\n"
+"POT-Creation-Date: 2018-08-02 09:24+0200\n"
+"PO-Revision-Date: 2018-08-02 09:25+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-08-01 16:27+0200\n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.7.1\n"
-"Last-Translator: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: nb_NO\n"
 
 #: includes/display_filters.php:213
 msgid "The order will be delivered between %s and %s on %s"
@@ -598,3 +598,55 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://ellera.no/"
 msgstr ""
+
+#: parts/porterbuddy-product-widget.php:78
+msgid "Today"
+msgstr "i dag"
+
+#: parts/porterbuddy-product-widget.php:92
+msgid "Tomorrow"
+msgstr "i morgen"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Monday"
+msgstr "mandag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Tuesday"
+msgstr "tirsdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Wednesday"
+msgstr "onsdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Thursday"
+msgstr "torsdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Friday"
+msgstr "fredag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Saturday"
+msgstr "lørdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Sunday"
+msgstr "søndag"
+
+#: parts/porterbuddy-product-widget.php:144
+msgid "days"
+msgstr "dager"
+
+#: parts/porterbuddy-product-widget.php:145
+msgid "hours"
+msgstr "timer"
+
+#: parts/porterbuddy-product-widget.php:146
+msgid "minutes"
+msgstr "minutter"
+
+#: parts/porterbuddy-product-widget.php:147
+msgid "and"
+msgstr "og"
