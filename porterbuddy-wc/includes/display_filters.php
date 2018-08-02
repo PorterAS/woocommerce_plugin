@@ -12,7 +12,7 @@ function pb_before_checkout_create_order( $order, $data ) {
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
-				if(WC()->session->get('pb_windowStart') == NULL || WC()->session->get('pb_windowStart')) throw new Exception('PorterBuddy delivery window must be set');
+				if(WC()->session->get('pb_windowStart') == NULL || WC()->session->get('pb_windowStart') == '') throw new Exception('PorterBuddy delivery window must be set');
 				elseif(lookup_window(WC()->session->get('pb_windowStart')) == null) throw new Exception('Invalid delivery window for PorterBuddy');
 			}
 		}
@@ -217,13 +217,14 @@ function lookup_window()
 {
 	$window = null;
 	$api_result = include dirname(__FILE__).'/availability.php';
-	if(isset($api_result['data'][$type]))
+	if(isset($api_result['data'][WC()->session->get('pb_type')]))
 	{
-		foreach ($api_result['data'][$type] as $win) {
-			if ($win->start == $window_start) $window = Window::load($win);
+		foreach ($api_result['data'][WC()->session->get('pb_type')] as $win) {
+			if ($win->start == WC()->session->get('pb_windowStart')) $window = Window::load($win);
 			break;
 		}
 	}
+	return $window;
 }
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'pb_admin_display', 10, 1 );
 
