@@ -1,43 +1,7 @@
-
-// Utility functions for the file.
-
+/**
+ * functions for shipping calculator embedded on product detail page
+ */
 jQuery( function( $ ) {
-
-	/**
-	 * Check if a node is blocked for processing.
-	 *
-	 * @param {JQuery Object} $node
-	 * @return {bool} True if the DOM Element is UI Blocked, false if not.
-	 */
-	var is_blocked = function( $node ) {
-		return $node.is( '.processing' ) || $node.parents( '.processing' ).length;
-	};
-
-	/**
-	 * Block a node visually for processing.
-	 *
-	 * @param {JQuery Object} $node
-	 */
-	var block = function( $node ) {
-		if ( ! is_blocked( $node ) ) {
-			$node.addClass( 'processing' ).block( {
-				message: null,
-				overlayCSS: {
-					background: '#fff',
-					opacity: 0.6
-				}
-			} );
-		}
-	};
-
-	/**
-	 * Unblock a node after processing is complete.
-	 *
-	 * @param {JQuery Object} $node
-	 */
-	var unblock = function( $node ) {
-		$node.removeClass( 'processing' ).unblock();
-	};
 
 	/**
 	 * Check location and act on node.
@@ -50,6 +14,8 @@ jQuery( function( $ ) {
 		// get post code from form, in case Woo has one set
 		var currentPostCode = $('.shipping-calculator-form').find('input[name="calc_shipping_postcode"]');
 		currentPostCodeOldVal = currentPostCode.val();
+
+		var geoSetting = $('.woocommerce-shipping-calculator').data("geo");
 
 		// clear out location data if true
 		if ( $clear == true ) {
@@ -69,14 +35,14 @@ jQuery( function( $ ) {
 			if ( curloc.length > 5 ) {
 				window.location.assign(window.location.href + " ");
 			}
-			else if ( navigator.geolocation ) {
+			else if ( geoSetting == "yes" && navigator.geolocation ) {
 
 				// fetch location data and place in cookie for PHP handling
 
 				function geo_success(position) {
 					console.log("Location set");
 					PBsetCookie('pb_location', '['+position.coords.latitude+','+position.coords.longitude+']', 30);
-					window.location.assign(window.location.href + " ");
+					window.location.reload();
 				}
 
 				function geo_error() {
@@ -94,7 +60,7 @@ jQuery( function( $ ) {
 						$(geosubtn).after('<p class="porterbuddy-warning">'+objectL10n.geoError+'</p>');
 						setTimeout(function(){
 							$(geosubtn).next().remove();
-						}, 3000);
+						}, 6000);
 
 					} else {
 						console.log( 'Unable to get location.' );
@@ -224,7 +190,7 @@ jQuery( function( $ ) {
 					PBsetCookie('pb_postcode', postcodeVal.val(), 60);
 					PBsetCookie('pb_country', countryVal.val(), 60);
 					
-					window.location.assign(window.location.href + " ");
+					window.location.reload();
 					
 				},
 				complete: function() {

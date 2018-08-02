@@ -22,7 +22,6 @@ class Address
 
 	/**
 	 * Splits the address into street name and number
-	 * TODO: Address lookup with an API
 	 */
 	public function formatAddress()
 	{
@@ -65,10 +64,12 @@ class Address
 class Buddy
 {
 	private $_api_key;
+	private $_url;
 
-	public function __construct($api_key)
+	public function __construct($api_key, $url)
 	{
 		$this->_api_key = $api_key;
+		$this->_url = $url;
 	}
 
 	/**
@@ -95,7 +96,7 @@ class Buddy
 		$windows = [];
 		$parcels = [];
 
-		$request = new Request($this->_api_key);
+		$request = new Request($this->_api_key, $this->_url);
 		$request->setEndpoint('availability');
 
 		foreach ($pickupWindows as $window) $windows[] = $window->getArray();
@@ -133,7 +134,7 @@ class Buddy
 		$courierInstructions
 	)
 	{
-		$request = new Request($this->_api_key);
+		$request = new Request($this->_api_key, $this->_url);
 		$request->setEndpoint('order');
 
 		$request->setPayload([
@@ -283,12 +284,13 @@ class Request
 	private $_ch;
 	private $_api_key;
 
-	public $url = 'https://api.porterbuddy-test.com/';
+	public $url;
 	public $payload;
 
-	public function __construct($api_key)
+	public function __construct($api_key, $url)
 	{
 		$this->_api_key = $api_key;
+		$this->url = $url;
 		$this->_ch = curl_init();
 		curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, 'POST');
 	}

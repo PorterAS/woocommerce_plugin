@@ -1,0 +1,652 @@
+# Copyright (C) 2018 PorterBuddy Shipping
+# This file is distributed under the same license as the PorterBuddy Shipping package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
+"POT-Creation-Date: 2018-08-02 10:24+0200\n"
+"PO-Revision-Date: 2018-08-02 10:25+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nb_NO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: includes/display_filters.php:213
+msgid "The order will be delivered between %s and %s on %s"
+msgstr "Orderen bil bli levert mellom %s og %s, den %s"
+
+#: includes/options.php:108
+msgid "General Settings"
+msgstr "Generelle innstillinger"
+
+#: includes/options.php:109
+msgid ""
+"General settings for PorterBuddy Shipping. <br><br>To enable the plugin, "
+"navigate to Shipping/Shipping Zones and activate PorterBuddy inside the zone "
+"named \"Oslo (PorterBuddy)\""
+msgstr ""
+"Generelle innstillinger for PorterBuddy Shipping. <br><br>For å aktivere "
+"Porterbuddy for dine kunder må du navigere til Frakt/Fraktsoner og aktivere "
+"PorterBuddy i sonen med navnet \"Oslo (PorterBuddy)\""
+
+#: includes/options.php:115
+msgid "Title"
+msgstr "Tittel"
+
+#: includes/options.php:117
+msgid "Title to be display on site"
+msgstr "Tittelen som vises på siden"
+
+#: includes/options.php:118
+msgid "Deliver with PorterBuddy"
+msgstr "Få den levert med Porterbuddy"
+
+#: includes/options.php:122
+msgid "The store name"
+msgstr "Butikkens navn"
+
+#: includes/options.php:124
+msgid "Displayed as the sender of the parcel"
+msgstr "Vises som sender av leveransen"
+
+#: includes/options.php:125
+msgid "Store Name"
+msgstr "Butikknavn"
+
+#: includes/options.php:129
+msgid "Store Phone"
+msgstr "Butikkens telefonnummer"
+
+#: includes/options.php:131
+msgid "Phone that the courier can reach the store"
+msgstr "Telefonnummer som budet kan nå butikken på"
+
+#: includes/options.php:132
+msgid "99999999"
+msgstr ""
+
+#: includes/options.php:136
+msgid "Store email"
+msgstr "Butikkens epostadresse"
+
+#: includes/options.php:138
+msgid "E-mail for porterbuddy to contact you"
+msgstr "E-postadresse som sendes med leveransebestillingen"
+
+#: includes/options.php:139
+msgid "something@store.com"
+msgstr ""
+
+#: includes/options.php:143
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: includes/options.php:145
+msgid "Delivery method description"
+msgstr "Beskrivelse av leveransemetoden"
+
+#: includes/options.php:146
+msgid ""
+"Simple and flexible. You decide when and where delivery will take place, at "
+"home, at work or elsewhere."
+msgstr ""
+"Enkelt og fleksibelt. Du bestemmer når og hvor leveringen skal skje - "
+"hjemme, på jobb eller et annet sted."
+
+#: includes/options.php:150
+msgid "Express Delivery Name"
+msgstr "Navn på Ekspressleveranse"
+
+#: includes/options.php:152
+msgid "EXPRESS"
+msgstr "EKSPRESS"
+
+#: includes/options.php:156
+msgid "PorterBuddy Mode"
+msgstr "Porterbuddymodus"
+
+#: includes/options.php:158
+msgid ""
+"Choose operating mode. Development and Testing will use porterbuddy-test."
+"com, and development will display debugging information."
+msgstr ""
+"Velg modus. Utvikling og Testing vil bruke porterbuddy-test.com, og "
+"Utvikling vil også vise feilsøkingsinformasjon. Må settes til Produksjon på "
+"nettbutikken."
+
+#: includes/options.php:161
+msgid "Development"
+msgstr "Utvikling"
+
+#: includes/options.php:162
+msgid "Testing"
+msgstr ""
+
+#: includes/options.php:163
+msgid "Production"
+msgstr "Produksjon"
+
+#: includes/options.php:168
+msgid "Use HTML5 Geo-Location"
+msgstr "Bruk HTML5-geolokasjon"
+
+#: includes/options.php:171
+msgid "Ask the customer to use their location when setting delivery postcode"
+msgstr ""
+"Spør kunden om de ønsker å bruke sin lokasjon når de velger land og "
+"postnummer"
+
+#: includes/options.php:173 includes/options.php:273 includes/options.php:463
+#: includes/options.php:501 includes/options.php:512 includes/options.php:523
+msgid "Yes"
+msgstr "Ja"
+
+#: includes/options.php:174 includes/options.php:272 includes/options.php:462
+#: includes/options.php:500 includes/options.php:511 includes/options.php:522
+msgid "No"
+msgstr "Nei"
+
+#: includes/options.php:180
+msgid "Product Page Widget"
+msgstr "Produktside-Widget"
+
+#: includes/options.php:181
+msgid "Settings for the PorterBuddy widget on the Product Page"
+msgstr "Innstillinger for widgeten som vises på produktsiden"
+
+#: includes/options.php:186
+msgid "Enable Widget"
+msgstr "Aktiver vidgeten"
+
+#: includes/options.php:188
+msgid "Enable or disable the product page widget."
+msgstr "Aktiver eller deaktiver widgeten"
+
+#: includes/options.php:193
+msgid "Click to see text"
+msgstr "Klikk-for-å-se-tekst"
+
+#: includes/options.php:195
+msgid "Text to show on product page when postcode is not set"
+msgstr "Teksten som skal vises på produktsiden når postnummer ikke er satt"
+
+#: includes/options.php:196
+msgid "Add a postcode to see if you are eligible for same day delivery"
+msgstr "Legg til postnummer for å se om du kan få levering med porterbuddy"
+
+#: includes/options.php:200
+msgid "Availability text"
+msgstr "Tilgjengelig-tekst"
+
+#: includes/options.php:202
+msgid "Can use {{date}} and {{countdown}} placeholders"
+msgstr "Kan bruke {{date}} og {{countdown}} som variabler"
+
+#: includes/options.php:203
+msgid "Want it {{date}}? Order in the next {{countdown}}"
+msgstr "Vil du ha den {{date}}? Bestill innen {{countdown}}"
+
+#: includes/options.php:207
+msgid "Postcode not available text"
+msgstr "Postnummer-ikke-tilgjengelig-tekst"
+
+#: includes/options.php:209
+msgid "Can use {{postcode}} placeholder (works as both country and postcode)"
+msgstr "Kan bruke {{postcode}} (fungerer som både land og postnummer)"
+
+#: includes/options.php:210
+msgid "Sorry, same day delivery is not currently available to {{postcode}}"
+msgstr "Beklager, porterbuddy leverer ikke til {{postcode}}"
+
+#: includes/options.php:215
+msgid "Messages"
+msgstr "Meldinger"
+
+#: includes/options.php:216
+msgid "Modify the messages PorterBuddy is displaying to your customers"
+msgstr "Endre teksten som Porterbuddy viser til dine kunder"
+
+#: includes/options.php:228
+msgid "No available dates text"
+msgstr "Ingen-tilgjengelige-dager-tekst"
+
+#: includes/options.php:230
+msgid "Text to show is no dates are available"
+msgstr "Tekst som vises dersom det ikke er noen datoer tilgjengelig"
+
+#: includes/options.php:231
+msgid "Sorry, Porterbuddy delivery is not currently available"
+msgstr "Beklager, levering med Porterbuddy er ikke tilgjengelig"
+
+#: includes/options.php:260
+msgid "Available days ahead"
+msgstr "Tilgjengelig dager frem"
+
+#: includes/options.php:262
+msgid "How many days ahead should be available"
+msgstr ""
+"Hvor mange dager fremover skal kunden kunne velge Porterbuddy-levering?"
+
+#: includes/options.php:267
+msgid "Return available"
+msgstr "Tillat retur"
+
+#: includes/options.php:269
+msgid "Should the option for return be available"
+msgstr "Skal det være mulig å bestille retur"
+
+#: includes/options.php:278
+msgid "Text for return"
+msgstr "Retur-tekst"
+
+#: includes/options.php:280
+msgid "Text shown for the return option"
+msgstr "Teksten som vises for retur-valget"
+
+#: includes/options.php:281
+msgid "I would like to return items that do not match me"
+msgstr "Jeg vil ha muligheten til å returnere varer som ikke passer meg"
+
+#: includes/options.php:291
+msgid "Return price"
+msgstr "Retur-pris"
+
+#: includes/options.php:293
+msgid "Price for the return service"
+msgstr "Prisen for retur-tjenesten"
+
+#: includes/options.php:298
+msgid "Update delivery alternative"
+msgstr "Oppdateringsfrekvens på tilgjengelighet"
+
+#: includes/options.php:300
+msgid "Given in minutes (caching, default 5)"
+msgstr "I minutter. (Standard er 5 minutter)"
+
+#: includes/options.php:305
+msgid "Text for leave at the door option"
+msgstr "Legg-ved-døra-alternativ"
+
+#: includes/options.php:307
+msgid "Allow the courier to leave the package outside the door"
+msgstr "Tillat budet å legge pakken utenfor døren"
+
+#: includes/options.php:311
+msgid "To the messenger box"
+msgstr "Melding-til-budet"
+
+#: includes/options.php:313
+msgid "Text above the message to courier box"
+msgstr "Tekst over melding-til-budet-boksen"
+
+#: includes/options.php:314
+msgid "Optional message to the courier"
+msgstr "Melding til budet (valgfri)"
+
+#: includes/options.php:318
+msgid "Override porterbuddy price with"
+msgstr "Overstyr prisen på standardleveranse"
+
+#: includes/options.php:320
+msgid "Leave empty to use Porterbuddy pricing"
+msgstr "Dersom den er tom vil prisene fra porterbuddy bli brukt"
+
+#: includes/options.php:325
+msgid "Override porterbuddy express price with"
+msgstr "Overstyr prisen på ekspressleveranse"
+
+#: includes/options.php:327
+msgid "Leave empty to use Porterbuddy Express pricing"
+msgstr "Dersom den er tom vil prisene fra porterbuddy bli brukt"
+
+#: includes/options.php:346
+msgid "Opening Hours"
+msgstr "Åpningstider"
+
+#: includes/options.php:347
+msgid ""
+"Opening hours and time settings. If you set close equal to or less then "
+"open, that day will be considered closed."
+msgstr ""
+"Innstillinger for åpningstid. Hvis stengetid settes til det samme som, eller "
+"mindre enn, åpningstiden vil den dagen bli ansett som stengt."
+
+#: includes/options.php:352
+msgid "PorterBuddy available until"
+msgstr "Porterbuddy tilgjengelig frem til"
+
+#: includes/options.php:354
+msgid "Latest pickup before closing, in minutes"
+msgstr "Siste henting før stengetid, i minutter"
+
+#: includes/options.php:359
+msgid "Opening monday"
+msgstr "Åpner mandag"
+
+#: includes/options.php:366
+msgid "Closing monday"
+msgstr "Stenger mandag"
+
+#: includes/options.php:373
+msgid "Opening tuesday"
+msgstr "Åpner tirsdag"
+
+#: includes/options.php:380
+msgid "Closing tuesday"
+msgstr "Stenger tirsdag"
+
+#: includes/options.php:387
+msgid "Opening wednesday"
+msgstr "Åpner onsdag"
+
+#: includes/options.php:394
+msgid "Closing wednesday"
+msgstr "Stenger onsdag"
+
+#: includes/options.php:401
+msgid "Opening thursday"
+msgstr "Åpner torsdag"
+
+#: includes/options.php:408
+msgid "Closing thursday"
+msgstr "Stenger torsdag"
+
+#: includes/options.php:415
+msgid "Opening friday"
+msgstr "Åpner fredag"
+
+#: includes/options.php:422
+msgid "Closing friday"
+msgstr "Stenger fredag"
+
+#: includes/options.php:429 includes/options.php:443
+msgid "Opening saturday"
+msgstr "Åpner lørdag"
+
+#: includes/options.php:436 includes/options.php:450
+msgid "Closing saturday"
+msgstr "Stenger lørdag"
+
+#: includes/options.php:457
+msgid "Add shipping automatically"
+msgstr ""
+
+#: includes/options.php:459
+msgid "Not sure what this does yet"
+msgstr ""
+
+#: includes/options.php:468
+msgid "Default phone country code"
+msgstr "Standard områdekode for telefon"
+
+#: includes/options.php:471
+msgid "+47"
+msgstr ""
+
+#: includes/options.php:475
+msgid "Packing time"
+msgstr "Pakketid"
+
+#: includes/options.php:483
+msgid "Delivery Verifications"
+msgstr "Leveranseverifikasjoner"
+
+#: includes/options.php:484
+msgid "Set delivery verifications"
+msgstr "Velg hvilke verifikasjoner som budet skal gjøre ved leveranse"
+
+#: includes/options.php:489
+msgid "Minimum age check"
+msgstr "Minimumsalder"
+
+#: includes/options.php:491
+msgid "Optional"
+msgstr "Valgfri"
+
+#: includes/options.php:495
+msgid "Signature on delivery"
+msgstr "Signatur ved leveranse"
+
+#: includes/options.php:497
+msgid "Require signature on delivery"
+msgstr "Krev at mottager signerer på leveransen"
+
+#: includes/options.php:506
+msgid "Verify ID on delivery"
+msgstr "Sjekk ID"
+
+#: includes/options.php:508
+msgid "Courier will check the receivers ID"
+msgstr "Budet vil kontrollere ID hos mottager"
+
+#: includes/options.php:517
+msgid "Only deliver to recipient"
+msgstr "Lever kun til mottager"
+
+#: includes/options.php:519
+msgid "Courier will only deliver to the registered recipient"
+msgstr "Budet vil kun levere til registrert mottager"
+
+#: includes/options.php:533
+msgid "Default Product"
+msgstr "Standardprodukt"
+
+#: includes/options.php:534
+msgid "Default package specifications"
+msgstr ""
+"Dersom ikke spesifikasjonene på produktet er satt, vil disse "
+"standardverdiene brukes"
+
+#: includes/options.php:539
+msgid "Default product weight"
+msgstr "Standardvekt"
+
+#: includes/options.php:541
+msgid "In kg, will be used for products without weight"
+msgstr "I kg, brukes på produkter uten vekt"
+
+#: includes/options.php:546
+msgid "Max product weight"
+msgstr "Maks produktvekt"
+
+#: includes/options.php:548
+msgid "In kg, max weight for shipments with PorterBuddy"
+msgstr "I kg, maks vekt på leveranse med Porterbuddy"
+
+#: includes/options.php:557
+msgid "Default product height"
+msgstr "Standardhøyde"
+
+#: includes/options.php:559
+msgid "In cm, will be used for products without height"
+msgstr "I cm, brukes på produkter uten høyde"
+
+#: includes/options.php:564
+msgid "Default product width"
+msgstr "Standardbredde"
+
+#: includes/options.php:566
+msgid "In cm, will be used for products without width"
+msgstr "I cm, brukes på produkter uten bredde"
+
+#: includes/options.php:571
+msgid "Default product depth"
+msgstr "Standarddypde"
+
+#: includes/options.php:573
+msgid "In cm, will be used for products without depth"
+msgstr "I cm, brukes på produkter uten dybde"
+
+#: includes/options.php:579
+msgid "API Settings"
+msgstr "API-Innstillinger"
+
+#: includes/options.php:580
+msgid "API Settings and keys"
+msgstr "API-Innstillinger og nøkler"
+
+#: includes/options.php:585
+msgid "API Key (Production)"
+msgstr "API-Nøkkel (Produksjon)"
+
+#: includes/options.php:587
+msgid "Must be set before mode is set to production"
+msgstr "Må settes før modus settes til \"Produksjon\""
+
+#: includes/options.php:592
+msgid "API Key (Test/Dev)"
+msgstr "API-Nøkkel (Test/Utvikling)"
+
+#: includes/options.php:594
+msgid "API Key for testing"
+msgstr "API-Nøkkel for testing og utvikling"
+
+#: includes/options.php:606
+msgid "MapBox API key"
+msgstr "API-Nøkkel for MapBox"
+
+#: includes/options.php:608
+msgid "Can be obtained from _LINK_"
+msgstr "Kan skaffes her: __LINK___"
+
+#: includes/scripts.php:14
+msgid "You have to select a country"
+msgstr "Du må velge land"
+
+#: includes/scripts.php:15
+msgid "Postcode must be 3 or more numbers!"
+msgstr "Postnummeret må være 3 eller flere siffer"
+
+#: includes/scripts.php:16
+msgid ""
+"You have blocked GEO requests in your browser and must change your settings "
+"to use your location for this."
+msgstr ""
+"Du har blokkert GEO-Lokasjon i nettleseren din og må endre dette i "
+"innstillinger før du kan bruke lokasjonen din her."
+
+#: includes/scripts.php:22
+msgid "Thank you"
+msgstr "Takk"
+
+#. Plugin Name of the plugin/theme
+#: includes/shipping_methods.php:14 includes/shipping_methods.php:24
+#: includes/shipping_methods.php:44
+msgid "PorterBuddy Shipping"
+msgstr ""
+
+#: includes/shipping_methods.php:15
+msgid ""
+"Let your customer get their delivery simple and flexible. They decide when "
+"and where delivery will take place, at home, at work or elsewhere."
+msgstr ""
+"La kunden din få leveranse enkelt og fleksibelt. De velger selv hvor og når "
+"leveransen skal skje, hjemme, på jobb, eller et annet sted."
+
+#: includes/shipping_methods.php:41
+msgid "Method title"
+msgstr "Metodetittel"
+
+#: includes/shipping_methods.php:43
+msgid "This controls the title which the user sees during checkout."
+msgstr "Styrer hvilken tittel brukere ser når de sjekker ut"
+
+#: includes/shipping_methods.php:48
+msgid "Cost"
+msgstr "Pris"
+
+#: includes/validate_order.php:30
+msgid "Sorry, %d kg exceeds the maximum weight of %d kg for %s"
+msgstr "Beklager, %d kg overstiger maksimumvekten på %d kg for %s"
+
+#: parts/porterbuddy-shipping-calc.php:24
+msgid "Check eligibility"
+msgstr "Sjekk tilgjengelighet"
+
+#: parts/porterbuddy-shipping-calc.php:24
+msgid "Change postcode"
+msgstr "Endre postnummer"
+
+#: parts/porterbuddy-shipping-calc.php:30
+msgid "Select a country&hellip;"
+msgstr "Velg land &hellip;"
+
+#: parts/porterbuddy-shipping-calc.php:42
+msgid "Postcode / ZIP"
+msgstr "Postnummer"
+
+#: parts/porterbuddy-shipping-calc.php:48
+msgid "Update postcode"
+msgstr "Endre postnummer"
+
+#: parts/porterbuddy-shipping-calc.php:50
+msgid "Use your location"
+msgstr "Bruk din lokasjon"
+
+#. Description of the plugin/theme
+msgid "Adds Porterbuddy as a delivery option for your sales"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Ellera AS"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://ellera.no/"
+msgstr ""
+
+#: parts/porterbuddy-product-widget.php:78
+msgid "Today"
+msgstr "i dag"
+
+#: parts/porterbuddy-product-widget.php:92
+msgid "Tomorrow"
+msgstr "i morgen"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Monday"
+msgstr "mandag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Tuesday"
+msgstr "tirsdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Wednesday"
+msgstr "onsdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Thursday"
+msgstr "torsdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Friday"
+msgstr "fredag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Saturday"
+msgstr "lørdag"
+
+#: parts/porterbuddy-product-widget.php:111
+msgid "Sunday"
+msgstr "søndag"
+
+#: parts/porterbuddy-product-widget.php:144
+msgid "days"
+msgstr "dager"
+
+#: parts/porterbuddy-product-widget.php:145
+msgid "hours"
+msgstr "timer"
+
+#: parts/porterbuddy-product-widget.php:146
+msgid "minutes"
+msgstr "minutter"
+
+#: parts/porterbuddy-product-widget.php:147
+msgid "and"
+msgstr "og"
