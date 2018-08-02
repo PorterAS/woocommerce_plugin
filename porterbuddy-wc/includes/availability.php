@@ -74,6 +74,14 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 
 			}
 
+			if(empty($parcels)) $parcels[] = new Parcel(
+				1,
+				1,
+				1,
+				1,
+				'Dummy Package - Just to get Availability'
+			);
+
 			$days = is_numeric($settings['days_ahead']) ? $settings['days_ahead'] : 3;
 			$windows = [];
 
@@ -135,7 +143,7 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 			else
 			{
 				if($settings['mode'] == 'production') $result['data'] = ['error' => 'Unknown error'];
-				elseif($res) $result['data'] = ['error' => 'API Returned null - no connection?'];
+				elseif($res) $result['data'] = ['error' => 'API Returned null - no connection?', 'dump' => $res];
 				else $result['data'] = $res;
 			}
 		}

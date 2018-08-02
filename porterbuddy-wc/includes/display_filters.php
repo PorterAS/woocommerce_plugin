@@ -12,8 +12,9 @@ function pb_before_checkout_create_order( $order, $data ) {
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
+				$window = lookup_window(WC()->session->get('pb_windowStart'));
 				if(WC()->session->get('pb_windowStart') == NULL || WC()->session->get('pb_windowStart') == '') throw new Exception('PorterBuddy delivery window must be set');
-				elseif(lookup_window(WC()->session->get('pb_windowStart')) == null) throw new Exception('Invalid delivery window for PorterBuddy');
+				elseif($window == null) throw new Exception('Invalid delivery window for PorterBuddy.');
 			}
 		}
 	}
@@ -66,6 +67,7 @@ function pb_display_order_complete( $order_id ) {
 
 					// Call PB
 					if($api_key != '') {
+
 						$buddy = new Buddy( $api_key, $api_url );
 
 						// Sanitizing the values
@@ -77,7 +79,10 @@ function pb_display_order_complete( $order_id ) {
 
 						if(isset($window_start) && strlen($window_start) > 6)
 						{
+
 							$window = lookup_window($window_start);
+
+							var_dump($window);
 
 							if($window != null) {
 								if ( $return_on_demand ) {
@@ -145,17 +150,18 @@ function pb_display_order_complete( $order_id ) {
 
 								}
 
-								$order = $buddy->placeOrder(
+								$api = $buddy->placeOrder(
 									$origin,
 									$destination,
 									$parcels,
 									$type,
 									$message
 								);
-								if(isset($order->orderId)) {
-									wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $order->orderId, true );
-									if(isset($order->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $order->deliveryReference, true );
-									if(isset($order->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $order->overviewUrl, true );
+
+								if(isset($api->orderId)) {
+									wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $api->orderId, true );
+									if(isset($api->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $api->deliveryReference, true );
+									if(isset($api->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $api->overviewUrl, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_window_start', $window->start, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_window_end', $window->end, true );
 								}
@@ -167,7 +173,7 @@ function pb_display_order_complete( $order_id ) {
 
 				// Displaying something
 				echo '<h2>Porterbuddy Delivery</h2>';
-				if(isset($order) && !isset($order->orderId))
+				if(isset($api) && !isset($api->orderId))
 				{
 					// Debug
 					echo '<strong>Window Start:</strong> ';
@@ -180,7 +186,6 @@ function pb_display_order_complete( $order_id ) {
 					var_dump(WC()->session->get('pb_leaveDoorStep'));
 					echo '<br><strong>Message:</strong> ';
 					var_dump(WC()->session->get('pb_message'));
-					var_dump($order);
 				}
 				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
 			}
