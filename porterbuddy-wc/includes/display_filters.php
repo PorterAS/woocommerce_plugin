@@ -34,7 +34,16 @@ add_filter('woocommerce_hidden_order_itemmeta', 'pb_woocommerce_hidden_order_ite
 // Checkout: Order Complete
 function pb_add_shipping_information( $total_rows, $order )
 {
-	$total_rows['shipping']['value'] = $total_rows['shipping']['value'].'<br><small>Delivered between XX.XX and XX.XX on Month. XX</small>';
+	if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
+		$items = $order->get_items('shipping');
+		foreach ($items as $item) {
+			if ( $item->get_method_id() == PORTERBUDDY_PLUGIN_NAME ) {
+				$start = wc_get_order_item_meta($item->get_id(), '_pb_window_start', true);
+				$end   = wc_get_order_item_meta($item->get_id(), '_pb_window_end', true);
+			}
+		}
+	}
+	$total_rows['shipping']['value'] = $total_rows['shipping']['value'].'<br><small>'.render_delivery_message($start, $end).'</small>';
 	return $total_rows;
 }
 function pb_display_order_complete( $order_id ) {
@@ -81,8 +90,6 @@ function pb_display_order_complete( $order_id ) {
 						{
 
 							$window = lookup_window($window_start);
-
-							var_dump($window);
 
 							if($window != null) {
 								if ( $return_on_demand ) {
@@ -173,20 +180,6 @@ function pb_display_order_complete( $order_id ) {
 
 				// Displaying something
 				echo '<h2>Porterbuddy Delivery</h2>';
-				if(isset($api) && !isset($api->orderId))
-				{
-					// Debug
-					echo '<strong>Window Start:</strong> ';
-					var_dump(WC()->session->get('pb_windowStart'));
-					echo '<br><strong>Return on Demand:</strong> ';
-					var_dump(WC()->session->get('pb_returnOnDemand'));
-					echo '<br><strong>Type:</strong> ';
-					var_dump(WC()->session->get('pb_type'));
-					echo '<br><strong>Leave Doorstep:</strong> ';
-					var_dump(WC()->session->get('pb_leaveDoorStep'));
-					echo '<br><strong>Message:</strong> ';
-					var_dump(WC()->session->get('pb_message'));
-				}
 				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
 			}
 		}
@@ -214,7 +207,9 @@ function pb_admin_display($order){
 function render_delivery_message($start, $end)
 {
 	$start_dto = new DateTime($start);
+	$start_dto->setTimezone(new DateTimeZone('Europe/Oslo'));
 	$end_dto = new DateTime($end);
+	$end_dto->setTimezone(new DateTimeZone('Europe/Oslo'));
 	return sprintf( __( 'The order will be delivered between %s and %s on %s'), $start_dto->format('H:i'), $end_dto->format('H:i'), $start_dto->format('l jS F'));
 }
 
