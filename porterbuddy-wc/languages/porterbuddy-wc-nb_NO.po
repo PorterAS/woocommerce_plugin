@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
-"POT-Creation-Date: 2018-08-02 09:24+0200\n"
-"PO-Revision-Date: 2018-08-02 09:25+0200\n"
+"POT-Creation-Date: 2018-08-02 10:24+0200\n"
+"PO-Revision-Date: 2018-08-02 10:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nb_NO\n"
@@ -215,12 +215,12 @@ msgid "No available dates text"
 msgstr "Ingen-tilgjengelige-dager-tekst"
 
 #: includes/options.php:230
-msgid "Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders"
-msgstr ""
+msgid "Text to show is no dates are available"
+msgstr "Tekst som vises dersom det ikke er noen datoer tilgjengelig"
 
 #: includes/options.php:231
-msgid "Sorry, same day delivery is not currently available"
-msgstr ""
+msgid "Sorry, Porterbuddy delivery is not currently available"
+msgstr "Beklager, levering med Porterbuddy er ikke tilgjengelig"
 
 #: includes/options.php:260
 msgid "Available days ahead"

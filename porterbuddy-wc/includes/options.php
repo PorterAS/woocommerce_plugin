@@ -233,8 +233,8 @@ return array(
 	'no_available_dates' => array(
 		'title' => __( 'No available dates text', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders', 'porterbuddy-wc' ),
-		'default' => __( 'Sorry, same day delivery is not currently available', 'porterbuddy-wc' )
+		'description' => __( 'Text to show is no dates are available', 'porterbuddy-wc' ),
+		'default' => __( 'Sorry, Porterbuddy delivery is not currently available', 'porterbuddy-wc' )
 	),
 /*
 	'popup_title' => array(

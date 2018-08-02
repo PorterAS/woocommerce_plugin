@@ -116,7 +116,18 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 				$result['success'] = true;
 				$result['data'] = [];
 				foreach ($res->deliveryWindows as $win) {
-					$win->price->string = number_format_i18n( $win->price->fractionalDenomination/100, 2 );
+					if($win->product == 'express')
+					{
+						if($settings['express_price_override'] == "") $cost = $win->price->fractionalDenomination/100;
+						else $cost = $settings['express_price_override'];
+					}
+					else
+					{
+						if($settings['price_override'] == "") $cost = $win->price->fractionalDenomination/100;
+						else $cost = $settings['price_override'];
+					}
+					$win->price->string = number_format_i18n( $cost, 2 );
+					$win->price->return = number_format_i18n( $cost + $settings['return_price'], 2 );
 					$result['data'][$win->product][] = $win;
 				}
 				if($settings['mode'] != 'development') set_transient( 'pb_availability', $result, is_numeric($settings['update_delivery']) ? $settings['update_delivery']*60 : 5*60 );

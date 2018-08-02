@@ -202,11 +202,11 @@ msgid "No available dates text"
 msgstr ""
 
 #: includes/options.php:230
-msgid "Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders"
+msgid "Text to show is no dates are available"
 msgstr ""
 
 #: includes/options.php:231
-msgid "Sorry, same day delivery is not currently available"
+msgid "Sorry, Porterbuddy delivery is not currently available"
 msgstr ""
 
 #: includes/options.php:260

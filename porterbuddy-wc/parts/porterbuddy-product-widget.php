@@ -116,6 +116,7 @@ function pb_product_display() {
 			{
 				echo str_replace(['{{date}}', '{{countdown}}'], [$date, $countdown], $settings['availability_text']);
 			}
+			else echo $settings['no_available_dates'];
 		}
 		else
 		{
