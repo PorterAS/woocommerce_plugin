@@ -355,24 +355,20 @@ msgstr ""
 msgid "Closing saturday"
 msgstr ""
 
-#: includes/options.php:457
-msgid "Add shipping automatically"
-msgstr ""
-
-#: includes/options.php:459
-msgid "Not sure what this does yet"
-msgstr ""
-
 #: includes/options.php:468
 msgid "Default phone country code"
 msgstr ""
 
-#: includes/options.php:471
-msgid "+47"
+#: includes/options.php:476
+msgid "Default phone country code (Ex. \"+47\")"
 msgstr ""
 
 #: includes/options.php:475
 msgid "Packing time"
+msgstr ""
+
+#: includes/options.php:483
+msgid "In minutes"
 msgstr ""
 
 #: includes/options.php:483

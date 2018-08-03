@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
-"POT-Creation-Date: 2018-08-02 10:24+0200\n"
-"PO-Revision-Date: 2018-08-02 10:25+0200\n"
+"POT-Creation-Date: 2018-08-03 14:28+0200\n"
+"PO-Revision-Date: 2018-08-03 14:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nb_NO\n"
@@ -160,7 +160,7 @@ msgstr "Innstillinger for widgeten som vises på produktsiden"
 
 #: includes/options.php:186
 msgid "Enable Widget"
-msgstr "Aktiver vidgeten"
+msgstr "Aktiver Widgeten"
 
 #: includes/options.php:188
 msgid "Enable or disable the product page widget."
@@ -383,13 +383,17 @@ msgstr ""
 msgid "Default phone country code"
 msgstr "Standard områdekode for telefon"
 
-#: includes/options.php:471
-msgid "+47"
-msgstr ""
+#: includes/options.php:476
+msgid "Default phone country code (Ex. \"+47\")"
+msgstr "Standard områdekode, eks. +47"
 
 #: includes/options.php:475
 msgid "Packing time"
 msgstr "Pakketid"
+
+#: includes/options.php:483
+msgid "In minutes"
+msgstr "I minutter"
 
 #: includes/options.php:483
 msgid "Delivery Verifications"

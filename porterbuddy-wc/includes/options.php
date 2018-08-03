@@ -174,10 +174,10 @@ return array(
 		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
 		'type' => 'select',
 		'default' => 'yes',
-		'description' => __( 'Ask the customer to use their location when setting delivery postcode' ),
+		'description' => __( 'Ask the customer to use their location when setting delivery postcode', 'porterbuddy-wc' ),
 		'options' => array(
-			'yes' => __( 'Yes' ),
-			'no' => __ ( 'No' ),
+			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'no' => __ ( 'No' , 'porterbuddy-wc' ),
 		)
 	),
 
@@ -275,8 +275,8 @@ return array(
 		'description' => __( 'Should the option for return be available', 'porterbuddy-wc' ),
 		'default' => 1,
 		'options' => array(
-			0 => __( 'No' ),
-			1 => __( 'Yes' ),
+			0 => __( 'No' , 'porterbuddy-wc' ),
+			1 => __( 'Yes', 'porterbuddy-wc' ),
 		)
 	),
 
@@ -297,14 +297,14 @@ return array(
 		'title' => __( 'Return price', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Price for the return service', 'porterbuddy-wc' ),
-		'default' => __( 79, 'porterbuddy-wc' )
+		'default' => 79
 	),
 
 	'update_delivery' => array(
 		'title' => __( 'Update delivery alternative', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Given in minutes (caching, default 5)', 'porterbuddy-wc' ),
-		'default' => __( 5, 'porterbuddy-wc' )
+		'default' => 5
 	),
 
 	'leave_at_door' => array(
@@ -316,21 +316,21 @@ return array(
 	'courier_message' => array(
 		'title' => __( 'To the messenger box', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Text above the message to courier box'),
+		'description' => __( 'Text above the message to courier box', 'porterbuddy-wc'),
 		'default' => __( 'Optional message to the courier', 'porterbuddy-wc' )
 	),
 
 	'price_override' => array(
 		'title' => __( 'Override porterbuddy price with', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Leave empty to use Porterbuddy pricing'),
+		'description' => __( 'Leave empty to use Porterbuddy pricing', 'porterbuddy-wc'),
 		'default' => __( '', 'porterbuddy-wc' )
 	),
 
 	'express_price_override' => array(
 		'title' => __( 'Override porterbuddy express price with', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Leave empty to use Porterbuddy Express pricing'),
+		'description' => __( 'Leave empty to use Porterbuddy Express pricing', 'porterbuddy-wc'),
 		'default' => __( '', 'porterbuddy-wc' )
 	),
 
@@ -357,7 +357,7 @@ return array(
 	'available_until' => array(
 		'title' => __( 'PorterBuddy available until', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Latest pickup before closing, in minutes'),
+		'description' => __( 'Latest pickup before closing, in minutes', 'porterbuddy-wc'),
 		'default' => __( 45, 'porterbuddy-wc' ),
 	),
 
@@ -458,7 +458,7 @@ return array(
 		'default' => '0000',
 		'options' => $hour_dropdown
 	),
-
+/*
 	'automatic_shipping' => array(
 		'title' => __( 'Add shipping automatically', 'porterbuddy-wc' ),
 		'type' => 'select',
@@ -469,18 +469,18 @@ return array(
 			1 => __ ( 'Yes' )
 		)
 	),
-
+*/
 	'default_phone_country_code' => array(
 		'title' => __( 'Default phone country code', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => 'Default phone country code (Ex. "+47")',
-		'default' => __( '+47', 'porterbuddy-wc' ),
+		'description' => __( 'Default phone country code (Ex. "+47")', 'porterbuddy-wc'),
+		'default' => '+47',
 	),
 
 	'packing_time' => array(
 		'title' => __( 'Packing time', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => 'In minutes',
+		'description' => __( 'In minutes', 'porterbuddy-wc' ),
 		'default' => __( 15, 'porterbuddy-wc' ),
 	),
 
@@ -500,33 +500,33 @@ return array(
 	'signature_required' => array(
 		'title' => __( 'Signature on delivery', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'description' => __( 'Require signature on delivery' ),
+		'description' => __( 'Require signature on delivery', 'porterbuddy-wc' ),
 		'default' => 0,
 		'options' => array(
-			0 => __( 'No' ),
-			1 => __ ( 'Yes' )
+			0 => __( 'No' , 'porterbuddy-wc' ),
+			1 => __ ( 'Yes', 'porterbuddy-wc' ),
 		)
 	),
 
 	'id_verification' => array(
 		'title' => __( 'Verify ID on delivery', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'description' => __( 'Courier will check the receivers ID' ),
+		'description' => __( 'Courier will check the receivers ID', 'porterbuddy-wc' ),
 		'default' => 0,
 		'options' => array(
-			0 => __( 'No' ),
-			1 => __ ( 'Yes' )
+			0 => __( 'No' , 'porterbuddy-wc' ),
+			1 => __ ( 'Yes', 'porterbuddy-wc' ),
 		)
 	),
 
 	'only_to_recipient' => array(
 		'title' => __( 'Only deliver to recipient', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'description' => __( 'Courier will only deliver to the registered recipient' ),
+		'description' => __( 'Courier will only deliver to the registered recipient', 'porterbuddy-wc' ),
 		'default' => 0,
 		'options' => array(
-			0 => __( 'No' ),
-			1 => __ ( 'Yes' )
+			0 => __( 'No' , 'porterbuddy-wc' ),
+			1 => __ ( 'Yes', 'porterbuddy-wc' ),
 		)
 	),
 
@@ -544,14 +544,14 @@ return array(
 	'default_product_weight' => array(
 		'title' => __( 'Default product weight', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'In kg, will be used for products without weight' ),
+		'description' => __( 'In kg, will be used for products without weight' , 'porterbuddy-wc' ),
 		'default' => __( 0.5, 'porterbuddy-wc' )
 	),
 
 	'weight' => array(
 		'title' => __( 'Max product weight', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'In kg, max weight for shipments with PorterBuddy' ),
+		'description' => __( 'In kg, max weight for shipments with PorterBuddy', 'porterbuddy-wc' ),
 		'default' => __( 2, 'porterbuddy-wc' )
 	),
 
@@ -562,21 +562,21 @@ return array(
 	'default_product_height' => array(
 		'title' => __( 'Default product height', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'In cm, will be used for products without height' ),
+		'description' => __( 'In cm, will be used for products without height' , 'porterbuddy-wc' ),
 		'default' => __( 20, 'porterbuddy-wc' )
 	),
 
 	'default_product_width' => array(
 		'title' => __( 'Default product width', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'In cm, will be used for products without width' ),
+		'description' => __( 'In cm, will be used for products without width' , 'porterbuddy-wc' ),
 		'default' => __( 20, 'porterbuddy-wc' )
 	),
 
 	'default_product_depth' => array(
 		'title' => __( 'Default product depth', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'In cm, will be used for products without depth' ),
+		'description' => __( 'In cm, will be used for products without depth' , 'porterbuddy-wc' ),
 		'default' => __( 20, 'porterbuddy-wc' )
 	),
 
