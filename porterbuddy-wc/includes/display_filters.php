@@ -24,8 +24,6 @@ add_action('woocommerce_checkout_create_order', 'pb_before_checkout_create_order
 function pb_woocommerce_hidden_order_itemmeta($arr) {
 	$arr[] = '_pb_window_start';
 	$arr[] = '_pb_window_end';
-	$arr[] = '_pb_price';
-	$arr[] = '_pb_idcheck';
 	return $arr;
 }
 add_filter('woocommerce_hidden_order_itemmeta', 'pb_woocommerce_hidden_order_itemmeta', 10, 1);
@@ -170,6 +168,16 @@ function pb_display_order_complete( $order_id ) {
 									if(isset($api->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $api->overviewUrl, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_window_start', $window->start, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_window_end', $window->end, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_minimumAgeCheck', $settings['min_age'], true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_leaveAtDoorstep', $leaveDoorStep, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_idCheck', $settings['id_verification'] == 1, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_requireSignature', $settings['signature_required'] == 1, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_onlyToRecipient', $settings['only_to_recipient'] == 1, true );
+									WC()->session->__unset( 'pb_windowStart' );
+									WC()->session->__unset( 'pb_returnOnDemand' );
+									WC()->session->__unset( 'pb_type' );
+									WC()->session->__unset( 'pb_leaveDoorStep' );
+									WC()->session->__unset( 'pb_message' );
 								}
 							}
 						}
