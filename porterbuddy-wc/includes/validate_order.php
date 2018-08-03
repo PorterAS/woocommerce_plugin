@@ -7,6 +7,9 @@ function porterbuddy_validate_order( $posted )   {
 
 	if( is_array( $chosen_methods ) && in_array( PORTERBUDDY_PLUGIN_NAME, $chosen_methods ) ) {
 
+		// Fetch the settings
+		$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
+
 		foreach ( $packages as $i => $package ) {
 
 			if ( $chosen_methods[ $i ] != PORTERBUDDY_PLUGIN_NAME ) {
@@ -20,6 +23,7 @@ function porterbuddy_validate_order( $posted )   {
 			foreach ( $package['contents'] as $item_id => $values )
 			{
 				$_product = $values['data'];
+				$product_weight = $_product->get_weight() == 'default_product_weight' ? $settings['default'] : $_product->get_weight();
 				$weight = $weight + $_product->get_weight() * $values['quantity'];
 			}
 
