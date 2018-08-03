@@ -78,6 +78,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	// Checkout Widget
 	function pb_checkout_display()
 	{
+		/*
 		echo '<strong>Window Start:</strong> ';
 		var_dump(WC()->session->get('pb_windowStart'));
 		echo '<br><strong>Return on Demand:</strong> ';
@@ -88,8 +89,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		var_dump(WC()->session->get('pb_leaveDoorStep'));
 		echo '<br><strong>Message:</strong> ';
 		var_dump(WC()->session->get('pb_message'));
+		*/
 	}
-	if(isset($settings['enabled']) && $settings['enabled'] == 'yes' ) add_action( 'woocommerce_review_order_after_payment', 'pb_checkout_display', 10 );
+	if(isset($settings['enabled']) && $settings['enabled'] == 'yes' ) add_action( 'woocommerce_review_order_after_cart_contents', 'pb_checkout_display', 10 );
 
 	include_once 'includes/display_filters.php';
 }

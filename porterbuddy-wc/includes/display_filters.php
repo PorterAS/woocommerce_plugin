@@ -6,13 +6,12 @@
  */
 function pb_before_checkout_create_order( $order, $data ) {
 	if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
-		$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
 		$items = $order->get_items('shipping');
 		foreach ($items as $item)
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
-				$window = lookup_window(WC()->session->get('pb_windowStart'));
+				$window = lookup_window();
 				if(WC()->session->get('pb_windowStart') == NULL || WC()->session->get('pb_windowStart') == '') throw new Exception('PorterBuddy delivery window must be set');
 				elseif($window == null) throw new Exception('Invalid delivery window for PorterBuddy.');
 			}
@@ -23,8 +22,8 @@ add_action('woocommerce_checkout_create_order', 'pb_before_checkout_create_order
 
 // Hide our custom meta data (Related to the data above)
 function pb_woocommerce_hidden_order_itemmeta($arr) {
-	//$arr[] = '_pb_window_start';
-	//$arr[] = '_pb_window_end';
+	$arr[] = '_pb_window_start';
+	$arr[] = '_pb_window_end';
 	$arr[] = '_pb_price';
 	$arr[] = '_pb_idcheck';
 	return $arr;
@@ -89,7 +88,7 @@ function pb_display_order_complete( $order_id ) {
 						if(isset($window_start) && strlen($window_start) > 6)
 						{
 
-							$window = lookup_window($window_start);
+							$window = lookup_window();
 
 							if($window != null) {
 								if ( $return_on_demand ) {
@@ -190,16 +189,14 @@ add_action('woocommerce_thankyou', 'pb_display_order_complete', 10, 1);
 // Admin: order
 function pb_admin_display($order){
 	if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
-		$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
 		$items = $order->get_items('shipping');
 		foreach ($items as $item)
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
-				// Displaying something
-				var_dump(wc_get_order_item_meta($item->get_id(), '_pb_order_id', true));
 				echo '<p><strong>Porterbuddy Details</strong></p>';
-				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
+				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true)).".</p>";
+				echo "<p><a href='".wc_get_order_item_meta($item->get_id(), '_pb_overview_url', true)."'>Tracking</a>";
 			}
 		}
 	}
@@ -220,8 +217,10 @@ function lookup_window()
 	if(isset($api_result['data'][WC()->session->get('pb_type')]))
 	{
 		foreach ($api_result['data'][WC()->session->get('pb_type')] as $win) {
-			if ($win->start == WC()->session->get('pb_windowStart')) $window = Window::load($win);
-			break;
+			if ($win->start == WC()->session->get('pb_windowStart')) {
+				$window = Window::load($win);
+				break;
+			}
 		}
 	}
 	return $window;
