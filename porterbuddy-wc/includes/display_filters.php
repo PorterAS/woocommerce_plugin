@@ -24,6 +24,11 @@ add_action('woocommerce_checkout_create_order', 'pb_before_checkout_create_order
 function pb_woocommerce_hidden_order_itemmeta($arr) {
 	$arr[] = '_pb_window_start';
 	$arr[] = '_pb_window_end';
+	$arr[] = '_pb_minimumAgeCheck';
+	$arr[] = '_pb_leaveAtDoorstep';
+	$arr[] = '_pb_idCheck';
+	$arr[] = '_pb_requireSignature';
+	$arr[] = '_pb_onlyToRecipient';
 	return $arr;
 }
 add_filter('woocommerce_hidden_order_itemmeta', 'pb_woocommerce_hidden_order_itemmeta', 10, 1);
@@ -204,7 +209,7 @@ function pb_admin_display($order){
 			{
 				echo '<p><strong>Porterbuddy Details</strong></p>';
 				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true)).".</p>";
-				echo "<p><a href='".wc_get_order_item_meta($item->get_id(), '_pb_overview_url', true)."'>Tracking</a>";
+				echo "<p><a href='".wc_get_order_item_meta($item->get_id(), '_pb_overview_url', true)."' target='_blank'>Tracking</a>";
 			}
 		}
 	}
