@@ -22,7 +22,7 @@ function porterbuddy_validate_order( $posted )   {
 			{
 				$_product = $values['data'];
 				$product_weight = $_product->get_weight() == '' ? (int) $PorterBuddy_Shipping_Method->settings['default_product_weight'] : $_product->get_weight();
-				$weight = $weight + $_product->get_weight() * $values['quantity'];
+				$weight = $weight + $product_weight * $values['quantity'];
 			}
 
 			$weight = wc_get_weight( $weight, 'kg' );
