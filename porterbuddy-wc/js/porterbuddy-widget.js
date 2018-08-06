@@ -12,17 +12,18 @@ jQuery( function( $ ) {
 	/**
 	 * Create a date object for the widget
 	 */
-	var date = {
-
-		init: function() {
-
+	var date = 
+	{
+		init: function() 
+		{
 			date = new Date;
 
 			date.set = this.set.bind( this );
 			date.next = this.next.bind( this );
 			date.prev = this.prev.bind( this );
 
-			dateObject = {
+			dateObject = 
+			{
 				date: date,
 				iso: moment(date).format(),
 				formatted: moment(date).format('dddd Do MMM')
@@ -32,10 +33,12 @@ jQuery( function( $ ) {
 			$( '#selected-date' ).text( dateObject["formatted"] );
 		},
 
-		set: function(day) {
+		set: function(day) 
+		{
 			date.setDate(day);
 
-			dateObject = {
+			dateObject = 
+			{
 				date: date,
 				iso: moment(date).format(),
 				formatted: moment(date).format('dddd Do MMM')
@@ -44,10 +47,12 @@ jQuery( function( $ ) {
 			return dateObject;
 		},
 
-		next: function() {
+		next: function() 
+		{
 			date.setDate(date.getDate() + 1);
 
-			dateObject = {
+			dateObject = 
+			{
 				date: date,
 				iso: moment(date).format(),
 				formatted: moment(date).format('dddd Do MMM')
@@ -56,10 +61,12 @@ jQuery( function( $ ) {
 			return dateObject;
 		},
 
-		prev: function() {
+		prev: function() 
+		{
 			date.setDate(date.getDate() - 1);
 
-			dateObject = {
+			dateObject = 
+			{
 				date: date,
 				iso: moment(date).format(),
 				formatted: moment(date).format('dddd Do MMM')
@@ -87,7 +94,8 @@ jQuery( function( $ ) {
 	 */
 	function getAvailability ( element )
 	{
-		$.ajax({
+		$.ajax(
+		{
 			url: pbWidgetPHP['ajaxEndpoint'],
 			type: 'GET',
 			dataType: 'json',
@@ -110,6 +118,7 @@ jQuery( function( $ ) {
 				{
 					populateTimeslots( '#timeslots', response['data'] ); // generates availableDates
 					upDateTimesControl();
+					setShippingSelection();
 				} 
 				else
 				{
@@ -129,10 +138,14 @@ jQuery( function( $ ) {
 	 */
 	function populateTimeslots ( element, data )
 	{
+		// merge express and regular deliveries
+		var deliveryDates = $.merge($.merge([], data.express), data.delivery);
+
 		// set first and last available date
-		var firstAvailableDate = $(data.delivery).get(0).start;
-		var lastAvailableDate = $(data.delivery).get(-1).start;
+		var firstAvailableDate = $(deliveryDates).get(0).start;
+		var lastAvailableDate = $(deliveryDates).get(-1).start;
 		availableDates = {firstAvailableDate, lastAvailableDate};
+
 
 		// delete any previous divs
 		$(element).empty();
@@ -150,15 +163,15 @@ jQuery( function( $ ) {
 		// add available express timeslots
 		$.each( data.express, function() 
 		{
-			$('<div/>', {
+			$('<div/>', 
+			{
 			    "class": 'porterbuddy-widget-timeslot ',
 			    html: '<h6>' + 'Express' + '</h6>' + 
 			    	'<p><span class="price">' + this.price.string + '</span></p>',
-			    click: function() {
+			    click: function() 
+			    {
 			    	// set active class on click
 			    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
-					// update shipping information
-					setShippingSelection();
 			    }
 			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
 				.attr('timeslot', this.start)
@@ -176,15 +189,15 @@ jQuery( function( $ ) {
 				hidden = "porterbuddy-hide";
 			}
 
-			$('<div/>', {
+			$('<div/>', 
+			{
 			    "class": 'porterbuddy-widget-timeslot ' + hidden,
 			    html: '<h6>' + moment(this.start).locale("nb_NO").format("LT") + ' - ' + moment(this.end).format("LT") + '</h6>' + 
 			    	'<p><span class="price">' + this.price.string + '</span></p>',
-			    click: function() {
+			    click: function() 
+			    {
 			    	// set active class on click
 			    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
-					// update shipping information
-					setShippingSelection();
 			    }
 			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
 				.attr('timeslot', this.start)
@@ -215,7 +228,8 @@ jQuery( function( $ ) {
 		{
 			$('.porterbuddy-widget-date-selectors .prev-date').removeClass('unavailable');
 		}
-		else {
+		else 
+		{
 			$('.porterbuddy-widget-date-selectors .prev-date').addClass('unavailable');
 		}
 
@@ -224,7 +238,8 @@ jQuery( function( $ ) {
 		{
 			$('.porterbuddy-widget-date-selector.next-date').removeClass('unavailable');
 		}
-		else {
+		else 
+		{
 			$('.porterbuddy-widget-date-selectors .next-date').addClass('unavailable');
 		}
 
@@ -234,7 +249,8 @@ jQuery( function( $ ) {
 		if ( allSlots[0] )
 		{
 			// display active date's options
-			$.each(allSlots, function() {
+			$.each(allSlots, function() 
+			{
 				$(this).addClass('porterbuddy-hide');
 			});
 		}
@@ -244,16 +260,21 @@ jQuery( function( $ ) {
 		if ( slots[0] )
 		{
 			// display active date's options
-			$.each(slots, function() {
+			$.each(slots, function() 
+			{
 				$(this).removeClass('porterbuddy-hide');
 			});
 		}
 
+		// if no slots are active, set the first one active
 		if ( $('.porterbuddy-widget-timeslot').hasClass('active') == false )
 		{
 			MakeActive = $('.porterbuddy-widget-timeslot').get(0);
 			$(MakeActive).addClass('active');
+			setShippingSelection();	
 		}
+
+		return true;
 
 	}
 
@@ -294,7 +315,8 @@ jQuery( function( $ ) {
 		var leaveDoorStep = $('#porterbuddy_leave_doorstep').prop("checked");
 		var comment = $('#porterbuddy_comment').val();
 
-		$.ajax({
+		$.ajax(
+		{
 			url: pbWidgetPHP['ajaxphp'],
 			type: 'POST',
 			dataType: 'json',
@@ -337,7 +359,6 @@ jQuery( function( $ ) {
 	 */
 	function updateTimeBlockPrices ()
 	{
-		
 		if ( $('#porterbuddy_return').prop("checked") == true )
 		{
 			$('.porterbuddy-widget-timeslot').each( function()
