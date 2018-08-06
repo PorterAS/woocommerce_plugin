@@ -32,22 +32,26 @@ function pb_cart_display() {
 
 	</div>
 
-	<div class="porterbuddy-widget-return">
-		<label>
-			<input type="checkbox" value="0" id="porterbuddy_return">
-			Retur on-demand; Budet venter inntil 10 minutter og tar varer med seg varer i retur on ønskelig (pris <span class="price"><?= $settings['return_price'] ?></span>)
-		</label>
-	</div>
+	<?php if ($settings['return'] == 1): ?>
+
+		<div class="porterbuddy-widget-return">
+			<label>
+				<input type="checkbox" value="0" id="porterbuddy_return">
+				<?= esc_html_e( $settings['return_text'], 'porterbuddy-wc' ) ?> (<?= esc_html_e( 'pris', 'porterbuddy-wc' ) ?>: <span class="price"><?= $settings['return_price'] ?>,-</span>)
+			</label>
+		</div>
+
+	<?php endif; ?>
 
 	<div class="porterbuddy-widget-leave-doorstep">
 		<label>
 			<input type="checkbox" value="1" id="porterbuddy_leave_doorstep" checked="checked">
-			Budet kan levere pakken utenfor døren på leveranse adressen
+			<?= esc_html_e( $settings['leave_at_door'], 'porterbuddy-wc' ) ?>
 		</label>
 	</div>
 
 	<div class="porterbuddy-widget-comment">
-		<textarea id="porterbuddy_comment" placeholder="Evt. beskjet til budet" maxlength="512"></textarea>
+		<textarea id="porterbuddy_comment" placeholder="<?= esc_html_e( $settings['courier_message'], 'porterbuddy-wc' ) ?>" maxlength="512"></textarea>
 	</div>
 
 </div>
