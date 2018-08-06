@@ -138,11 +138,13 @@ jQuery( function( $ ) {
 	 */
 	function populateTimeslots ( element, data )
 	{
+
+		if ( data.express == undefined ) data.express = [];
+		if ( data.delivery == undefined ) data.delivery = [];
 		// merge express and regular deliveries
 		var deliveryDates = $.merge($.merge([], data.express), data.delivery);
 
 		deliveryDates.shift();
-		data.express = undefined;
 
 		// set first and last available date
 		var firstAvailableDate = $(deliveryDates).get(0).start;
