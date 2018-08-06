@@ -130,21 +130,21 @@ function pb_product_display() {
 				}
 				if(isset($date) && isset($countdown))
 				{
-					echo str_replace(['{{date}}', '{{countdown}}'], [$date, $countdown], $settings['availability_text']);
+					echo str_replace(['{{date}}', '{{countdown}}'], [$date, $countdown], __($settings['availability_text'], 'porterbuddy-wc'));
 				}
-				else echo $settings['no_available_dates'];
+				else echo __($settings['no_available_dates'], 'porterbuddy-wc');
 			}
 			else
 			{
-				if(empty($valid_country) && isset(\WC()->countries->countries[$country])) echo str_replace('{{postcode}}', \WC()->countries->countries[$country], $settings['postcode_unavailable_text']);
-				else echo str_replace('{{postcode}}', $postcode, $settings['postcode_unavailable_text']);
+				if(empty($valid_country) && isset(\WC()->countries->countries[$country])) echo str_replace('{{postcode}}', \WC()->countries->countries[$country], __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
+				else echo str_replace('{{postcode}}', $postcode, __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
 			}
 
 		}
 		else
 		{
 			// PostCode is not set
-			echo $settings['click_to_see'];
+			echo __($settings['click_to_see'], 'porterbuddy-wc');
 		}
 	}
 	// Include shipping calculator to set country and postcode
