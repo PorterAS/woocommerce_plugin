@@ -121,41 +121,41 @@ return array(
 		'title' => __( 'Title', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Title to be display on site', 'porterbuddy-wc' ),
-		'default' => __( 'Deliver with PorterBuddy', 'porterbuddy-wc' )
+		'default' => 'Deliver with PorterBuddy'
 	),
 
 	'store_name' => array(
 		'title' => __( 'The store name', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Displayed as the sender of the parcel', 'porterbuddy-wc' ),
-		'default' => __( 'Store Name', 'porterbuddy-wc' )
+		'default' => 'Store Name'
 	),
 
 	'store_phone' => array(
 		'title' => __( 'Store Phone', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Phone that the courier can reach the store', 'porterbuddy-wc' ),
-		'default' => __( '99999999', 'porterbuddy-wc' )
+		'default' => '99999999'
 	),
 
 	'store_email' => array(
 		'title' => __( 'Store email', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'E-mail for porterbuddy to contact you', 'porterbuddy-wc' ),
-		'default' => __( 'something@store.com', 'porterbuddy-wc' )
+		'default' => 'something@store.com'
 	),
 
 	'description' => array(
 		'title' => __( 'Description', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Delivery method description', 'porterbuddy-wc' ),
-		'default' => __( 'Simple and flexible. You decide when and where delivery will take place, at home, at work or elsewhere.', 'porterbuddy-wc' )
+		'default' => 'Simple and flexible. You decide when and where delivery will take place, at home, at work or elsewhere.'
 	),
 
 	'express' => array(
 		'title' => __( 'Express Delivery Name', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'default' => __( 'EXPRESS', 'porterbuddy-wc' )
+		'default' => 'EXPRESS'
 	),
 
 	'mode' => array(
@@ -199,21 +199,21 @@ return array(
 		'title' => __( 'Click to see text', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Text to show on product page when postcode is not set', 'porterbuddy-wc' ),
-		'default' => __( 'Add a postcode to see if you are eligible for same day delivery', 'porterbuddy-wc' )
+		'default' => 'Add a postcode to see if you are eligible for same day delivery'
 	),
 
 	'availability_text' => array(
 		'title' => __( 'Availability text', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can use {{date}} and {{countdown}} placeholders', 'porterbuddy-wc' ),
-		'default' => __( 'Want it {{date}}? Order in the next {{countdown}}', 'porterbuddy-wc' )
+		'default' => 'Want it {{date}}? Order in the next {{countdown}}'
 	),
 
 	'postcode_unavailable_text' => array(
 		'title' => __( 'Postcode not available text', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can use {{postcode}} placeholder (works as both country and postcode)', 'porterbuddy-wc' ),
-		'default' => __( 'Sorry, same day delivery is not currently available to {{postcode}}', 'porterbuddy-wc' )
+		'default' => 'Sorry, same day delivery is not currently available to {{postcode}}'
 	),
 
 	'messages' => array(
@@ -227,28 +227,28 @@ return array(
 		'title' => __( 'Product is out of stock text', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can use {{location}}, {{postcode}}, {{city}}, {{country}} placeholders', 'porterbuddy-wc' ),
-		'default' => __( 'Sorry, product is out of stock', 'porterbuddy-wc' )
+		'default' => 'Sorry, product is out of stock'
 	),
 */
 	'no_available_dates' => array(
 		'title' => __( 'No available dates text', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Text to show is no dates are available', 'porterbuddy-wc' ),
-		'default' => __( 'Sorry, Porterbuddy delivery is not currently available', 'porterbuddy-wc' )
+		'default' => 'Sorry, Porterbuddy delivery is not currently available'
 	),
 /*
 	'popup_title' => array(
 		'title' => __( 'Popup Title', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Title on the PorterBuddy widget popup', 'porterbuddy-wc' ),
-		'default' => __( 'Choose your delivery location', 'porterbuddy-wc' )
+		'default' => 'Choose your delivery location'
 	),
 
 	'popup_description' => array(
 		'title' => __( 'Popup Description', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Description on the PorterBuddy widget popup', 'porterbuddy-wc' ),
-		'default' => __( 'Delivery options and delivery speeds may vary for different locations', 'porterbuddy-wc' )
+		'default' => 'Delivery options and delivery speeds may vary for different locations'
 	),
 
 	'position' => array(
@@ -266,7 +266,7 @@ return array(
 		'title' => __( 'Available days ahead', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'How many days ahead should be available', 'porterbuddy-wc' ),
-		'default' => __( 3, 'porterbuddy-wc' )
+		'default' => 3
 	),
 
 	'return' => array(
@@ -284,13 +284,13 @@ return array(
 		'title' => __( 'Text for return', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Text shown for the return option', 'porterbuddy-wc' ),
-		'default' => __( 'I would like to return items that do not match me', 'porterbuddy-wc' )
+		'default' => 'I would like to return items that do not match me'
 	),
 /*
 	'return_text_short' => array(
 		'title' => __( 'Short text for return', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'default' => __( '+ included return', 'porterbuddy-wc' )
+		'default' => '+ included return'
 	),
 */
 	'return_price' => array(
@@ -310,28 +310,28 @@ return array(
 	'leave_at_door' => array(
 		'title' => __( 'Text for leave at the door option', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'default' => __( 'Allow the courier to leave the package outside the door', 'porterbuddy-wc' )
+		'default' => 'Allow the courier to leave the package outside the door'
 	),
 
 	'courier_message' => array(
 		'title' => __( 'To the messenger box', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Text above the message to courier box', 'porterbuddy-wc'),
-		'default' => __( 'Optional message to the courier', 'porterbuddy-wc' )
+		'default' => 'Optional message to the courier'
 	),
 
 	'price_override' => array(
 		'title' => __( 'Override porterbuddy price with', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Leave empty to use Porterbuddy pricing', 'porterbuddy-wc'),
-		'default' => __( '', 'porterbuddy-wc' )
+		'default' => ''
 	),
 
 	'express_price_override' => array(
 		'title' => __( 'Override porterbuddy express price with', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Leave empty to use Porterbuddy Express pricing', 'porterbuddy-wc'),
-		'default' => __( '', 'porterbuddy-wc' )
+		'default' => ''
 	),
 
 /*
@@ -358,7 +358,7 @@ return array(
 		'title' => __( 'PorterBuddy available until', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Latest pickup before closing, in minutes', 'porterbuddy-wc'),
-		'default' => __( 45, 'porterbuddy-wc' ),
+		'default' => 45
 	),
 
 	'monday_open' => array(
@@ -481,7 +481,7 @@ return array(
 		'title' => __( 'Packing time', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'In minutes', 'porterbuddy-wc' ),
-		'default' => __( 15, 'porterbuddy-wc' ),
+		'default' => 15
 	),
 
 	'verifications' => array(
@@ -545,14 +545,14 @@ return array(
 		'title' => __( 'Default product weight', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'In kg, will be used for products without weight' , 'porterbuddy-wc' ),
-		'default' => __( 0.5, 'porterbuddy-wc' )
+		'default' => 0.5
 	),
 
 	'weight' => array(
 		'title' => __( 'Max product weight', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'In kg, max weight for shipments with PorterBuddy', 'porterbuddy-wc' ),
-		'default' => __( 2, 'porterbuddy-wc' )
+		'default' => 2
 	),
 
 	/*
@@ -563,21 +563,21 @@ return array(
 		'title' => __( 'Default product height', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'In cm, will be used for products without height' , 'porterbuddy-wc' ),
-		'default' => __( 20, 'porterbuddy-wc' )
+		'default' => 20
 	),
 
 	'default_product_width' => array(
 		'title' => __( 'Default product width', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'In cm, will be used for products without width' , 'porterbuddy-wc' ),
-		'default' => __( 20, 'porterbuddy-wc' )
+		'default' => 20
 	),
 
 	'default_product_depth' => array(
 		'title' => __( 'Default product depth', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'In cm, will be used for products without depth' , 'porterbuddy-wc' ),
-		'default' => __( 20, 'porterbuddy-wc' )
+		'default' => 20
 	),
 
 	'api_settings' => array(
@@ -591,27 +591,27 @@ return array(
 		'title' => __( 'API Key (Production)', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Must be set before mode is set to production', 'porterbuddy-wc' ),
-		'default' => __( '', 'porterbuddy-wc' )
+		'default' => ''
 	),
 
 	'api_key_testing' => array(
 		'title' => __( 'API Key (Test/Dev)', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'API Key for testing', 'porterbuddy-wc' ),
-		'default' => __( '', 'porterbuddy-wc' )
+		'default' => ''
 	),
 /*
 	'google_maps_api_key' => array(
 		'title' => __( 'Google Maps API key', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can be obtained from _LINK_' ),
-		'default' => __( '', 'porterbuddy-wc' )
+		'default' => ''
 	),
 */
 	'mapbox_api_key' => array(
 		'title' => __( 'MapBox API key', 'porterbuddy-wc' ),
 		'type' => 'text',
 		'description' => __( 'Can be obtained from _LINK_' ),
-		'default' => __( '', 'porterbuddy-wc' )
+		'default' => ''
 	),
 );

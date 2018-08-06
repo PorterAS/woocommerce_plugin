@@ -18,9 +18,9 @@ function pb_cart_display() {
 		<img src="<?= plugins_url("../assets/", __FILE__) ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
 	</div>
 	
-	<h3 class="porterbuddy-widget-title"><?= $settings['title'] ?></h3>
+	<h3 class="porterbuddy-widget-title"><?= __($settings['title'], 'porterbuddy-wc') ?></h3>
 	
-	<p class="porterbuddy-widget-description"><?= $settings['description'] ?></p>
+	<p class="porterbuddy-widget-description"><?= __($settings['description'], 'porterbuddy-wc') ?></p>
 	
 	<div class="porterbuddy-widget-date-selectors">
 		<a href="#" class="porterbuddy-widget-date-selector prev-date unavailable">Forrige dag</a>
