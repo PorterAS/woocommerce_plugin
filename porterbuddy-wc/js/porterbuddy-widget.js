@@ -106,11 +106,11 @@ jQuery( function( $ ) {
 			},
 			beforeSend: function () 
 			{
-				block( element );
+				block( $( 'div.cart_totals' ) );
 			},
 			complete: function ()
 			{
-				unblock( element );
+				unblock( $( 'div.cart_totals' ) );
 			},
 			success: function ( response )
 			{
