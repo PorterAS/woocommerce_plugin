@@ -3,12 +3,10 @@
  */
 jQuery( function( $ ) {
 
-	// set js moment library locale
-	moment.locale("nb_NO");
-
 	// scope outside for all functions
 	var availableDates;
-
+	// set js moment library locale
+	moment.locale("nb_NO");
 	/**
 	 * Create a date object for the widget
 	 */
@@ -79,350 +77,387 @@ jQuery( function( $ ) {
 	// initiate date variable
 	date.init();
 
-	
-	/**
-	 * When loaded, check availability
-	 */
-	ready('#porterbuddy-widget', function() 
+	// due to how woo handles cart updates, we wrap everything into a function
+	function porterbuddy ()
 	{
-	    getAvailability( this );
-	});
-
-
-	/**
-	 * Get available timeslots from the API (via backend)
-	 */
-	function getAvailability ( element )
-	{
-		$.ajax(
+		/**
+		 * When loaded, check availability
+		 */
+		ready('#porterbuddy-widget', function() 
 		{
-			url: pbWidgetPHP['ajaxEndpoint'],
-			type: 'GET',
-			dataType: 'json',
-			cache: true,
-			data:
+		    getAvailability( this );
+		});
+
+
+		/**
+		 * Get available timeslots from the API (via backend)
+		 */
+		function getAvailability ( element )
+		{
+			$.ajax(
 			{
-				//action: '',
-			},
-			beforeSend: function () 
-			{
-				block( $( 'div.cart_totals' ) );
-			},
-			complete: function ()
-			{
-				unblock( $( 'div.cart_totals' ) );
-			},
-			success: function ( response )
-			{
-				if ( response['data']['delivery'] != undefined )
+				url: pbWidgetPHP['ajaxEndpoint'],
+				type: 'GET',
+				dataType: 'json',
+				cache: true,
+				data:
 				{
-					populateTimeslots( '#timeslots', response['data'] ); // generates availableDates
-					upDateTimesControl();
-					setShippingSelection();
-				} 
-				else
+					//action: '',
+				},
+				beforeSend: function () 
+				{
+					block( $( 'div.cart_totals' ) );
+				},
+				complete: function ()
+				{
+					unblock( $( 'div.cart_totals' ) );
+				},
+				success: function ( response )
+				{
+					if ( response['data']['delivery'] != undefined )
+					{
+						populateTimeslots( '#timeslots', response['data'] ); // generates availableDates
+						upDateTimesControl();
+						setShippingSelection();
+					} 
+					else
+					{
+						return false;
+					}
+				},
+				error: function ( error )
 				{
 					return false;
-				}
-			},
-			error: function ( error )
-			{
-				return false;
-			},
-		})
-	};
+				},
+			})
+		};
 
-	
-	/**
-	 * Populate timeslots with data from the API
-	 */
-	function populateTimeslots ( element, data )
-	{
-
-		if ( data.express == undefined ) data.express = [];
-		if ( data.delivery == undefined ) data.delivery = [];
-		// merge express and regular deliveries
-		var deliveryDates = $.merge($.merge([], data.express), data.delivery);
-
-		deliveryDates.shift();
-
-		// set first and last available date
-		var firstAvailableDate = $(deliveryDates).get(0).start;
-		var lastAvailableDate = $(deliveryDates).get(-1).start;
-		availableDates = {firstAvailableDate, lastAvailableDate};
-
-
-		// delete any previous divs
-		$(element).empty();
-
-		// if no available slots, return false
-		if ( firstAvailableDate == undefined ) return false;
-
-		// set date to first available slot and make available
-		$( '#selected-date' ).text( moment(availableDates['firstAvailableDate']).format('dddd Do MMM') ).removeClass('unavailable');
 		
-		// set date object to available
-		date.set( moment(availableDates['firstAvailableDate']).format('D') ); // #RPT: might need work due to js setDate functionality
-
-
-		// add available express timeslots
-		$.each( data.express, function() 
+		/**
+		 * Populate timeslots with data from the API
+		 */
+		function populateTimeslots ( element, data )
 		{
-			$('<div/>', 
-			{
-			    "class": 'porterbuddy-widget-timeslot ',
-			    html: '<h6>' + 'Express' + '</h6>' + 
-			    	'<p><span class="price">' + this.price.string + '</span></p>',
-			    click: function() 
-			    {
-			    	// set active class on click
-			    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
-			    }
-			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
-				.attr('timeslot', this.start)
-				.attr('type', 'express')
-				.appendTo(element);
-		});
 
-		// add delivery timeslots and add metadata for filtration
-		$.each( data.delivery, function() 
-		{
-			// hide those elements not to be shown today
-			hidden = "";
-			if ( ! moment(this.start).isSame(moment(availableDates['firstAvailableDate']), 'day') )
+			if ( data.express == undefined ) data.express = [];
+			if ( data.delivery == undefined ) data.delivery = [];
+			// merge express and regular deliveries
+			var deliveryDates = $.merge($.merge([], data.express), data.delivery);
+
+			deliveryDates.shift();
+
+			// set first and last available date
+			var firstAvailableDate = $(deliveryDates).get(0).start;
+			var lastAvailableDate = $(deliveryDates).get(-1).start;
+			availableDates = {firstAvailableDate, lastAvailableDate};
+
+
+			// delete any previous divs
+			$(element).empty();
+
+			// if no available slots, return false
+			if ( firstAvailableDate == undefined ) return false;
+
+			// set date to first available slot and make available
+			$( '#selected-date' ).text( moment(availableDates['firstAvailableDate']).format('dddd Do MMM') ).removeClass('unavailable');
+			
+			// set date object to available
+			date.set( moment(availableDates['firstAvailableDate']).format('D') ); // #RPT: might need work due to js setDate functionality
+
+
+			// add available express timeslots
+			$.each( data.express, function() 
 			{
-				hidden = "porterbuddy-hide";
+				$('<div/>', 
+				{
+				    "class": 'porterbuddy-widget-timeslot ',
+				    html: '<h6>' + 'Express' + '</h6>' + 
+				    	'<p><span class="price">' + this.price.string + '</span></p>',
+				    click: function() 
+				    {
+				    	// set active class on click
+				    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
+				    }
+				}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
+					.attr('timeslot', this.start)
+					.attr('type', 'express')
+					.appendTo(element);
+			});
+
+			// add delivery timeslots and add metadata for filtration
+			$.each( data.delivery, function() 
+			{
+				// hide those elements not to be shown today
+				hidden = "";
+				if ( ! moment(this.start).isSame(moment(availableDates['firstAvailableDate']), 'day') )
+				{
+					hidden = "porterbuddy-hide";
+				}
+
+				$('<div/>', 
+				{
+				    "class": 'porterbuddy-widget-timeslot ' + hidden,
+				    html: '<h6>' + moment(this.start).locale("nb_NO").format("LT") + ' - ' + moment(this.end).format("LT") + '</h6>' + 
+				    	'<p><span class="price">' + this.price.string + '</span></p>',
+				    click: function() 
+				    {
+				    	// set active class on click
+				    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
+				    }
+				}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
+					.attr('timeslot', this.start)
+					.attr('type', "delivery")
+					.appendTo(element);
+			});
+
+			return availableDates;
+		}
+
+
+		/**
+		 * Update which timeslots to display, and navigational controls.
+		 */
+		function upDateTimesControl ()
+		{
+			// format dates to same time 
+			var dateChosen = moment( dateObject.iso ).format('YYYY-MM-DD');
+			dateChosen = moment( dateChosen ).format();
+			var dateFirst = moment( availableDates['firstAvailableDate'] ).format('YYYY-MM-DD');
+			dateFirst = moment( dateFirst ).format();
+			var dateLast = moment( availableDates['lastAvailableDate'] ).format('YYYY-MM-DD');
+			dateLast = moment( dateLast ).format();
+			
+
+			// set date prev selector 
+			if ( moment( dateChosen ).isAfter( moment(dateFirst),'day') == true )
+			{
+				$('.porterbuddy-widget-date-selectors .prev-date').removeClass('unavailable');
+			}
+			else 
+			{
+				$('.porterbuddy-widget-date-selectors .prev-date').addClass('unavailable');
 			}
 
-			$('<div/>', 
+			// set date next selector 
+			if ( moment( dateChosen ).isBefore( moment(dateLast),'day') == true ) 
 			{
-			    "class": 'porterbuddy-widget-timeslot ' + hidden,
-			    html: '<h6>' + moment(this.start).locale("nb_NO").format("LT") + ' - ' + moment(this.end).format("LT") + '</h6>' + 
-			    	'<p><span class="price">' + this.price.string + '</span></p>',
-			    click: function() 
-			    {
-			    	// set active class on click
-			    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
-			    }
-			}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
-				.attr('timeslot', this.start)
-				.attr('type', "delivery")
-				.appendTo(element);
-		});
-
-		return availableDates;
-	}
-
-
-	/**
-	 * Update which timeslots to display, and navigational controls.
-	 */
-	function upDateTimesControl ()
-	{
-		// format dates to same time 
-		var dateChosen = moment( dateObject.iso ).format('YYYY-MM-DD');
-		dateChosen = moment( dateChosen ).format();
-		var dateFirst = moment( availableDates['firstAvailableDate'] ).format('YYYY-MM-DD');
-		dateFirst = moment( dateFirst ).format();
-		var dateLast = moment( availableDates['lastAvailableDate'] ).format('YYYY-MM-DD');
-		dateLast = moment( dateLast ).format();
-		
-
-		// set date prev selector 
-		if ( moment( dateChosen ).isAfter( moment(dateFirst),'day') == true )
-		{
-			$('.porterbuddy-widget-date-selectors .prev-date').removeClass('unavailable');
-		}
-		else 
-		{
-			$('.porterbuddy-widget-date-selectors .prev-date').addClass('unavailable');
-		}
-
-		// set date next selector 
-		if ( moment( dateChosen ).isBefore( moment(dateLast),'day') == true ) 
-		{
-			$('.porterbuddy-widget-date-selector.next-date').removeClass('unavailable');
-		}
-		else 
-		{
-			$('.porterbuddy-widget-date-selectors .next-date').addClass('unavailable');
-		}
-
-
-		// hide all slots
-		var allSlots = $('div[data-value^="pbdelivery_"]');
-		if ( allSlots[0] )
-		{
-			// display active date's options
-			$.each(allSlots, function() 
+				$('.porterbuddy-widget-date-selector.next-date').removeClass('unavailable');
+			}
+			else 
 			{
-				$(this).addClass('porterbuddy-hide');
-			});
+				$('.porterbuddy-widget-date-selectors .next-date').addClass('unavailable');
+			}
+
+
+			// hide all slots
+			var allSlots = $('div[data-value^="pbdelivery_"]');
+			if ( allSlots[0] )
+			{
+				// display active date's options
+				$.each(allSlots, function() 
+				{
+					$(this).addClass('porterbuddy-hide');
+				});
+			}
+
+			// show new timeslots
+			var slots = $('div[data-value^="pbdelivery_'+moment( dateChosen ).format('YYYY-MM-DD')+'"]');
+			if ( slots[0] )
+			{
+				// display active date's options
+				$.each(slots, function() 
+				{
+					$(this).removeClass('porterbuddy-hide');
+				});
+				
+				// remove text saying it's empty
+				$('#timeslots p.noSlots').remove();
+			}
+			else
+			{
+				if ( $('#timeslots p.noSlots').length < 1 )
+				{
+					$('#timeslots').prepend('<p class="noSlots">'+objectL10n.noSlotsAvailable+'</p>');
+				}
+			}
+
+			// if no slots are active, set the first one active
+			if ( $('.porterbuddy-widget-timeslot').hasClass('active') == false )
+			{
+				MakeActive = $('.porterbuddy-widget-timeslot').get(0);
+				$(MakeActive).addClass('active');
+				setShippingSelection();	
+			}
+
+			return true;
+
 		}
 
-		// show new timeslots
-		var slots = $('div[data-value^="pbdelivery_'+moment( dateChosen ).format('YYYY-MM-DD')+'"]');
-		if ( slots[0] )
+
+		/**
+		 * On "prev" and "next" click events, change data accordingly and update controls
+		 */
+		$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function()
 		{
-			// display active date's options
-			$.each(slots, function() 
+			event.preventDefault();
+
+			if ( $(this).hasClass('prev-date') && !$(this).hasClass('unavailable') )
 			{
-				$(this).removeClass('porterbuddy-hide');
-			});
-			
-			// remove text saying it's empty
-			$('#timeslots').remove('p');
-		}
-		else
-		{
-			$('#timeslots').prepend('<p>'+objectL10n.noSlotsAvailable+'</p>');
-		}
+				$( '#selected-date' ).text( date.prev );
+				$( '#selected-date' ).text( dateObject['formatted'] );
+			}
 
-		// if no slots are active, set the first one active
-		if ( $('.porterbuddy-widget-timeslot').hasClass('active') == false )
-		{
-			MakeActive = $('.porterbuddy-widget-timeslot').get(0);
-			$(MakeActive).addClass('active');
-			setShippingSelection();	
-		}
-
-		return true;
-
-	}
-
-
-	/**
-	 * On "prev" and "next" click events, change data accordingly and update controls
-	 */
-	$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function()
-	{
-		event.preventDefault();
-
-		if ( $(this).hasClass('prev-date') && !$(this).hasClass('unavailable') )
-		{
-			$( '#selected-date' ).text( date.prev );
-			$( '#selected-date' ).text( dateObject['formatted'] );
-		}
-
-		if ( $(this).hasClass('next-date') && !$(this).hasClass('unavailable') )
-		{
-			$( '#selected-date' ).text( date.next );
-			$( '#selected-date' ).text( dateObject['formatted'] );
-		}
-
-		// update controls accordingly
-		upDateTimesControl();
-	})
-
-
-	/**
-	 * Update woo session with PorterBuddy shipping selection
-	 */
-	function setShippingSelection ()
-	{
-		var nonce = $('#porterbuddy-widget').data('wpnonce');
-		var type = $('.porterbuddy-widget-timeslot.active').attr('type');
-		var windowStart = $('.porterbuddy-widget-timeslot.active').attr('timeslot');
-		var returnOnDemand = $('#porterbuddy_return').prop("checked");
-		var leaveDoorStep = $('#porterbuddy_leave_doorstep').prop("checked");
-		var comment = $('#porterbuddy_comment').val();
-
-		$.ajax(
-		{
-			url: pbWidgetPHP['ajaxphp'],
-			type: 'POST',
-			dataType: 'json',
-			cache: false,
-			data:
+			if ( $(this).hasClass('next-date') && !$(this).hasClass('unavailable') )
 			{
-				action: 'setShippingSelection',
-				pb_nonce: nonce,
-				pb_type: type,
-				pb_windowStart: windowStart,
-				pb_returnOnDemand: returnOnDemand,
-				pb_leaveDoorStep: leaveDoorStep,
-				pb_message: comment,
-			},
-			beforeSend: function () 
-			{
-				block( $( 'div.cart_totals' ) );
-			},
-			complete: function ()
-			{
-				unblock( $( 'div.cart_totals' ) );
-				// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
-				// $( document.body ).trigger( 'updated_shipping_method' );
-			},
-			success: function ( response )
-			{
-				//console.log( response );
-				return true;
-			},
-			error: function ( error )
-			{
-				//console.log( error );
-				return false;
-			},
+				$( '#selected-date' ).text( date.next );
+				$( '#selected-date' ).text( dateObject['formatted'] );
+			}
+
+			// update controls accordingly
+			upDateTimesControl();
 		})
-	}
 
-	/**
-	 * function to update timeslot prices if "return on-delivery" is checked
-	 */
-	function updateTimeBlockPrices ()
-	{
-		if ( $('#porterbuddy_return').prop("checked") == true )
+
+		/**
+		 * Update woo session with PorterBuddy shipping selection
+		 */
+		function setShippingSelection ()
 		{
-			$('.porterbuddy-widget-timeslot').each( function()
+			var nonce = $('#porterbuddy-widget').data('wpnonce');
+			var type = $('.porterbuddy-widget-timeslot.active').attr('type');
+			var price = $('.porterbuddy-widget-timeslot.active .price').text();
+			var windowStart = $('.porterbuddy-widget-timeslot.active').attr('timeslot');
+			var returnOnDemand = $('#porterbuddy_return').prop("checked");
+			var leaveDoorStep = $('#porterbuddy_leave_doorstep').prop("checked");
+			var comment = $('#porterbuddy_comment').val();
+
+			$.ajax(
 			{
-				if ( $( this ).data('returnPrice') == undefined || $( this ).data('returnPrice') === 0 )
+				url: pbWidgetPHP['ajaxphp'],
+				type: 'POST',
+				dataType: 'json',
+				cache: false,
+				data:
 				{
-					let price = parseInt( $('.price', this).text() );
-					let extraPrice = parseInt( $('.price', '.porterbuddy-widget-return').text() );
-					
-					$('.price', this).text(price+extraPrice);
-					$(this).data('returnPrice',1);
-				}
-			});
-		} 
-		else
-		{
-			$('.porterbuddy-widget-timeslot').each( function()
-			{
-				if ( $( this ).data('returnPrice') === 1 )
+					action: 'setShippingSelection',
+					pb_nonce: nonce,
+					pb_type: type,
+					pb_windowStart: windowStart,
+					pb_returnOnDemand: returnOnDemand,
+					pb_leaveDoorStep: leaveDoorStep,
+					pb_message: comment,
+				},
+				beforeSend: function () 
 				{
-					let price = parseInt( $('.price', this).text() );
-					let extraPrice = parseInt( $('.price', '.porterbuddy-widget-return').text() );
-					
-					$('.price', this).text(price-extraPrice);
-					$(this).data('returnPrice',0);
-				}
-			});
+					block( $( 'div.porterbuddy-widget' ) );
+				},
+				complete: function ()
+				{
+					unblock( $( 'div.porterbuddy-widget' ) );
+
+					// update shipping cost
+					$('#shipping_method label[for="shipping_method_0_porterbuddy-wc"] .woocommerce-Price-amount').contents().filter(function(){ 
+					  return this.nodeType == 3; 
+					})[0].nodeValue = price;
+					// get cart subtotal
+					var subTotal = $('.cart-subtotal .woocommerce-Price-amount').contents().filter(function(){ 
+					  return this.nodeType == 3; 
+					})[0].nodeValue;
+					// and update cart total with updated shipping cost
+					$('.order-total .woocommerce-Price-amount').contents().filter(function(){ 
+					  return this.nodeType == 3; 
+					})[0].nodeValue = parseFloat(subTotal) + parseFloat(price);
+
+				},
+				success: function ( response )
+				{
+					//console.log( response );
+					return true;
+				},
+				error: function ( error )
+				{
+					//console.log( error );
+					return false;
+				},
+			})
 		}
+
+		/**
+		 * function to update timeslot prices if "return on-delivery" is checked
+		 */
+		function updateTimeBlockPrices ()
+		{
+			if ( $('#porterbuddy_return').prop("checked") == true )
+			{
+				$('.porterbuddy-widget-timeslot').each( function()
+				{
+					if ( $( this ).data('returnPrice') == undefined || $( this ).data('returnPrice') === 0 )
+					{
+						let price = parseFloat( $('.price', this).text() );
+						let extraPrice = parseFloat( $('.price', '.porterbuddy-widget-return').text() );
+						
+						$('.price', this).text(price+extraPrice);
+						$(this).data('returnPrice',1);
+					}
+				});
+			} 
+			else
+			{
+				$('.porterbuddy-widget-timeslot').each( function()
+				{
+					if ( $( this ).data('returnPrice') === 1 )
+					{
+						let price = parseFloat( $('.price', this).text() );
+						let extraPrice = parseFloat( $('.price', '.porterbuddy-widget-return').text() );
+						
+						$('.price', this).text(price-extraPrice);
+						$(this).data('returnPrice',0);
+					}
+				});
+			}
+		}
+
+
+		/**
+		 * Update woo session with PorterBuddy shipping selection
+		 */
+		$( '#porterbuddy-widget' ).on(
+			'click',
+			'label #porterbuddy_return, label #porterbuddy_leave_doorstep',
+			function () 
+			{
+				// update timeblock prices
+				updateTimeBlockPrices();
+				// set shipping selection
+				setShippingSelection();	
+			}
+		);
+		// $( '#porterbuddy-widget' ).on(
+		// 	'blur',
+		// 	'.porterbuddy-widget-comment',
+		// 	function () 
+		// 	{
+		// 		setShippingSelection();
+		// 	}
+		// );
+		$( '.checkout-button, #place_order').on(
+			'click',
+			function() 
+			{
+				setShippingSelection();
+			}
+		);
 	}
 
-
+	// initiate porterbuddy widget
+	porterbuddy();
+	
 	/**
-	 * Update woo session with PorterBuddy shipping selection
+	 * after woo cart updates with ajax, reinitiate widget
 	 */
-	$( '#porterbuddy-widget' ).on(
-		'click',
-		'label #porterbuddy_return, label #porterbuddy_leave_doorstep',
-		function () 
-		{
-			// update timeblock prices
-			updateTimeBlockPrices();
-			// set shipping selection
-			setShippingSelection();	
-		},
-	);
-	$( '#porterbuddy-widget' ).on(
-		'blur',
-		'.porterbuddy-widget-comment',
-		function () 
-		{
-			setShippingSelection();
-		},
-	);
+	 $( document.body ).on( 'updated_cart_totals', function(){
+	 	console.log("reload!");
+	 	porterbuddy();
+	 });
 
 });
