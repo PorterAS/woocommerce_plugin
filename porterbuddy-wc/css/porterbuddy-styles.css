@@ -57,6 +57,12 @@
     margin-right: -0.2rem;
     margin-bottom: 1.5rem;
 }
+.porterbuddy-widget-timeslots p {
+    margin: 0 2rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #bbb;
+}
 .porterbuddy-widget-timeslot {
 	border: 1px solid #cdcdcd;
     flex-basis: 7rem;

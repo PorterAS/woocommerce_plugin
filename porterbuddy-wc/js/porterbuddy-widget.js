@@ -141,6 +141,9 @@ jQuery( function( $ ) {
 		// merge express and regular deliveries
 		var deliveryDates = $.merge($.merge([], data.express), data.delivery);
 
+		deliveryDates.shift();
+		data.express = undefined;
+
 		// set first and last available date
 		var firstAvailableDate = $(deliveryDates).get(0).start;
 		var lastAvailableDate = $(deliveryDates).get(-1).start;
@@ -264,6 +267,13 @@ jQuery( function( $ ) {
 			{
 				$(this).removeClass('porterbuddy-hide');
 			});
+			
+			// remove text saying it's empty
+			$('#timeslots').remove('p');
+		}
+		else
+		{
+			$('#timeslots').prepend('<p>'+objectL10n.noSlotsAvailable+'</p>');
 		}
 
 		// if no slots are active, set the first one active
