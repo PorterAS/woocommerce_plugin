@@ -355,18 +355,8 @@ jQuery( function( $ ) {
 				{
 					unblock( $( 'div.porterbuddy-widget' ) );
 
-					// update shipping cost
-					$('#shipping_method label[for="shipping_method_0_porterbuddy-wc"] .woocommerce-Price-amount').contents().filter(function(){ 
-					  return this.nodeType == 3; 
-					})[0].nodeValue = price;
-					// get cart subtotal
-					var subTotal = $('.cart-subtotal .woocommerce-Price-amount').contents().filter(function(){ 
-					  return this.nodeType == 3; 
-					})[0].nodeValue;
-					// and update cart total with updated shipping cost
-					$('.order-total .woocommerce-Price-amount').contents().filter(function(){ 
-					  return this.nodeType == 3; 
-					})[0].nodeValue = parseFloat(subTotal) + parseFloat(price);
+					// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
+					$( document.body ).trigger( 'updated_shipping_method' );
 
 				},
 				success: function ( response )
@@ -423,7 +413,7 @@ jQuery( function( $ ) {
 		 */
 		$( '#porterbuddy-widget' ).on(
 			'click',
-			'label #porterbuddy_return, label #porterbuddy_leave_doorstep',
+			'label #porterbuddy_return, label #porterbuddy_leave_doorstep, .porterbuddy-widget-timeslot',
 			function () 
 			{
 				// update timeblock prices
@@ -432,14 +422,14 @@ jQuery( function( $ ) {
 				setShippingSelection();	
 			}
 		);
-		// $( '#porterbuddy-widget' ).on(
-		// 	'blur',
-		// 	'.porterbuddy-widget-comment',
-		// 	function () 
-		// 	{
-		// 		setShippingSelection();
-		// 	}
-		// );
+		$( '#porterbuddy-widget' ).on(
+			'blur',
+			'.porterbuddy-widget-comment',
+			function () 
+			{
+				setShippingSelection();
+			}
+		);
 		$( '.checkout-button, #place_order').on(
 			'click',
 			function() 
