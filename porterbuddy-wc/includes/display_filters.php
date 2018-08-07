@@ -220,7 +220,7 @@ function render_delivery_message($start, $end)
 	$start_dto->setTimezone(new DateTimeZone('Europe/Oslo'));
 	$end_dto = new DateTime($end);
 	$end_dto->setTimezone(new DateTimeZone('Europe/Oslo'));
-	return sprintf( __( 'The order will be delivered between %s and %s on %s'), $start_dto->format('H:i'), $end_dto->format('H:i'), $start_dto->format('l jS F'));
+	return sprintf( __( 'The order will be delivered between %s and %s on %s', 'porterbuddy-wc'), $start_dto->format('H:i'), $end_dto->format('H:i'), date_i18n('l j F'));
 }
 
 function lookup_window()

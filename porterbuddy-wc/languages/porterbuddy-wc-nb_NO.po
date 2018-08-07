@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
 "POT-Creation-Date: 2018-08-03 14:28+0200\n"
-"PO-Revision-Date: 2018-08-03 14:29+0200\n"
+"PO-Revision-Date: 2018-08-07 09:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nb_NO\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: includes/display_filters.php:213
 msgid "The order will be delivered between %s and %s on %s"
-msgstr "Orderen bil bli levert mellom %s og %s, den %s"
+msgstr "Orderen bil bli levert mellom %s og %s, %s"
 
 #: includes/options.php:108
 msgid "General Settings"
