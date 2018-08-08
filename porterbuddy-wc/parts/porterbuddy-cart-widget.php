@@ -37,7 +37,7 @@ function pb_cart_display() {
 		<div class="porterbuddy-widget-return">
 			<label>
 				<input type="checkbox" value="0" id="porterbuddy_return">
-				<?= esc_html_e( $settings['return_text'], 'porterbuddy-wc' ) ?> (<?= esc_html_e( 'pris', 'porterbuddy-wc' ) ?>: <span class="price"><?= $settings['return_price'] ?>,-</span>)
+				<?= esc_html_e( $settings['return_text'], 'porterbuddy-wc' ) ?> (<?= esc_html_e( 'price', 'porterbuddy-wc' ) ?>: <span class="price"><?= $settings['return_price'] ?>,-</span>)
 			</label>
 		</div>
 

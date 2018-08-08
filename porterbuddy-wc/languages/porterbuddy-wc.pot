@@ -509,6 +509,10 @@ msgstr ""
 msgid "Thank you"
 msgstr ""
 
+#: parts/porterbuddy-cart-widget.php:40
+msgid "price"
+msgstr ""
+
 #. #-#-#-#-#  porterbuddy-wc.po (PorterBuddy Shipping 0.0.3)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: includes/shipping_methods.php:14 includes/shipping_methods.php:24
