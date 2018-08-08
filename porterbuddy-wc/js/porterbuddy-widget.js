@@ -24,22 +24,21 @@ jQuery( function( $ ) {
 			{
 				date: date,
 				iso: moment(date).format(),
-				formatted: moment(date).format('dddd Do MMM')
+				formatted: moment(date).format('ddd Do MMM')
 			};
-
-			// set widget date
-			$( '#selected-date' ).text( dateObject["formatted"] );
 		},
 
-		set: function(day) 
+		set: function( dateToSet ) 
 		{
-			date.setDate(day);
+			date.setFullYear( moment(dateToSet).format("YYYY") );
+			date.setMonth( moment(dateToSet).format("M")-1 );
+			date.setDate( moment(dateToSet).format("D") );
 
 			dateObject = 
 			{
 				date: date,
 				iso: moment(date).format(),
-				formatted: moment(date).format('dddd Do MMM')
+				formatted: moment(date).format('ddd Do MMM')
 			};
 
 			return dateObject;
@@ -53,7 +52,7 @@ jQuery( function( $ ) {
 			{
 				date: date,
 				iso: moment(date).format(),
-				formatted: moment(date).format('dddd Do MMM')
+				formatted: moment(date).format('ddd Do MMM')
 			};
 
 			return dateObject;
@@ -67,7 +66,7 @@ jQuery( function( $ ) {
 			{
 				date: date,
 				iso: moment(date).format(),
-				formatted: moment(date).format('dddd Do MMM')
+				formatted: moment(date).format('ddd Do MMM')
 			};
 
 			return dateObject;
@@ -106,19 +105,20 @@ jQuery( function( $ ) {
 				},
 				beforeSend: function () 
 				{
-					block( $( 'div.cart_totals' ) );
+					block( $( 'div.porterbuddy-widget' ) );
 				},
 				complete: function ()
 				{
-					unblock( $( 'div.cart_totals' ) );
+					unblock( $( 'div.porterbuddy-widget' ) );
 				},
 				success: function ( response )
 				{
 					if ( response['data']['delivery'] != undefined )
 					{
-						populateTimeslots( '#timeslots', response['data'] ); // generates availableDates
-						upDateTimesControl();
-						setShippingSelection();
+						// popuplate available dates from API
+						populateTimeslots( '#timeslots', response['data'] );
+						// set shipping session data if not available already and update navigational control for timeslots
+						getShippingSelection( upDateTimesControl, setShippingSelection );
 					} 
 					else
 					{
@@ -159,10 +159,10 @@ jQuery( function( $ ) {
 			if ( firstAvailableDate == undefined ) return false;
 
 			// set date to first available slot and make available
-			$( '#selected-date' ).text( moment(availableDates['firstAvailableDate']).format('dddd Do MMM') ).removeClass('unavailable');
+			$( '#selected-date' ).text( moment(availableDates['firstAvailableDate']).format('ddd Do MMM') ).removeClass('unavailable');
 			
 			// set date object to available
-			date.set( moment(availableDates['firstAvailableDate']).format('D') ); // #RPT: might need work due to js setDate functionality
+			date.set( moment(availableDates['firstAvailableDate']).format('YYYY-MM-DD') );
 
 
 			// add available express timeslots
@@ -217,15 +217,29 @@ jQuery( function( $ ) {
 		/**
 		 * Update which timeslots to display, and navigational controls.
 		 */
-		function upDateTimesControl ()
+		function upDateTimesControl ( dateGiven )
 		{
+			// get date if set, or fetch from dateobject
+			if ( dateGiven != undefined )
+			{
+				var dateChosen = moment( dateGiven ).format('YYYY-MM-DD');
+				$( '#selected-date' ).text( date.set(dateChosen) );
+			}
+			else
+			{
+				var dateChosen = moment( dateObject.iso ).format('YYYY-MM-DD');
+			}
+
 			// format dates to same time 
-			var dateChosen = moment( dateObject.iso ).format('YYYY-MM-DD');
 			dateChosen = moment( dateChosen ).format();
 			var dateFirst = moment( availableDates['firstAvailableDate'] ).format('YYYY-MM-DD');
 			dateFirst = moment( dateFirst ).format();
 			var dateLast = moment( availableDates['lastAvailableDate'] ).format('YYYY-MM-DD');
 			dateLast = moment( dateLast ).format();
+
+
+			// set date
+			$( '#selected-date' ).text( dateObject['formatted'] );
 			
 
 			// set date prev selector 
@@ -286,7 +300,8 @@ jQuery( function( $ ) {
 			{
 				MakeActive = $('.porterbuddy-widget-timeslot').get(0);
 				$(MakeActive).addClass('active');
-				setShippingSelection();	
+				// save selection to session data
+				setShippingSelection();
 			}
 
 			return true;
@@ -304,18 +319,64 @@ jQuery( function( $ ) {
 			if ( $(this).hasClass('prev-date') && !$(this).hasClass('unavailable') )
 			{
 				$( '#selected-date' ).text( date.prev );
-				$( '#selected-date' ).text( dateObject['formatted'] );
 			}
 
 			if ( $(this).hasClass('next-date') && !$(this).hasClass('unavailable') )
 			{
 				$( '#selected-date' ).text( date.next );
-				$( '#selected-date' ).text( dateObject['formatted'] );
 			}
 
 			// update controls accordingly
 			upDateTimesControl();
 		})
+
+
+		/**
+		 * Update widget with session from PorterBuddy shipping selection
+		 */
+		 function getShippingSelection ( callback, callback )
+		 {
+			$.ajax(
+			{
+				url: pbWidgetPHP['ajaxphp'],
+				type: 'GET',
+				dataType: 'json',
+				cache: false,
+				data:
+				{
+					action: 'getShippingSelection',
+				},
+				beforeSend: function () 
+				{
+					block( $( 'div.porterbuddy-widget' ) );
+				},
+				complete: function ()
+				{
+					unblock( $( 'div.porterbuddy-widget' ) );
+				},
+				success: function ( response )
+				{
+					if ( response.status == "success" )
+					{
+						$('.porterbuddy-widget-timeslot[timeslot="' + response.pb_windowStart + '"]').addClass("active");
+						$('label #porterbuddy_return').prop("checked", $.parseJSON(response.pb_returnOnDemand)); 
+						$('label #porterbuddy_leave_doorstep').prop("checked", $.parseJSON(response.pb_leaveDoorStep)); 
+						$('#porterbuddy_comment').val( response.pb_message );
+
+						upDateTimesControl( response.pb_windowStart );
+						updateTimeBlockPrices();
+					}
+					else
+					{
+						upDateTimesControl();
+					}
+				},
+				error: function ( error )
+				{
+					return false;
+				},
+			})
+		 }
 
 
 		/**
@@ -356,7 +417,7 @@ jQuery( function( $ ) {
 					unblock( $( 'div.porterbuddy-widget' ) );
 
 					// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
-					$( document.body ).trigger( 'updated_shipping_method' );
+					//$( document.body ).trigger( 'updated_shipping_method' );
 
 				},
 				success: function ( response )
@@ -446,7 +507,6 @@ jQuery( function( $ ) {
 	 * after woo cart updates with ajax, reinitiate widget
 	 */
 	 $( document.body ).on( 'updated_cart_totals', function(){
-	 	console.log("reload!");
 	 	porterbuddy();
 	 });
 
