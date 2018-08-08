@@ -31,7 +31,7 @@ add_action( 'woocommerce_add_cart_item_data', function()
 
 
 /**
- * Add AJAX endpoints to save shipping data
+ * Add AJAX endpoint to save shipping data
  */
 add_action( 'wp_ajax_setShippingSelection', 'setShippingSelection' );
 add_action( 'wp_ajax_nopriv_setShippingSelection', 'setShippingSelection' );
@@ -54,6 +54,39 @@ function setShippingSelection()
 	{
 		echo json_encode( "Nonce could not be validated!" );
 	}
+	
+	// required to terminate immediately after returning a proper response
+	wp_die(); 
+}
+
+
+/**
+ * Add AJAX endpoint to get shipping data
+ */
+add_action( 'wp_ajax_getShippingSelection', 'getShippingSelection' );
+add_action( 'wp_ajax_nopriv_getShippingSelection', 'getShippingSelection' );
+function getShippingSelection()
+{
+	// get woo session variables
+	$PBsessionData['pb_type'] = WC()->session->get( 'pb_type' );
+	$PBsessionData['pb_windowStart'] = WC()->session->get( 'pb_windowStart' );
+	$PBsessionData['pb_returnOnDemand'] = WC()->session->get( 'pb_returnOnDemand' );
+	$PBsessionData['pb_leaveDoorStep'] = WC()->session->get( 'pb_leaveDoorStep' );
+	$PBsessionData['pb_message'] = WC()->session->get( 'pb_message' );
+
+	// check if timewindow exists
+	if ( ! empty($PBsessionData['pb_windowStart']) )
+	{
+		$PBsessionData['status'] = "success";
+	}
+	else
+	{
+		$PBsessionData['status'] = "Data was not accessible!";
+	}
+
+	// return json data type
+	header('Content-Type: application/json');
+	echo json_encode( $PBsessionData );
 	
 	// required to terminate immediately after returning a proper response
 	wp_die(); 

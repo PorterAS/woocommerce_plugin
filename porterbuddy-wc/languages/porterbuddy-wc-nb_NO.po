@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
-"POT-Creation-Date: 2018-08-02 10:24+0200\n"
-"PO-Revision-Date: 2018-08-02 10:25+0200\n"
+"POT-Creation-Date: 2018-08-08 10:39+0200\n"
+"PO-Revision-Date: 2018-08-08 10:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nb_NO\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: includes/display_filters.php:213
 msgid "The order will be delivered between %s and %s on %s"
-msgstr "Orderen bil bli levert mellom %s og %s, den %s"
+msgstr "Orderen bil bli levert mellom %s og %s, %s"
 
 #: includes/options.php:108
 msgid "General Settings"
@@ -160,7 +160,7 @@ msgstr "Innstillinger for widgeten som vises på produktsiden"
 
 #: includes/options.php:186
 msgid "Enable Widget"
-msgstr "Aktiver vidgeten"
+msgstr "Aktiver Widgeten"
 
 #: includes/options.php:188
 msgid "Enable or disable the product page widget."
@@ -371,25 +371,21 @@ msgstr "Åpner lørdag"
 msgid "Closing saturday"
 msgstr "Stenger lørdag"
 
-#: includes/options.php:457
-msgid "Add shipping automatically"
-msgstr ""
-
-#: includes/options.php:459
-msgid "Not sure what this does yet"
-msgstr ""
-
 #: includes/options.php:468
 msgid "Default phone country code"
 msgstr "Standard områdekode for telefon"
 
-#: includes/options.php:471
-msgid "+47"
-msgstr ""
+#: includes/options.php:476
+msgid "Default phone country code (Ex. \"+47\")"
+msgstr "Standard områdekode, eks. +47"
 
 #: includes/options.php:475
 msgid "Packing time"
 msgstr "Pakketid"
+
+#: includes/options.php:483
+msgid "In minutes"
+msgstr "I minutter"
 
 #: includes/options.php:483
 msgid "Delivery Verifications"
@@ -532,6 +528,10 @@ msgstr ""
 #: includes/scripts.php:22
 msgid "Thank you"
 msgstr "Takk"
+
+#: parts/porterbuddy-cart-widget.php:40
+msgid "price"
+msgstr "pris"
 
 #. Plugin Name of the plugin/theme
 #: includes/shipping_methods.php:14 includes/shipping_methods.php:24

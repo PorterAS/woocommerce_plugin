@@ -1,33 +1,59 @@
 /**
- * Porterbuddy cart widget styles
+ * Porterbuddy widget styles
  */
 .porterbuddy-widget {
+    font-size: 100%;
 	background-color: #f8f8f8;
-	padding: 1rem;
-	margin-bottom: 1rem;
+	padding: 1em;
+	margin-bottom: 1em;
 }
+.porterbuddy-widget-title {
+    line-height: 1.5em;
+    margin-top: 0.5em;
+}
+
+
+/**
+ * Porterbuddy widget form styles
+ */
+.porterbuddy-widget-return, .porterbuddy-widget-leave-doorstep, .porterbuddy-widget-comment {
+    font-size: 0.8em;
+    margin-bottom: 0.5em;
+}
+.porterbuddy-widget-comment textarea {
+    background-color: #fdfdfd;
+    margin-top: 0.5em;
+}
+
+
+/**
+ * Porterbuddy widget date selectors
+ */
 .porterbuddy-widget-date-selectors {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.5em;
     align-items: center;
+    line-height: 1.2;
+    font-size: 0.9em;
 }
 .porterbuddy-widget-selected-date {
-	font-size: 1.3rem;
+	font-size: 1.2em;
     font-weight: 700;
     text-transform: uppercase;
     color: black;
     text-align: center;
-    margin: 0 0.1rem;
+    margin: 0 0.1em;
 }
 .porterbuddy-widget-date-selector.prev-date:before, .porterbuddy-widget-date-selector.next-date:after {
-	width: 1rem;
-    height: 1rem;
+	width: 0.8em;
+    height: 0.8em;
     content: " ";
     display: inline-block;
     vertical-align: middle;
 	transform: scale(0.8);
-	margin-left: 0.1rem;
+	margin-left: 0.2em;
+    margin-bottom: 0.1rem;
 
 	-webkit-mask: url(../assets/porterbuddy-arrow.svg) no-repeat 50% 50%;
 	mask: url(../assets/porterbuddy-arrow.svg) no-repeat 50% 50%;
@@ -46,48 +72,55 @@
 	background-color: rgba(0,0,0,0.3);
 }
 
+
 /**
- * Widget timeslots
+ * Porterbuddy widget timeslots
  */
 .porterbuddy-widget-timeslots {
 	display: flex;
     flex-wrap: wrap;
     justify-content: normal;
-    margin-left: -0.2rem;
-    margin-right: -0.2rem;
-    margin-bottom: 1.5rem;
+    margin-left: -0.2em;
+    margin-right: -0.2em;
+    margin-bottom: 1.5em;
+}
+.porterbuddy-widget-timeslots p {
+    margin: 0 2em;
+    font-size: 0.9em;
+    font-style: italic;
+    color: #bbb;
 }
 .porterbuddy-widget-timeslot {
 	border: 1px solid #cdcdcd;
-    flex-basis: 7rem;
-    height: 4.5rem;
+    flex-basis: 7em;
+    height: 4.5em;
     text-align: center;
-    margin: 0.2rem;
+    margin: 0.2em;
     display: flex;
     flex-flow: column;
     justify-content: center;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
     box-sizing: border-box;
     background-color: #fdfdfd;
     cursor: pointer;
 }
 .porterbuddy-widget-timeslot div{
-	flex-basis: 4rem;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
+	flex-basis: 4em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
 }
 .porterbuddy-widget-timeslot h6 {
-	font-size: 1rem;
+	font-size: 1em;
     color: black;
     text-transform: uppercase;
     font-weight: 700;
     margin: 0;
     white-space: nowrap;
-    line-height: 1.1rem;
+    line-height: 1.1em;
 }
 .porterbuddy-widget-timeslot p {
-	font-size: 0.9rem;
+	font-size: 0.9em;
     color: rgba(0,0,0,0.5);
     margin: 0;
 }
@@ -105,26 +138,13 @@
 }
 
 /**
- * Widget form styles
- */
-.porterbuddy-widget-return, .porterbuddy-widget-leave-doorstep, .porterbuddy-widget-comment {
-	font-size: 0.8rem;
-	margin-bottom: 0.5rem;
-}
-.porterbuddy-widget-comment textarea {
-	background-color: #fdfdfd;
-	margin-top: 0.5rem;
-}
-
-
-/**
  * Porterbuddy general styles
  */
 .porterbuddy-error {
-	color: red;
-	margin-left: 0.2rem;
-	margin-top: 0.2rem;
+    color: red;
+    margin-left: 0.2em;
+    margin-top: 0.2em;
 }
 .porterbuddy-hide {
-	display: none;
+    display: none;
 }

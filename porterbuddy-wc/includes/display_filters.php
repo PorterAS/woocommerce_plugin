@@ -6,13 +6,12 @@
  */
 function pb_before_checkout_create_order( $order, $data ) {
 	if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
-		$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
 		$items = $order->get_items('shipping');
 		foreach ($items as $item)
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
-				$window = lookup_window(WC()->session->get('pb_windowStart'));
+				$window = lookup_window();
 				if(WC()->session->get('pb_windowStart') == NULL || WC()->session->get('pb_windowStart') == '') throw new Exception('PorterBuddy delivery window must be set');
 				elseif($window == null) throw new Exception('Invalid delivery window for PorterBuddy.');
 			}
@@ -23,10 +22,13 @@ add_action('woocommerce_checkout_create_order', 'pb_before_checkout_create_order
 
 // Hide our custom meta data (Related to the data above)
 function pb_woocommerce_hidden_order_itemmeta($arr) {
-	//$arr[] = '_pb_window_start';
-	//$arr[] = '_pb_window_end';
-	$arr[] = '_pb_price';
-	$arr[] = '_pb_idcheck';
+	$arr[] = '_pb_window_start';
+	$arr[] = '_pb_window_end';
+	$arr[] = '_pb_minimumAgeCheck';
+	$arr[] = '_pb_leaveAtDoorstep';
+	$arr[] = '_pb_idCheck';
+	$arr[] = '_pb_requireSignature';
+	$arr[] = '_pb_onlyToRecipient';
 	return $arr;
 }
 add_filter('woocommerce_hidden_order_itemmeta', 'pb_woocommerce_hidden_order_itemmeta', 10, 1);
@@ -89,7 +91,7 @@ function pb_display_order_complete( $order_id ) {
 						if(isset($window_start) && strlen($window_start) > 6)
 						{
 
-							$window = lookup_window($window_start);
+							$window = lookup_window();
 
 							if($window != null) {
 								if ( $return_on_demand ) {
@@ -171,6 +173,16 @@ function pb_display_order_complete( $order_id ) {
 									if(isset($api->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $api->overviewUrl, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_window_start', $window->start, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_window_end', $window->end, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_minimumAgeCheck', $settings['min_age'], true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_leaveAtDoorstep', $leaveDoorStep, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_idCheck', $settings['id_verification'] == 1, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_requireSignature', $settings['signature_required'] == 1, true );
+									wc_add_order_item_meta( $item->get_id(), '_pb_onlyToRecipient', $settings['only_to_recipient'] == 1, true );
+									WC()->session->__unset( 'pb_windowStart' );
+									WC()->session->__unset( 'pb_returnOnDemand' );
+									WC()->session->__unset( 'pb_type' );
+									WC()->session->__unset( 'pb_leaveDoorStep' );
+									WC()->session->__unset( 'pb_message' );
 								}
 							}
 						}
@@ -190,16 +202,14 @@ add_action('woocommerce_thankyou', 'pb_display_order_complete', 10, 1);
 // Admin: order
 function pb_admin_display($order){
 	if( $order->has_shipping_method(PORTERBUDDY_PLUGIN_NAME) ) {
-		$order->add_meta_data( 'porterbuddy_shipping', 'yes', true);
 		$items = $order->get_items('shipping');
 		foreach ($items as $item)
 		{
 			if($item->get_method_id() == PORTERBUDDY_PLUGIN_NAME)
 			{
-				// Displaying something
-				var_dump(wc_get_order_item_meta($item->get_id(), '_pb_order_id', true));
 				echo '<p><strong>Porterbuddy Details</strong></p>';
-				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true))."</p>";
+				echo "<p>".render_delivery_message(wc_get_order_item_meta($item->get_id(), '_pb_window_start', true), wc_get_order_item_meta($item->get_id(), '_pb_window_end', true)).".</p>";
+				echo "<p><a href='".wc_get_order_item_meta($item->get_id(), '_pb_overview_url', true)."' target='_blank'>Tracking</a>";
 			}
 		}
 	}
@@ -210,7 +220,7 @@ function render_delivery_message($start, $end)
 	$start_dto->setTimezone(new DateTimeZone('Europe/Oslo'));
 	$end_dto = new DateTime($end);
 	$end_dto->setTimezone(new DateTimeZone('Europe/Oslo'));
-	return sprintf( __( 'The order will be delivered between %s and %s on %s'), $start_dto->format('H:i'), $end_dto->format('H:i'), $start_dto->format('l jS F'));
+	return sprintf( __( 'The order will be delivered between %s and %s on %s', 'porterbuddy-wc'), $start_dto->format('H:i'), $end_dto->format('H:i'), date_i18n('l j F'));
 }
 
 function lookup_window()
@@ -220,8 +230,10 @@ function lookup_window()
 	if(isset($api_result['data'][WC()->session->get('pb_type')]))
 	{
 		foreach ($api_result['data'][WC()->session->get('pb_type')] as $win) {
-			if ($win->start == WC()->session->get('pb_windowStart')) $window = Window::load($win);
-			break;
+			if ($win->start == WC()->session->get('pb_windowStart')) {
+				$window = Window::load($win);
+				break;
+			}
 		}
 	}
 	return $window;

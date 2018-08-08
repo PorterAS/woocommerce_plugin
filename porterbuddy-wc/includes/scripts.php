@@ -5,7 +5,7 @@ function porterbuddy_scripts( $page )
 {
 	// Reigster scripts in WP
 	wp_register_script( 'wp-porterbuddy-shipping-calc-js', plugins_url( '../js/porterbuddy-shipping-calc.js', __FILE__ ), array( 'jquery' ) );
-	wp_register_script( 'wp-porterbuddy-scripts', plugins_url( '../js/porterbuddy-scripts.js', __FILE__ ), array( 'jquery' ) );
+	wp_register_script( 'wp-porterbuddy-scripts-js', plugins_url( '../js/porterbuddy-scripts.js', __FILE__ ), array( 'jquery' ) );
 	wp_register_script( 'wp-porterbuddy-widget-js', plugins_url( '../js/porterbuddy-widget.js', __FILE__ ), array( 'jquery' ) );
 	wp_register_script( 'wp-porterbuddy-moment-js', plugins_url( '../libraries/moment-min.js', __FILE__ ) );
 
@@ -14,6 +14,7 @@ function porterbuddy_scripts( $page )
 		'countryError' => esc_html__( 'You have to select a country', PORTERBUDDY_PLUGIN_NAME ),
 		'postcodeError' => esc_html__( 'Postcode must be 3 or more numbers!', PORTERBUDDY_PLUGIN_NAME ),
 		'geoError' => esc_html__( 'You have blocked GEO requests in your browser and must change your settings to use your location for this.', PORTERBUDDY_PLUGIN_NAME ),
+		'noSlotsAvailable' => esc_html__( 'Unfortunately there are no available time slots. Please try another day.', PORTERBUDDY_PLUGIN_NAME ),
 	) );
 	wp_localize_script( 'wp-porterbuddy-widget-js', 'pbWidgetPHP', array(
 		'ajaxphp'	=> admin_url( 'admin-ajax.php' ),
@@ -29,6 +30,6 @@ function porterbuddy_scripts( $page )
 	// Enqueue defaults
 	wp_enqueue_style( 'wp-porterbuddy-styles' );
 	wp_enqueue_script( 'wp-porterbuddy-moment-js' );
-	wp_enqueue_script( 'wp-porterbuddy-scripts' );
+	wp_enqueue_script( 'wp-porterbuddy-scripts-js' );
 
 }

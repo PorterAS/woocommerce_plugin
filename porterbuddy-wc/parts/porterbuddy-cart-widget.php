@@ -18,36 +18,40 @@ function pb_cart_display() {
 		<img src="<?= plugins_url("../assets/", __FILE__) ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
 	</div>
 	
-	<h3 class="porterbuddy-widget-title"><?= $settings['title'] ?></h3>
+	<h3 class="porterbuddy-widget-title"><?= __($settings['title'], 'porterbuddy-wc') ?></h3>
 	
-	<p class="porterbuddy-widget-description"><?= $settings['description'] ?></p>
+	<p class="porterbuddy-widget-description"><?= __($settings['description'], 'porterbuddy-wc') ?></p>
 	
 	<div class="porterbuddy-widget-date-selectors">
-		<a href="#" class="porterbuddy-widget-date-selector prev-date unavailable">Forrige dag</a>
-		<span id="selected-date" class="porterbuddy-widget-selected-date selected-date unavailable"><?= strftime("%A %e %b") ?></span>
-		<a href="#" class="porterbuddy-widget-date-selector next-date unavailable">Neste dag</a>
+		<a href="#" class="porterbuddy-widget-date-selector prev-date unavailable">Forrige</a>
+		<span id="selected-date" class="porterbuddy-widget-selected-date selected-date unavailable"> </span>
+		<a href="#" class="porterbuddy-widget-date-selector next-date unavailable">Neste</a>
 	</div>
 
 	<div id="timeslots" class="porterbuddy-widget-timeslots">
 
 	</div>
 
-	<div class="porterbuddy-widget-return">
-		<label>
-			<input type="checkbox" value="0" id="porterbuddy_return">
-			Retur on-demand; Budet venter inntil 10 minutter og tar varer med seg varer i retur on ønskelig (pris <span class="price"><?= $settings['return_price'] ?></span>)
-		</label>
-	</div>
+	<?php if ($settings['return'] == 1): ?>
+
+		<div class="porterbuddy-widget-return">
+			<label>
+				<input type="checkbox" value="0" id="porterbuddy_return">
+				<?= esc_html_e( $settings['return_text'], 'porterbuddy-wc' ) ?> (<?= esc_html_e( 'price', 'porterbuddy-wc' ) ?>: <span class="price"><?= $settings['return_price'] ?>,-</span>)
+			</label>
+		</div>
+
+	<?php endif; ?>
 
 	<div class="porterbuddy-widget-leave-doorstep">
 		<label>
 			<input type="checkbox" value="1" id="porterbuddy_leave_doorstep" checked="checked">
-			Budet kan levere pakken utenfor døren på leveranse adressen
+			<?= esc_html_e( $settings['leave_at_door'], 'porterbuddy-wc' ) ?>
 		</label>
 	</div>
 
 	<div class="porterbuddy-widget-comment">
-		<textarea id="porterbuddy_comment" placeholder="Evt. beskjet til budet" maxlength="512"></textarea>
+		<textarea id="porterbuddy_comment" placeholder="<?= esc_html_e( $settings['courier_message'], 'porterbuddy-wc' ) ?>" maxlength="512"></textarea>
 	</div>
 
 </div>

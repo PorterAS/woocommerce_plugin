@@ -45,7 +45,7 @@ if( is_product() ):
 			<?php endif; ?>
 
 			<p>
-				<button type="submit" name="calc_shipping" value="1" class="button"><?php esc_html_e( 'Update postcode', 'woocommerce' ); ?></button>
+				<button type="submit" name="calc_shipping" value="1" class="button"><?php esc_html_e( 'Update postcode', 'porterbuddy-wc' ); ?></button>
 				<?php if ( $form_postcode ) : ?>
 					<button type="button" class="use_geo_btn"><?php esc_html_e( 'Use your location', 'porterbuddy-wc' ); ?></button>
 				<?php endif; ?>

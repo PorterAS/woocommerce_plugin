@@ -7,6 +7,7 @@ function porterbuddy_validate_order( $posted )   {
 
 	if( is_array( $chosen_methods ) && in_array( PORTERBUDDY_PLUGIN_NAME, $chosen_methods ) ) {
 
+
 		foreach ( $packages as $i => $package ) {
 
 			if ( $chosen_methods[ $i ] != PORTERBUDDY_PLUGIN_NAME ) {
@@ -20,7 +21,8 @@ function porterbuddy_validate_order( $posted )   {
 			foreach ( $package['contents'] as $item_id => $values )
 			{
 				$_product = $values['data'];
-				$weight = $weight + $_product->get_weight() * $values['quantity'];
+				$product_weight = $_product->get_weight() == '' ? (int) $PorterBuddy_Shipping_Method->settings['default_product_weight'] : $_product->get_weight();
+				$weight = $weight + $product_weight * $values['quantity'];
 			}
 
 			$weight = wc_get_weight( $weight, 'kg' );
