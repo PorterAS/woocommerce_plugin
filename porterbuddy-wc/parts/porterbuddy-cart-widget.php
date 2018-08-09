@@ -23,9 +23,9 @@ function pb_cart_display() {
 	<p class="porterbuddy-widget-description"><?= __($settings['description'], 'porterbuddy-wc') ?></p>
 	
 	<div class="porterbuddy-widget-date-selectors">
-		<a href="#" class="porterbuddy-widget-date-selector prev-date unavailable">Forrige</a>
+		<a href="#" class="porterbuddy-widget-date-selector prev-date unavailable"><?= __('Previous', 'porterbuddy-wc') ?></a>
 		<span id="selected-date" class="porterbuddy-widget-selected-date selected-date unavailable"> </span>
-		<a href="#" class="porterbuddy-widget-date-selector next-date unavailable">Neste</a>
+		<a href="#" class="porterbuddy-widget-date-selector next-date unavailable"><?= __('Next', 'porterbuddy-wc') ?></a>
 	</div>
 
 	<div id="timeslots" class="porterbuddy-widget-timeslots">

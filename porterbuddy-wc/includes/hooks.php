@@ -95,6 +95,8 @@ function getShippingSelection()
 /**
  * Woocommerce Shipping Cost Cache Killer
  */
+
+// Add to admin-ajax.php for checkout calls
 add_action( 'wp_ajax_pb_kill_shipping_cost_cache', 'pb_kill_shipping_cost_cache' );
 add_action( 'wp_ajax_nopriv_pb_kill_shipping_cost_cache', 'pb_kill_shipping_cost_cache' );
 function pb_kill_shipping_cost_cache()
@@ -102,12 +104,14 @@ function pb_kill_shipping_cost_cache()
 	// START    Shipping cost cache killer
 	$contents = WC()->cart->cart_contents;
 	foreach ( $contents as $key => $content ) {
-		$contents[ $key ]['data_hash'] = md5( time() );
+		$contents[ $key ]['data_hash'] = md5( time() ); // Unset the hash to force cart update
 	}
 	WC()->cart->set_cart_contents( $contents );
 	WC()->cart->calculate_shipping();
 	// END      Shipping cost cache killer
 }
+
+// Add to cart and checkout
 if(
 	isset($settings['enabled']) && $settings['enabled'] == 'yes'
 ) {

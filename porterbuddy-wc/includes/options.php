@@ -611,7 +611,7 @@ return array(
 	'mapbox_api_key' => array(
 		'title' => __( 'MapBox API key', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Can be obtained from _LINK_' ),
+		'description' => __( 'Can be obtained from <a href=\'https://www.mapbox.com/account/\'>here</a>', 'porterbuddy-wc' ),
 		'default' => ''
 	),
 );
