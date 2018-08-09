@@ -75,7 +75,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	) {
 		add_action( 'woocommerce_proceed_to_checkout', 'pb_cart_display', 10 );
 	}
-	
+
 	// Checkout Widget
 	if(
 		isset($settings['enabled']) && $settings['enabled'] == 'yes' 

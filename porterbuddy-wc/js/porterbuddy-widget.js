@@ -421,22 +421,23 @@ jQuery( function( $ ) {
 
 
                     /* global wc_cart_params */
-                    var get_url = function( endpoint ) {
+                    var pb_get_url = function( endpoint ) {
                         return wc_cart_params.wc_ajax_url.toString().replace(
                             '%%endpoint%%',
                             endpoint
                         );
                     };
-                    var update_cart_totals_div = function( html_str ) {
-                        $( '.cart_totals' ).replaceWith( html_str );
+                    var pb_update_cart_totals_div = function( html_str ) {
+                        var table = $(html_str).find('.shop_table');
+                        $( '.cart_totals .shop_table' ).replaceWith( table );
                         $( document.body ).trigger( 'updated_cart_totals' );
                     };
 
                     $.ajax( {
-                        url:      get_url( 'get_cart_totals' ),
+                        url:      pb_get_url( 'get_cart_totals' ),
                         dataType: 'html',
                         success:  function( response ) {
-                            update_cart_totals_div( response );
+                            pb_update_cart_totals_div( response );
                         },
                         complete: function() {
                             unblock( $( 'div.cart_totals' ) );
@@ -530,9 +531,10 @@ jQuery( function( $ ) {
 	/**
 	 * after woo cart updates with ajax, reinitiate widget
 	 */
+
 	 $( document.body ).on( 'updated_cart_totals', function(){
-	 	porterbuddy();
-	 	console.log('trigggggad!');
+	 	//porterbuddy();
+	 	//console.log('trigggggad!');
 	 });
 
 });
