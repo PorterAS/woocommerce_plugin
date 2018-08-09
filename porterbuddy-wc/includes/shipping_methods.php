@@ -167,17 +167,6 @@ function porterbuddy_shipping_method() {
 
 function pb_checkout_display() {
 
-	// START    Shipping cost cache killer
-	if ( WC()->session->get( 'chosen_shipping_methods' )[0] == PORTERBUDDY_PLUGIN_NAME ) {
-		$contents = WC()->cart->cart_contents;
-		foreach ( $contents as $key => $content ) {
-			$contents[ $key ]['data_hash'] = md5( time() );
-		}
-		WC()->cart->set_cart_contents( $contents );
-		WC()->cart->calculate_shipping();
-	}
-	// END      Shipping cost cache killer
-
 /*
 	echo '<strong>Window Start:</strong> ';
 	var_dump(WC()->session->get('pb_windowStart'));

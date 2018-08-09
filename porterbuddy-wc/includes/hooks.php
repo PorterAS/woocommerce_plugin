@@ -91,3 +91,21 @@ function getShippingSelection()
 	// required to terminate immediately after returning a proper response
 	wp_die(); 
 }
+
+/**
+ * Woocommerce Shipping Cost Cache Killer
+ */
+function pb_kill_shipping_cost_cache()
+{
+	// START    Shipping cost cache killer
+	$contents = WC()->cart->cart_contents;
+	foreach ( $contents as $key => $content ) {
+		$contents[ $key ]['data_hash'] = md5( time() );
+	}
+	WC()->cart->set_cart_contents( $contents );
+	WC()->cart->calculate_shipping();
+	// END      Shipping cost cache killer
+}
+if(
+	isset($settings['enabled']) && $settings['enabled'] == 'yes'
+) add_action( 'woocommerce_cart_totals_before_shipping', 'pb_kill_shipping_cost_cache', 10 );

@@ -72,8 +72,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	include_once 'parts/porterbuddy-cart-widget.php';
 	if(
 		isset($settings['enabled']) && $settings['enabled'] == 'yes'
-	) add_action( 'woocommerce_proceed_to_checkout', 'pb_cart_display', 10 );
-
+	) {
+		add_action( 'woocommerce_proceed_to_checkout', 'pb_cart_display', 10 );
+	}
+	
 	// Checkout Widget
 	if(
 		isset($settings['enabled']) && $settings['enabled'] == 'yes' 

@@ -417,9 +417,31 @@ jQuery( function( $ ) {
 					unblock( $( 'div.porterbuddy-widget' ) );
 
 					// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
-                    $(document.body).trigger("shipping_calculator_submit");
 
-                    console.log('triggered');
+
+
+                    /* global wc_cart_params */
+                    var get_url = function( endpoint ) {
+                        return wc_cart_params.wc_ajax_url.toString().replace(
+                            '%%endpoint%%',
+                            endpoint
+                        );
+                    };
+                    var update_cart_totals_div = function( html_str ) {
+                        $( '.cart_totals' ).replaceWith( html_str );
+                        $( document.body ).trigger( 'updated_cart_totals' );
+                    };
+
+                    $.ajax( {
+                        url:      get_url( 'get_cart_totals' ),
+                        dataType: 'html',
+                        success:  function( response ) {
+                            update_cart_totals_div( response );
+                        },
+                        complete: function() {
+                            unblock( $( 'div.cart_totals' ) );
+                        }
+                    } );
 
 				},
 				success: function ( response )
@@ -510,6 +532,7 @@ jQuery( function( $ ) {
 	 */
 	 $( document.body ).on( 'updated_cart_totals', function(){
 	 	porterbuddy();
+	 	console.log('trigggggad!');
 	 });
 
 });
