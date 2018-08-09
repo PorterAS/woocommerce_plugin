@@ -95,6 +95,8 @@ function getShippingSelection()
 /**
  * Woocommerce Shipping Cost Cache Killer
  */
+add_action( 'wp_ajax_pb_kill_shipping_cost_cache', 'pb_kill_shipping_cost_cache' );
+add_action( 'wp_ajax_nopriv_pb_kill_shipping_cost_cache', 'pb_kill_shipping_cost_cache' );
 function pb_kill_shipping_cost_cache()
 {
 	// START    Shipping cost cache killer
@@ -108,4 +110,7 @@ function pb_kill_shipping_cost_cache()
 }
 if(
 	isset($settings['enabled']) && $settings['enabled'] == 'yes'
-) add_action( 'woocommerce_cart_totals_before_shipping', 'pb_kill_shipping_cost_cache', 10 );
+) {
+	add_action( 'woocommerce_checkout_before_order_review', 'pb_kill_shipping_cost_cache', 10 );
+	add_action( 'woocommerce_cart_totals_before_shipping', 'pb_kill_shipping_cost_cache', 10 );
+}

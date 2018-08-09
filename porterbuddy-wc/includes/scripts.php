@@ -18,6 +18,7 @@ function porterbuddy_scripts( $page )
 	) );
 	wp_localize_script( 'wp-porterbuddy-widget-js', 'pbWidgetPHP', array(
 		'ajaxphp'	=> admin_url( 'admin-ajax.php' ),
+		'ajaxwoo'	=> home_url( '?wc-ajax=' ),
 		'ajaxEndpoint'	=> plugins_url('../availability.php', __FILE__),
 		'translations'	=> array(
 			'ThankYou'	=>	__('Thank you', PORTERBUDDY_PLUGIN_NAME ),

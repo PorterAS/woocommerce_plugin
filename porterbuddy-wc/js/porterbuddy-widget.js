@@ -416,33 +416,60 @@ jQuery( function( $ ) {
 				{
 					unblock( $( 'div.porterbuddy-widget' ) );
 
-					// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
-
-
-
-                    /* global wc_cart_params */
-                    var pb_get_url = function( endpoint ) {
-                        return wc_cart_params.wc_ajax_url.toString().replace(
-                            '%%endpoint%%',
-                            endpoint
+					if($('#order_review').length > 0)
+					{
+                        $.ajax(
+                            {
+                                url: pbWidgetPHP['ajaxphp'],
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data:
+                                    {
+                                        action: 'pb_kill_shipping_cost_cache'
+                                    },
+                                success: function () {
+                                    $.ajax(
+                                        {
+                                            url: pbWidgetPHP['ajaxphp'],
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            cache: false,
+                                            data:
+                                                {
+                                                    action: 'woocommerce_update_order_review',
+                                                    security: wc_checkout_params.update_order_review_nonce
+                                                },
+                                            success: function (response)
+                                            {
+                                                $( '#order_review .shop_table' ).replaceWith( response.fragments['.woocommerce-checkout-review-order-table'] );
+                                                $( 'body' ).trigger( 'update_checkout' );
+                                            }
+                                        }
+                                    );
+                                }
+                            }
                         );
-                    };
-                    var pb_update_cart_totals_div = function( html_str ) {
-                        var table = $(html_str).find('.shop_table');
-                        $( '.cart_totals .shop_table' ).replaceWith( table );
-                        $( document.body ).trigger( 'updated_cart_totals' );
-                    };
+                    }
+                    else
+                    {
+                        var pb_update_cart_totals_div = function( html_str ) {
+                            var table = $(html_str).find('.shop_table');
+                            $( '.cart_totals .shop_table' ).replaceWith( table );
+                            $( document.body ).trigger( 'updated_cart_totals' );
+                        };
 
-                    $.ajax( {
-                        url:      pb_get_url( 'get_cart_totals' ),
-                        dataType: 'html',
-                        success:  function( response ) {
-                            pb_update_cart_totals_div( response );
-                        },
-                        complete: function() {
-                            unblock( $( 'div.cart_totals' ) );
-                        }
-                    } );
+                        $.ajax( {
+                            url:      pbWidgetPHP['ajaxwoo'] + 'get_cart_totals',
+                            dataType: 'html',
+                            success:  function( response ) {
+                                pb_update_cart_totals_div( response );
+                            },
+                            complete: function() {
+                                unblock( $( 'div.cart_totals' ) );
+                            }
+                        } );
+                    }
 
 				},
 				success: function ( response )
