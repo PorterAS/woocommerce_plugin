@@ -8,11 +8,11 @@
  * Author URI:              https://ellera.no/
  *
  * Version:                 1.0.0
- * Requires at least:       4.6
- * Tested up to:
+ * Requires at least:       4.9.8
+ * Tested up to:            4.9.8
  *
- * WC requires at least:    2.6
- * WC tested up to:
+ * WC requires at least:    3.4.4
+ * WC tested up to:         3.4.4
  *
  * Text Domain:             porterbuddy-wc
  * Domain Path:             /languages
