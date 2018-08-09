@@ -3,7 +3,7 @@
 /**
  * Plugin Name:             PorterBuddy Shipping
  * Plugin URI:
- * Description:             Adds Porterbuddy as a delivery option for your sales
+ * Description:             Adds Porterbuddy as a delivery option for WooCommerce
  * Author:                  Ellera AS
  * Author URI:              https://ellera.no/
  *
