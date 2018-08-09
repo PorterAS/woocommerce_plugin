@@ -105,7 +105,6 @@ function porterbuddy_shipping_method() {
 				$window_start = WC()->session->get('pb_windowStart');
 				$return_on_demand = WC()->session->get('pb_returnOnDemand') == 'true';
 				$type = WC()->session->get('pb_type') == 'express' ? 'express' : 'delivery';
-
 				if(isset($window_start) && strlen($window_start) > 6)
 				{
 					$window = null;
@@ -133,6 +132,7 @@ function porterbuddy_shipping_method() {
 							}
 							//die(var_dump([$this->get_option('price_override'), $this->get_option('express_price_override')]));
 							if($return_on_demand) $cost += $this->get_option('return_price', 79);
+							//die(var_dump($cost));
 						}
 					}
 					else $cost = $this->get_instance_option('cost');
@@ -164,9 +164,21 @@ function porterbuddy_shipping_method() {
 		}
 	}
 }
+
+function pb_checkout_display() {
+
+	// START    Shipping cost cache killer
+	if ( WC()->session->get( 'chosen_shipping_methods' )[0] == PORTERBUDDY_PLUGIN_NAME ) {
+		$contents = WC()->cart->cart_contents;
+		foreach ( $contents as $key => $content ) {
+			$contents[ $key ]['data_hash'] = md5( time() );
+		}
+		WC()->cart->set_cart_contents( $contents );
+		WC()->cart->calculate_shipping();
+	}
+	// END      Shipping cost cache killer
+
 /*
-function pb_checkout_display()
-{
 	echo '<strong>Window Start:</strong> ';
 	var_dump(WC()->session->get('pb_windowStart'));
 	echo '<br><strong>Return on Demand:</strong> ';
@@ -177,10 +189,11 @@ function pb_checkout_display()
 	var_dump(WC()->session->get('pb_leaveDoorStep'));
 	echo '<br><strong>Message:</strong> ';
 	var_dump(WC()->session->get('pb_message'));
+*/
 }
+
 add_action( 'woocommerce_after_order_notes', 'pb_checkout_display', 10 );
 add_action( 'woocommerce_cart_collaterals', 'pb_checkout_display', 10 );
-*/
 
 // Initialize the shipping method
 add_action( 'woocommerce_shipping_init', 'porterbuddy_shipping_method' );
@@ -191,8 +204,6 @@ function add_porterbuddy_shipping_method( $methods ) {
 
 add_filter( 'woocommerce_shipping_methods', 'add_porterbuddy_shipping_method' );
 
-function pb_calculate_shipping_hook( $passed, $cart_item_key, $values, $quantity ) {
-	WC()->shipping()->calculate_shipping();
-	return $passed;
-}
-add_filter( 'woocommerce_update_cart_validation', 'pb_calculate_shipping_hook', 10, 4 );
+
+
+

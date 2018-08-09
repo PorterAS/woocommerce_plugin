@@ -417,7 +417,9 @@ jQuery( function( $ ) {
 					unblock( $( 'div.porterbuddy-widget' ) );
 
 					// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
-					//$( document.body ).trigger( 'updated_shipping_method' );
+                    $(document.body).trigger("shipping_calculator_submit");
+
+                    console.log('triggered');
 
 				},
 				success: function ( response )
