@@ -167,7 +167,9 @@ function pb_display_order_complete( $order_id ) {
 									$message
 								);
 
+								// Order Successful
 								if(isset($api->orderId)) {
+									// Set meta-data on the order
 									wc_add_order_item_meta( $item->get_id(), '_pb_order_id', $api->orderId, true );
 									if(isset($api->deliveryReference)) wc_add_order_item_meta( $item->get_id(), '_pb_delivery_reference', $api->deliveryReference, true );
 									if(isset($api->overviewUrl)) wc_add_order_item_meta( $item->get_id(), '_pb_overview_url', $api->overviewUrl, true );
@@ -178,6 +180,8 @@ function pb_display_order_complete( $order_id ) {
 									wc_add_order_item_meta( $item->get_id(), '_pb_idCheck', $settings['id_verification'] == 1, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_requireSignature', $settings['signature_required'] == 1, true );
 									wc_add_order_item_meta( $item->get_id(), '_pb_onlyToRecipient', $settings['only_to_recipient'] == 1, true );
+
+									// Remove sessions
 									WC()->session->__unset( 'pb_windowStart' );
 									WC()->session->__unset( 'pb_returnOnDemand' );
 									WC()->session->__unset( 'pb_type' );

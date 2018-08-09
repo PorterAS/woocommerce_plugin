@@ -164,9 +164,25 @@ function porterbuddy_shipping_method() {
 		}
 	}
 }
+/*
+function pb_checkout_display()
+{
+	echo '<strong>Window Start:</strong> ';
+	var_dump(WC()->session->get('pb_windowStart'));
+	echo '<br><strong>Return on Demand:</strong> ';
+	var_dump(WC()->session->get('pb_returnOnDemand'));
+	echo '<br><strong>Type:</strong> ';
+	var_dump(WC()->session->get('pb_type'));
+	echo '<br><strong>Leave Doorstep:</strong> ';
+	var_dump(WC()->session->get('pb_leaveDoorStep'));
+	echo '<br><strong>Message:</strong> ';
+	var_dump(WC()->session->get('pb_message'));
+}
+add_action( 'woocommerce_after_order_notes', 'pb_checkout_display', 10 );
+add_action( 'woocommerce_cart_collaterals', 'pb_checkout_display', 10 );
+*/
 
 // Initialize the shipping method
-
 add_action( 'woocommerce_shipping_init', 'porterbuddy_shipping_method' );
 function add_porterbuddy_shipping_method( $methods ) {
 	$methods[PORTERBUDDY_PLUGIN_NAME] = 'PorterBuddy_Shipping_Method';
@@ -174,3 +190,9 @@ function add_porterbuddy_shipping_method( $methods ) {
 }
 
 add_filter( 'woocommerce_shipping_methods', 'add_porterbuddy_shipping_method' );
+
+function pb_calculate_shipping_hook( $passed, $cart_item_key, $values, $quantity ) {
+	WC()->shipping()->calculate_shipping();
+	return $passed;
+}
+add_filter( 'woocommerce_update_cart_validation', 'pb_calculate_shipping_hook', 10, 4 );
