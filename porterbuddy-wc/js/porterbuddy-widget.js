@@ -569,4 +569,20 @@ jQuery( function( $ ) {
 	 	porterbuddy();
 	 });
 
+
+	 /**
+	  * If shipping changes occurs on checkout, hide and show the widget
+	  */
+	 $( '#order_review' ).on( 'click', '#shipping_method > li > input', function() 
+	 {
+	 	if ( $(this).val() == "porterbuddy-wc" ) 
+	 	{
+	 		$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+	 	}
+	 	else 
+	 	{
+	 		$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+	 	}
+	 });
+
 });

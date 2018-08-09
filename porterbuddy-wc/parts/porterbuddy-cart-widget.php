@@ -8,7 +8,7 @@ function pb_cart_display() {
 	wp_enqueue_script( 'wp-porterbuddy-widget-js' );
 
 	// if PorterBuddy shipping is selected, display widget
-	if ( WC()->session->get('chosen_shipping_methods')[0] == PORTERBUDDY_PLUGIN_NAME ) :
+	if ( is_checkout() || WC()->session->get('chosen_shipping_methods')[0] == PORTERBUDDY_PLUGIN_NAME ) :
 
 		?>
 
