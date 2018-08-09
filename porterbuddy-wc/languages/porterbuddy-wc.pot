@@ -488,7 +488,7 @@ msgid "MapBox API key"
 msgstr ""
 
 #: includes/options.php:608
-msgid "Can be obtained from _LINK_"
+msgid "Can be obtained from <a href='https://www.mapbox.com/account/'>here</a>"
 msgstr ""
 
 #: includes/scripts.php:14
@@ -505,8 +505,20 @@ msgid ""
 "to use your location for this."
 msgstr ""
 
+#: includes/scripts.php:17
+msgid "Unfortunately there are no available time slots. Please try another day."
+msgstr ""
+
 #: includes/scripts.php:22
 msgid "Thank you"
+msgstr ""
+
+#: parts/porterbuddy-cart-widget.php:26
+msgid "Previous"
+msgstr ""
+
+#: parts/porterbuddy-cart-widget.php:28
+msgid "Next"
 msgstr ""
 
 #: parts/porterbuddy-cart-widget.php:40

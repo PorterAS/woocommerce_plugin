@@ -392,6 +392,7 @@ jQuery( function( $ ) {
 			var leaveDoorStep = $('#porterbuddy_leave_doorstep').prop("checked");
 			var comment = $('#porterbuddy_comment').val();
 
+			// first set variables in cart session for reusability
 			$.ajax(
 			{
 				url: pbWidgetPHP['ajaxphp'],
@@ -400,7 +401,7 @@ jQuery( function( $ ) {
 				cache: false,
 				data:
 				{
-					action: 'setShippingSelection',
+					action: 'setShippingSelection', // as defined in includes/hooks.php
 					pb_nonce: nonce,
 					pb_type: type,
 					pb_windowStart: windowStart,
@@ -415,14 +416,71 @@ jQuery( function( $ ) {
 				complete: function ()
 				{
 					unblock( $( 'div.porterbuddy-widget' ) );
-
-					// #RPT: should trigger update of shipping cost, but does not work.. need to investigate.
-					//$( document.body ).trigger( 'updated_shipping_method' );
-
 				},
 				success: function ( response )
 				{
-					//console.log( response );
+					/** 
+					 * When successfully updated shipping cost, force update cart shipping cache.
+					 * This is due to how WooCommerce handles shipping and carts, and why
+					 * it all becomes a bit hacky.
+					 */
+
+					// if in checkout, we need to get order review instead of cart totals
+					if($('#order_review').length > 0)
+					{
+                        $.ajax(
+                            {
+                                url: pbWidgetPHP['ajaxphp'],
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data:
+                                    {
+                                        action: 'pb_kill_shipping_cost_cache' // as defined in includes/hooks.php
+                                    },
+                                success: function () {
+                                    $.ajax(
+                                        {
+                                            url: pbWidgetPHP['ajaxphp'],
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            cache: false,
+                                            data:
+                                                {
+                                                    action: 'woocommerce_update_order_review',
+                                                    security: wc_checkout_params.update_order_review_nonce
+                                                },
+                                            success: function (response)
+                                            {
+                                                $( '#order_review .shop_table' ).replaceWith( response.fragments['.woocommerce-checkout-review-order-table'] );
+                                            }
+                                        }
+                                    );
+                                }
+                            }
+                        );
+                    }
+                    else
+                    {
+                    	// get shipping part of cart totals
+                        var pb_update_cart_totals_div = function( html_str ) {
+                            var table = $(html_str).find('.shop_table');
+                            $( '.cart_totals .shop_table' ).replaceWith( table );
+                        };
+
+                        // update cart totals and replace html
+                        $.ajax( {
+                            url: pbWidgetPHP['ajaxwoo'] + 'get_cart_totals',
+                            dataType: 'html',
+                            success:  function( response ) {
+                                pb_update_cart_totals_div( response );
+                            },
+                            complete: function() {
+                                unblock( $( 'div.cart_totals' ) );
+                            }
+                        } );
+                    }
+
 					return true;
 				},
 				error: function ( error )
@@ -506,8 +564,25 @@ jQuery( function( $ ) {
 	/**
 	 * after woo cart updates with ajax, reinitiate widget
 	 */
+
 	 $( document.body ).on( 'updated_cart_totals', function(){
 	 	porterbuddy();
+	 });
+
+
+	 /**
+	  * If shipping changes occurs on checkout, hide and show the widget
+	  */
+	 $( '#order_review' ).on( 'click', '#shipping_method > li > input', function() 
+	 {
+	 	if ( $(this).val() == "porterbuddy-wc" ) 
+	 	{
+	 		$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+	 	}
+	 	else 
+	 	{
+	 		$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+	 	}
 	 });
 
 });

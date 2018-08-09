@@ -1,5 +1,11 @@
 <?php
+/**
+ * PorterBuddy API classes
+ */
 
+/**
+ * Class Address
+ */
 class Address
 {
 	public $streetName;
@@ -57,10 +63,14 @@ class Address
 	public function validate()
 	{
 		// TODO: Validation
+		// If needed, validation can be done here.
 		return true;
 	}
 }
 
+/**
+ * Class Buddy
+ */
 class Buddy
 {
 	private $_api_key;
@@ -149,6 +159,9 @@ class Buddy
 	}
 }
 
+/**
+ * Class Destination
+ */
 class Destination extends Origin
 {
 	public $deliveryWindow;
@@ -196,6 +209,9 @@ class Destination extends Origin
 	}
 }
 
+/**
+ * Class Origin
+ */
 class Origin
 {
 	public $name;
@@ -244,6 +260,9 @@ class Origin
 	}
 }
 
+/**
+ * Class Parcel
+ */
 class Parcel
 {
 	public $widthCm;
@@ -279,6 +298,9 @@ class Parcel
 	}
 }
 
+/**
+ * Class Request
+ */
 class Request
 {
 	private $_ch;
@@ -348,6 +370,9 @@ class Request
 	}
 }
 
+/**
+ * Class ResolvedAddress
+ */
 class ResolvedAddress extends Address
 {
 	public $latitude;
@@ -381,6 +406,9 @@ class ResolvedAddress extends Address
 	}
 }
 
+/**
+ * Class Window
+ */
 class Window
 {
 	public $start;
