@@ -1,9 +1,9 @@
-#Installing PorterBuddy
-###Plugin Requirements:
+# Installing PorterBuddy
+### Plugin Requirements:
 1.  Wordpress (Developed with v4.9.8)
 2.  WooCommerce (Developed with v3.4.4)
 
-###Install Instructions:
+### Install Instructions:
 1.  Clone this repo and copy the directory `porterbuddy-wc` into your plugins folder `/wp-content/plugins/`.
 2.  Navigate to `Administration Panel` -> `Plugins` in a browser and activate "PorterBuddy Shipping"
 ![Activating the plugin](doc_images/plugins.png "Activating the plugin")
