@@ -120,6 +120,7 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 			);
 			if(isset($res->deliveryWindows))
 			{
+				$result['locale_code'] = get_locale();
 				if(isset($wp_locale)) $result['locale'] = $wp_locale;
 				$result['success'] = true;
 				$result['data'] = [];
