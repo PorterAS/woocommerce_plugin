@@ -5,7 +5,8 @@ function pb_product_display() {
 	// Fetch the settings
 	$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 
-	echo '<div style="border: 1px solid #CCC; padding: 10px; margin-top: 10px;"><p>';
+	echo '<div class="porterbuddy-widget porterbuddy-product">';
+
 	if(
 		(
 			$settings['geo_widget'] == 'yes' &&
@@ -18,10 +19,11 @@ function pb_product_display() {
 			strlen($settings['api_key_testing']) < 5
 		)
 	){
-		echo 'Invalid API keys. Update your settings.';
+		echo '<p>Invalid API keys. Update your settings.</p>';
 	}
 	else
 	{
+		echo "<p>";
 
 		$postcode = isset($_COOKIE['pb_postcode']) && $_COOKIE['pb_postcode'] == 'x' ? null : (
 		WC()->customer->get_shipping_postcode() != null ? WC()->customer->get_shipping_postcode() : (
@@ -58,8 +60,10 @@ function pb_product_display() {
 					WC()->customer->set_shipping_country( $country );
 					// set post code cookie, so we don't have to check the API every time. Use JS because WP..
 					$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
-					echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', '.$postcode.', 30);</script>';
-					echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
+					echo '<div style="display:none;">';
+						echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', '.$postcode.', 30);</script>';
+						echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
+					echo '</div>';
 				};
 
 			}
@@ -139,19 +143,21 @@ function pb_product_display() {
 				if(empty($valid_country) && isset(\WC()->countries->countries[$country])) echo str_replace('{{postcode}}', \WC()->countries->countries[$country], __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
 				else echo str_replace('{{postcode}}', $postcode, __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
 			}
-
 		}
 		else
 		{
 			// PostCode is not set
 			echo __($settings['click_to_see'], 'porterbuddy-wc');
 		}
+
+		echo "</p>";
 	}
+
 	// Include shipping calculator to set country and postcode
 	include('porterbuddy-shipping-calc.php');
 
 	// close the widget
-	echo '</p><p style="float: right; margin-top: -9px;"><strong>Porter</strong>buddy</p></div>';
+	echo '</div>';
 }
 
 // Generate the product page countdown values
