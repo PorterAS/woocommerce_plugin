@@ -6,7 +6,7 @@ jQuery( function( $ ) {
 	// scope outside for all functions
 	var availableDates;
 	// set js moment library locale
-	moment.locale("nb_NO");
+	moment.locale("en_GB");
 	/**
 	 * Create a date object for the widget
 	 */
@@ -115,6 +115,8 @@ jQuery( function( $ ) {
 				{
 					if ( response['data']['delivery'] != undefined )
 					{
+						// set js moment library locale from API
+						moment.locale(response['locale_code']);
 						// popuplate available dates from API
 						populateTimeslots( '#timeslots', response['data'] );
 						// set shipping session data if not available already and update navigational control for timeslots
