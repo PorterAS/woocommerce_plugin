@@ -349,7 +349,6 @@ class Request
 	public function execute()
 	{
 		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($this->_ch, CURLOPT_HEADER, true);
 		curl_setopt($this->_ch, CURLOPT_HTTPHEADER, [
 			'x-api-key: '.$this->_api_key,
 			'Content-Type: application/json',
