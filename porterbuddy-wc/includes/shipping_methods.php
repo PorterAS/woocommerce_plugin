@@ -130,9 +130,7 @@ function porterbuddy_shipping_method() {
 								if($this->get_option('price_override') == "") $cost = $window->price->fractionalDenomination/100;
 								else $cost = $this->get_option('price_override');
 							}
-							//die(var_dump([$this->get_option('price_override'), $this->get_option('express_price_override')]));
 							if($return_on_demand) $cost += $this->get_option('return_price', 79);
-							//die(var_dump($cost));
 						}
 					}
 					else $cost = $this->get_instance_option('cost');

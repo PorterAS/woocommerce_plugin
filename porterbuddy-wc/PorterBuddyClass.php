@@ -349,12 +349,20 @@ class Request
 	public function execute()
 	{
 		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($this->_ch, CURLOPT_HEADER, true);
 		curl_setopt($this->_ch, CURLOPT_HTTPHEADER, [
 			'x-api-key: '.$this->_api_key,
 			'Content-Type: application/json',
 			'Content-Length: '.strlen($this->payload)
 		]);
-		return json_decode(curl_exec($this->_ch));
+
+		$result = curl_exec($this->_ch);
+		$httpcode = curl_getinfo($this->_ch, CURLINFO_HTTP_CODE);
+		if($httpcode != 200)
+		{
+			// Notify error
+		}
+		return json_decode($result);
 	}
 
 	/**

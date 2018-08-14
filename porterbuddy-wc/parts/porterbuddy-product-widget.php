@@ -26,9 +26,9 @@ function pb_product_display() {
 		echo "<p>";
 
 		$postcode = isset($_COOKIE['pb_postcode']) && $_COOKIE['pb_postcode'] == 'x' ? null : (
-		WC()->customer->get_shipping_postcode() != null ? WC()->customer->get_shipping_postcode() : (
-		isset($_COOKIE['pb_postcode']) ? $_COOKIE['pb_postcode'] : ''
-		)
+			WC()->customer->get_shipping_postcode() != null ? WC()->customer->get_shipping_postcode() : (
+				isset($_COOKIE['pb_postcode']) ? $_COOKIE['pb_postcode'] : ''
+			)
 		);
 
 		$country = isset($_COOKIE['pb_country']) && $_COOKIE['pb_country'] == 'x' ? null : (
