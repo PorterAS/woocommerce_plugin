@@ -12,7 +12,7 @@ function pb_cart_display() {
 
 		?>
 
-<div id="porterbuddy-widget" class="porterbuddy-widget" data-wpnonce="<?php echo wp_create_nonce('porterbuddy_widget_options'); ?>">
+<div id="porterbuddy-widget" class="porterbuddy-widget <?php if ( WC()->session->get('chosen_shipping_methods')[0] !== PORTERBUDDY_PLUGIN_NAME ) echo "porterbuddy-hide"; ?>" data-wpnonce="<?php echo wp_create_nonce('porterbuddy_widget_options'); ?>">
 
 	<div class="porterbuddy-widget-logo-wrapper">
 		<img src="<?= plugins_url("../assets/", __FILE__) ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
