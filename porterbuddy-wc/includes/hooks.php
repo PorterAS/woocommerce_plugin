@@ -118,3 +118,11 @@ if(
 	add_action( 'woocommerce_checkout_before_order_review', 'pb_kill_shipping_cost_cache', 10 );
 	add_action( 'woocommerce_cart_totals_before_shipping', 'pb_kill_shipping_cost_cache', 10 );
 }
+
+// Pad the postcode if it is shorter than 4 digits
+add_filter( 'woocommerce_format_postcode', 'pb_format_postcode', 10, 2 );
+function pb_format_postcode( $postcode, $country ){
+	$postcode = wc_normalize_postcode( $postcode );
+	if($country == 'NO') $postcode = str_pad($postcode, 4, "0", STR_PAD_LEFT);
+	return $postcode;
+}

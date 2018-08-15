@@ -74,6 +74,7 @@ function pb_product_display() {
 			if($postcode != null && strlen($postcode) > 2)
 			{
 				global $wp_locale;
+				$postcode = str_pad($postcode, 4, "0", STR_PAD_LEFT);
 				// Check if the postcode is valid for PB
 				global $wpdb;
 				$zones = $wpdb->get_results( "SELECT zone_id FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'porterbuddy-wc'", ARRAY_A );
@@ -88,13 +89,14 @@ function pb_product_display() {
 					$opening_hours = formatClosingHours($settings);
 					$prep_time = $settings['available_until']+$settings['packing_time'];
 					$now = new DateTime('now', new DateTimeZone('Europe/Oslo'));
-
+					$now_in_a_minute = new DateTime('now', new DateTimeZone('Europe/Oslo'));
+					$now_in_a_minute->modify('+1 minutes');
 					$today = new \DateTime('now', new DateTimeZone('Europe/Oslo'));
 					$closes_today = $opening_hours[$today->format('l')]['close'];
 					$today->setTime(substr($closes_today,0,2),substr($closes_today,2,2), '00');
 					$today->modify('-'.$prep_time.' minutes');
 
-					if($opening_hours[$today->format('l')]['open'] < $closes_today && $now < $today) {
+					if($opening_hours[$today->format('l')]['open'] < $closes_today && $now_in_a_minute < $today) {
 						// We can deliver today!
 						$interval  = $today->diff( $now );
 						$countdown = createCountdown( $interval->d, $interval->h, $interval->i );
@@ -160,7 +162,7 @@ function pb_product_display() {
 		include('porterbuddy-shipping-calc.php');
 
 		// close the widget
-		echo '</div>';	
+		echo '</div>';
 	}
 }
 
