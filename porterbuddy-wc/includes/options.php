@@ -587,6 +587,13 @@ return array(
 		'class'       => 'separated_title_tab',
 	),
 
+	'error_email' => array(
+		'title' => __( 'Error Reporting E-Mail', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Reports on API-requests that fail will be sent to this email. Leave blank to turn off.', 'porterbuddy-wc' ),
+		'default' => get_option('admin_email', '')
+	),
+
 	'api_key_prod' => array(
 		'title' => __( 'API Key (Production)', 'porterbuddy-wc' ),
 		'type' => 'text',

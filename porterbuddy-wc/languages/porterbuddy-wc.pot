@@ -467,6 +467,14 @@ msgstr ""
 msgid "API Settings and keys"
 msgstr ""
 
+#: includes/options.php:591
+msgid "Error Reporting E-Mail"
+msgstr ""
+
+#: includes/options.php:593
+msgid "Reports on API-requests that fail will be sent to this email. Leave blank to turn off."
+msgstr ""
+
 #: includes/options.php:585
 msgid "API Key (Production)"
 msgstr ""
@@ -640,4 +648,12 @@ msgstr ""
 
 #: parts/porterbuddy-product-widget.php:147
 msgid "and"
+msgstr ""
+
+#: PorterBuddyClass.php:367
+msgid "Porterbuddy API generated an error"
+msgstr ""
+
+#: PorterBuddyClass.php:368
+msgid "API Returned:"
 msgstr ""

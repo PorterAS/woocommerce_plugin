@@ -359,7 +359,16 @@ class Request
 		$httpcode = curl_getinfo($this->_ch, CURLINFO_HTTP_CODE);
 		if($httpcode != 200)
 		{
-			// Notify error
+			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
+			if (filter_var($settings['error_email'], FILTER_VALIDATE_EMAIL))
+			{
+				wp_mail(
+					$settings['error_email'],
+					__('Porterbuddy API generated an error', 'porterbuddy-wc'),
+					__('API Returned:', 'porterbuddy-wc')."\n\n".$result,
+					$headers = ''
+				);
+			}
 		}
 		return json_decode($result);
 	}
