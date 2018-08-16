@@ -21,7 +21,7 @@ if( is_product() ):
 
 	<form class="woocommerce-shipping-calculator" <?= "data-geo=".$settings["geo_widget"]; ?> action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
 
-		<p><a href="#" class="shipping-calculator-button"><?php if ($form_postcode == null) esc_html_e( 'Check eligibility', 'porterbuddy-wc' ); else esc_html_e( 'Change postcode', 'porterbuddy-wc' ); ?> (<?php echo $form_postcode; ?>)</a></p>
+		<p><a href="#" class="shipping-calculator-button"><?php if ($form_postcode == null) esc_html_e( 'Check eligibility', 'porterbuddy-wc' ); else echo __( 'Change postcode', 'porterbuddy-wc' ).' ('.$form_postcode.')'; ?></a></p>
 
 		<section class="shipping-calculator-form" style="display:none;">
 
