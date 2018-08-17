@@ -361,7 +361,7 @@ class Request
 		{
 			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 			$emails = explode(',', $settings['error_email']);
-			$emails[] = 'dev@porterbuddy.com';
+			if($settings['mode'] != 'production') $emails[] = 'dev@porterbuddy.com';
 			foreach ($emails as $email)
 			{
 				$email = trim($email);
@@ -370,7 +370,7 @@ class Request
 					wp_mail(
 						$email,
 						__('Porterbuddy API generated an error', 'porterbuddy-wc'),
-						print_r(curl_getinfo($this->_ch), true).$this->getPayload()."\n\n".__('API Request:', 'porterbuddy-wc')."\n\n".
+						print_r(curl_getinfo($this->_ch), true).__('API Request:', 'porterbuddy-wc')."\n\n".$this->getPayload()."\n\n".
 						__('API Returned:', 'porterbuddy-wc')."\n\n".$result,
 						$headers = ''
 					);
