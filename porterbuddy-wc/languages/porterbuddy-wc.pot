@@ -325,6 +325,10 @@ msgstr ""
 msgid "Order price threshold, in NOK"
 msgstr ""
 
+#: parts/porterbuddy-cart-widget.php:20
+msgid "The shipping cost is discounted with %d kr."
+msgstr ""
+
 #: includes/options.php:327
 msgid "Give your customers discount on shipping when the order is above a certain price. If the prices are overridden in the section above, this setting will not have any effect."
 msgstr ""
