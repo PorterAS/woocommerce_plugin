@@ -679,16 +679,22 @@ msgid "Sunday"
 msgstr ""
 
 #: parts/porterbuddy-product-widget.php:144
-msgid "days"
-msgstr ""
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
 
 #: parts/porterbuddy-product-widget.php:145
-msgid "hours"
-msgstr ""
+msgid "%s hour"
+msgid_plural "%s hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #: parts/porterbuddy-product-widget.php:146
-msgid "minutes"
-msgstr ""
+msgid "%s minute"
+msgid_plural "%s minutes"
+msgstr[0] ""
+msgstr[1] ""
 
 #: parts/porterbuddy-product-widget.php:147
 msgid "and"

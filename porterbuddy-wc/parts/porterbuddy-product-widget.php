@@ -170,9 +170,10 @@ function pb_product_display() {
 function createCountdown($d, $h, $m)
 {
 	$string = [];
-	if($d > 0) $string[] = $d.' '. __( 'days', 'porterbuddy-wc'  );
-	if($h > 0) $string[] = $h.' '. __( 'hours', 'porterbuddy-wc' );
-	if($d == 0 && $m > 0) $string[] = $m.' '.__( 'minutes', 'porterbuddy-wc' );
+
+	if($d > 0) $string[] = sprintf( _n( '%s day', '%s days', $d, 'porterbuddy-wc' ), number_format_i18n( $d ) );
+	if($h > 0) $string[] = sprintf( _n( '%s hour', '%s hours', $h, 'porterbuddy-wc' ), number_format_i18n( $h ) );
+	if($d == 0 && $m > 0) $string[] = sprintf( _n( '%s minute', '%s minutes', $m, 'porterbuddy-wc' ), number_format_i18n( $m ) );
 	return implode(' '.__( 'and', 'porterbuddy-wc' ).' ', $string);
 }
 
