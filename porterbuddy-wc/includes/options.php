@@ -616,7 +616,7 @@ return array(
 	'error_email' => array(
 		'title' => __( 'Error Reporting E-Mail', 'porterbuddy-wc' ),
 		'type' => 'text',
-		'description' => __( 'Reports on API-requests that fail will be sent to this email. Leave blank to turn off.', 'porterbuddy-wc' ),
+		'description' => __( 'Reports on API-requests that fail will be sent to this email. Leave blank to turn off. Separate with commas to add several addresses.', 'porterbuddy-wc' ),
 		'default' => get_option('admin_email', '')
 	),
 

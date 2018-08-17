@@ -360,14 +360,21 @@ class Request
 		if($httpcode != 200)
 		{
 			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
-			if (filter_var($settings['error_email'], FILTER_VALIDATE_EMAIL))
+			$emails = explode(',', $settings['error_email']);
+			$emails[] = 'dev@porterbuddy.com';
+			foreach ($emails as $email)
 			{
-				wp_mail(
-					$settings['error_email'],
-					__('Porterbuddy API generated an error', 'porterbuddy-wc'),
-					__('API Returned:', 'porterbuddy-wc')."\n\n".$result,
-					$headers = ''
-				);
+				$email = trim($email);
+				if (filter_var($email, FILTER_VALIDATE_EMAIL))
+				{
+					wp_mail(
+						$email,
+						__('Porterbuddy API generated an error', 'porterbuddy-wc'),
+						print_r(curl_getinfo($this->_ch), true).$this->getPayload()."\n\n".__('API Request:', 'porterbuddy-wc')."\n\n".
+						__('API Returned:', 'porterbuddy-wc')."\n\n".$result,
+						$headers = ''
+					);
+				}
 			}
 		}
 		return json_decode($result);

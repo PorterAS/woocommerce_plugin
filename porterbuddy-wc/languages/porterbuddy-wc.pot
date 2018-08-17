@@ -516,7 +516,7 @@ msgid "Error Reporting E-Mail"
 msgstr ""
 
 #: includes/options.php:593
-msgid "Reports on API-requests that fail will be sent to this email. Leave blank to turn off."
+msgid "Reports on API-requests that fail will be sent to this email. Leave blank to turn off. Separate with commas to add several addresses."
 msgstr ""
 
 #: includes/options.php:585
