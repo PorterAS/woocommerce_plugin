@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
-"POT-Creation-Date: 2018-08-15 09:47+0200\n"
-"PO-Revision-Date: 2018-08-15 09:47+0200\n"
+"POT-Creation-Date: 2018-08-17 10:17+0200\n"
+"PO-Revision-Date: 2018-08-17 10:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nb_NO\n"
@@ -283,6 +283,14 @@ msgstr "Melding-til-budet"
 msgid "Text above the message to courier box"
 msgstr "Tekst over melding-til-budet-boksen"
 
+#: includes/options.php:325
+msgid "Delivery Pricing"
+msgstr "Leveringspriser"
+
+#: includes/options.php:326
+msgid "Manage the cost you charge your customers for shipping with Porterbuddy"
+msgstr "Overstyr prisene som dine kunder betaler for leveranse med Porterbuddy"
+
 #: includes/options.php:314
 msgid "Optional message to the courier"
 msgstr "Melding til budet (valgfri)"
@@ -302,6 +310,45 @@ msgstr "Overstyr prisen på ekspressleveranse"
 #: includes/options.php:327
 msgid "Leave empty to use Porterbuddy Express pricing"
 msgstr "Dersom den er tom vil prisene fra porterbuddy bli brukt"
+
+#: includes/options.php:327
+msgid "Delivery Discount"
+msgstr "Leveringsrabatt"
+
+#: includes/options.php:327
+msgid "Off"
+msgstr "Av"
+
+#: includes/options.php:327
+msgid "On"
+msgstr "På"
+
+#: includes/options.php:327
+msgid "Price Discount"
+msgstr "Prisrabatt"
+
+#: includes/options.php:327
+msgid "Subtracted from the price, in NOK"
+msgstr "Trekkes fra leveranseprisen, i NOK"
+
+#: includes/options.php:327
+msgid "Threshold"
+msgstr "Minimumssum"
+
+#: includes/options.php:327
+msgid "Order price threshold, in NOK"
+msgstr ""
+"Minimumssummen som må være i handlekurven for at rabatten skal bli gjeldende"
+
+#: includes/options.php:327
+msgid ""
+"Give your customers discount on shipping when the order is above a certain "
+"price. If the prices are overridden in the section above, this setting will "
+"not have any effect."
+msgstr ""
+"Gi kundene dine rabatt på levering når orderensummen er over et nivå. Hvis "
+"prisene er overstyrt i seksjonen over, har innstillingene i denne seksjonen "
+"ingen effekt."
 
 #: includes/options.php:346
 msgid "Opening Hours"

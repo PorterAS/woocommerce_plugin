@@ -320,6 +320,13 @@ return array(
 		'default' => 'Optional message to the courier'
 	),
 
+	'pricing' => array(
+		'type'        => 'title',
+		'title'       => __( 'Delivery Pricing', 'porterbuddy-wc' ),
+		'description' => __( 'Manage the cost you charge your customers for shipping with Porterbuddy', 'porterbuddy-wc' ),
+		'class'       => 'separated_title_tab',
+	),
+
 	'price_override' => array(
 		'title' => __( 'Override porterbuddy price with', 'porterbuddy-wc' ),
 		'type' => 'text',
@@ -334,19 +341,38 @@ return array(
 		'default' => ''
 	),
 
-/*
+	'pricing_discount' => array(
+		'type'        => 'title',
+		'title'       => __( 'Delivery Discount', 'porterbuddy-wc' ),
+		'description' => __( 'Give your customers discount on shipping when the order is above a certain price. If the prices are overridden in the section above, this setting will not have any effect.', 'porterbuddy-wc' ),
+		'class'       => 'separated_title_tab',
+	),
+
 	'delivery_discount' => array(
-		'title' => __( 'Delivery discount', 'porterbuddy-wc' ),
+		'title' => __( 'Delivery Discount', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'description' => __( 'Not entirely sure how this works'),
-		'default' => 'none',
+		'default' => 'off',
 		'options' => array(
-			'none' => __( 'None' ),
-			'fixed' => __( 'Fixed' ),
-			'percentage' => __( 'Percentage' ),
+			'off' => __( 'Off' , 'porterbuddy-wc'),
+			'on' => __( 'On' , 'porterbuddy-wc'),
 		)
 	),
-*/
+
+	'discount_threshold' => array(
+		'title' => __( 'Threshold', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Order price threshold, in NOK', 'porterbuddy-wc'),
+		'default' => '1000'
+	),
+
+	'price_discount' => array(
+		'title' => __( 'Price Discount', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Subtracted from the price, in NOK', 'porterbuddy-wc'),
+		'default' => '99'
+	),
+
+
 	'opening_hours' => array(
 		'type'        => 'title',
 		'title'       => __( 'Opening Hours', 'porterbuddy-wc' ),

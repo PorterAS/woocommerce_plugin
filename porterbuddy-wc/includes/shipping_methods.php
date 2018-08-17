@@ -137,10 +137,21 @@ function porterbuddy_shipping_method() {
 				}
 				else $cost = $this->get_instance_option('cost');
 
+				if(
+					(
+						($type == 'express' && $this->get_option('express_price_override') == "")
+						|| ($type != 'express' && $this->get_option('price_override') == "")
+					)
+					&& $this->get_option('delivery_discount', '') == 'on'
+					&& is_numeric($this->get_option('discount_threshold', ''))
+					&& is_numeric($this->get_option('price_discount', ''))
+					&& WC()->cart->get_cart_contents_total() >= (float) $this->get_option('discount_threshold', 0)
+				) $cost = $cost - $this->get_option('price_discount', 0);
+
 				$rate = array(
 					'id' => $this->id,
 					'label' => $this->title,
-					'cost' => $this->sanitize_cost($cost)
+					'cost' => $this->sanitize_cost($cost) > 0 ? $this->sanitize_cost($cost) : 0
 				);
 
 				$this->add_rate( $rate );

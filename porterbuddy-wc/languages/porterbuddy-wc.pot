@@ -269,6 +269,14 @@ msgstr ""
 msgid "Text above the message to courier box"
 msgstr ""
 
+#: includes/options.php:325
+msgid "Delivery Pricing"
+msgstr ""
+
+#: includes/options.php:326
+msgid "Manage the cost you charge your customers for shipping with Porterbuddy"
+msgstr ""
+
 #: includes/options.php:314
 msgid "Optional message to the courier"
 msgstr ""
@@ -287,6 +295,38 @@ msgstr ""
 
 #: includes/options.php:327
 msgid "Leave empty to use Porterbuddy Express pricing"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Delivery Discount"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Off"
+msgstr ""
+
+#: includes/options.php:327
+msgid "On"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Price Discount"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Subtracted from the price, in NOK"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Threshold"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Order price threshold, in NOK"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Give your customers discount on shipping when the order is above a certain price. If the prices are overridden in the section above, this setting will not have any effect."
 msgstr ""
 
 #: includes/options.php:346
