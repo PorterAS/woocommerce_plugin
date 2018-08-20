@@ -70,7 +70,7 @@ function pb_product_display() {
 						echo '</div>';
 					};
 				}
-				elseif(function_exists('geoip_detect2_get_info_from_ip')) {
+				elseif(function_exists('geoip_detect2_get_info_from_ip') && isset($settings['ip_widget']) && $settings['ip_widget'] == 'yes') {
 					$geo = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip());
 					//$geo = geoip_detect2_get_info_from_ip("84.211.129.239");
 
