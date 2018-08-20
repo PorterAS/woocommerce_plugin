@@ -89,10 +89,11 @@ function pb_product_display() {
 				}
 			}
 
-			if($country == 'NO') $postcode = str_pad($postcode, 4, "0", STR_PAD_LEFT);
-			if($postcode != null && strlen($postcode) > 2)
+			if($postcode != null && strlen($postcode) > 0)
 			{
 				global $wp_locale;
+
+				if($country == 'NO') $postcode = str_pad($postcode, 4, "0", STR_PAD_LEFT);
 				// Check if the postcode is valid for PB
 				global $wpdb;
 				$zones = $wpdb->get_results( "SELECT zone_id FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'porterbuddy-wc'", ARRAY_A );
