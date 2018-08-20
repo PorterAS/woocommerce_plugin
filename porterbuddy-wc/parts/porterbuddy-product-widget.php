@@ -3,10 +3,11 @@
 function pb_product_display() {
 	global $product;
 
+	// Fetch the settings
+	$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
+
 	if($product->get_stock_status() == 'instock')
 	{
-		// Fetch the settings
-		$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 
 		echo '<div class="porterbuddy-widget porterbuddy-product">';
 
@@ -68,13 +69,30 @@ function pb_product_display() {
 						echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
 						echo '</div>';
 					};
+				}
+				elseif(function_exists('geoip_detect2_get_info_from_ip')) {
+					//$geo = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip());
+					$geo = geoip_detect2_get_info_from_ip("84.211.129.239");
 
+					$postcode = (string) $geo->postal->code;
+					$country = $geo->country->isoCode;
+
+					// set WC shipping info
+					WC()->customer->set_shipping_postcode( $postcode );
+					WC()->customer->set_shipping_country( $country );
+					// set post code cookie, so we don't have to check the API every time. Use JS because WP..
+					$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
+					echo '<div style="display:none;">';
+					echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', '.$postcode.', 30);</script>';
+					echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
+					echo '</div>';
 				}
 			}
+
+			if($country == 'NO') $postcode = str_pad($postcode, 4, "0", STR_PAD_LEFT);
 			if($postcode != null && strlen($postcode) > 2)
 			{
 				global $wp_locale;
-				if($country == 'NO') $postcode = str_pad($postcode, 4, "0", STR_PAD_LEFT);
 				// Check if the postcode is valid for PB
 				global $wpdb;
 				$zones = $wpdb->get_results( "SELECT zone_id FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'porterbuddy-wc'", ARRAY_A );
@@ -161,7 +179,6 @@ function pb_product_display() {
 		// Include shipping calculator to set country and postcode
 		include('porterbuddy-shipping-calc.php');
 
-		// close the widget
 		echo '</div>';
 	}
 }

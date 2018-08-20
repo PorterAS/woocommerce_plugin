@@ -3,6 +3,9 @@
 if(!defined('ABSPATH') || ! defined( 'WPINC' )) {
 	die;
 }
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+$geoip = '';
+if(!is_plugin_active('geoip-detect/geoip-detect.php')) $geoip = '<br><span style="color: red"><a href="https://wordpress.org/plugins/geoip-detect/">GeoIP Detection</a> '.__( 'plugin must be installed', 'porterbuddy-wc' ) . '</span>';
 $hour_dropdown = array(
 	'0000' => '00:00',
 	'0015' => '00:15',
@@ -170,17 +173,6 @@ return array(
 		)
 	),
 
-	'geo_widget' => array(
-		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
-		'type' => 'select',
-		'default' => 'yes',
-		'description' => __( 'Ask the customer to use their location when setting delivery postcode', 'porterbuddy-wc' ),
-		'options' => array(
-			'yes' => __( 'Yes', 'porterbuddy-wc' ),
-			'no' => __ ( 'No' , 'porterbuddy-wc' ),
-		)
-	),
-
 	'product_page_widget' => array(
 		'type'        => 'title',
 		'title'       => __( 'Product Page Widget', 'porterbuddy-wc' ),
@@ -193,6 +185,28 @@ return array(
 		'type' => 'checkbox',
 		'description' => __( 'Enable or disable the product page widget.', 'porterbuddy-wc' ),
 		'default' => 'yes'
+	),
+
+	'ip_widget' => array(
+		'title' => __( 'Use IP Geo-Location', 'porterbuddy-wc' ),
+		'type' => 'select',
+		'default' => 'no',
+		'description' => __( 'Use IP location to determine if the widget should be rendered', 'porterbuddy-wc' ) . $geoip,
+		'options' => array(
+			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'no' => __ ( 'No' , 'porterbuddy-wc' ),
+		)
+	),
+
+	'geo_widget' => array(
+		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
+		'type' => 'select',
+		'default' => 'yes',
+		'description' => __( 'Ask the customer to use their location when setting delivery postcode', 'porterbuddy-wc' ),
+		'options' => array(
+			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'no' => __ ( 'No' , 'porterbuddy-wc' ),
+		)
 	),
 
 	'click_to_see' => array(
