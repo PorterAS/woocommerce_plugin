@@ -9,7 +9,7 @@ function pb_product_display() {
 	if($product->get_stock_status() == 'instock')
 	{
 
-		echo '<div class="porterbuddy-widget porterbuddy-product">';
+		$html = '<div class="porterbuddy-widget porterbuddy-product">';
 
 		if(
 			(
@@ -23,11 +23,11 @@ function pb_product_display() {
 				strlen($settings['api_key_testing']) < 5
 			)
 		){
-			echo '<p>Invalid API keys. Update your settings.</p>';
+			$html .= '<p>Invalid API keys. Update your settings.</p>';
 		}
 		else
 		{
-			echo "<p>";
+			$html .= "<p>";
 
 			$postcode = isset($_COOKIE['pb_postcode']) && $_COOKIE['pb_postcode'] == 'x' ? null : (
 			WC()->customer->get_shipping_postcode() != null ? WC()->customer->get_shipping_postcode() : (
@@ -71,8 +71,8 @@ function pb_product_display() {
 					};
 				}
 				elseif(function_exists('geoip_detect2_get_info_from_ip')) {
-					//$geo = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip());
-					$geo = geoip_detect2_get_info_from_ip("84.211.129.239");
+					$geo = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip());
+					//$geo = geoip_detect2_get_info_from_ip("84.211.129.239");
 
 					$postcode = (string) $geo->postal->code;
 					$country = $geo->country->isoCode;
@@ -157,29 +157,32 @@ function pb_product_display() {
 					}
 					if(isset($date) && isset($countdown))
 					{
-						echo str_replace(['{{date}}', '{{countdown}}'], [$date, $countdown], __($settings['availability_text'], 'porterbuddy-wc'));
+						$html .= str_replace(['{{date}}', '{{countdown}}'], [$date, $countdown], __($settings['availability_text'], 'porterbuddy-wc'));
 					}
-					else echo __($settings['no_available_dates'], 'porterbuddy-wc');
+					else $html .= __($settings['no_available_dates'], 'porterbuddy-wc');
 				}
 				else
 				{
-					if(empty($valid_country) && isset(\WC()->countries->countries[$country])) echo str_replace('{{postcode}}', \WC()->countries->countries[$country], __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
-					else echo str_replace('{{postcode}}', $postcode, __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
+					if(empty($valid_country) && isset(\WC()->countries->countries[$country])) $html .= str_replace('{{postcode}}', \WC()->countries->countries[$country], __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
+					else $html .= str_replace('{{postcode}}', $postcode, __($settings['postcode_unavailable_text'], 'porterbuddy-wc'));
 				}
 			}
 			else
 			{
 				// PostCode is not set
-				echo __($settings['click_to_see'], 'porterbuddy-wc');
+				$html .= __($settings['click_to_see'], 'porterbuddy-wc');
 			}
 
-			echo "</p>";
+			$html .= "</p>";
 		}
-
-		// Include shipping calculator to set country and postcode
-		include('porterbuddy-shipping-calc.php');
-
-		echo '</div>';
+		if(!isset($settings['ip_widget']) || $settings['ip_widget'] == 'no' || (!empty($valid_postcode) && !empty($valid_country)))
+		{
+			// Render widget
+			echo $html;
+			// Include shipping calculator to set country and postcode
+			include('porterbuddy-shipping-calc.php');
+			echo '</div>';
+		}
 	}
 }
 

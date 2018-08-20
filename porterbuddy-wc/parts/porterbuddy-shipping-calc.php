@@ -10,7 +10,7 @@ if( is_product() ):
 				isset($_COOKIE['pb_postcode']) ? $_COOKIE['pb_postcode'] : ''
 			)
 		);
-
+	$form_postcode = str_pad($form_postcode, 4, "0", STR_PAD_LEFT);
 	$form_country = isset($_COOKIE['pb_country']) && $_COOKIE['pb_country'] == 'x' ? null : (
 			WC()->customer->get_shipping_country() != null ? WC()->customer->get_shipping_country() : ( 
 				isset($_COOKIE['pb_country']) ? $_COOKIE['pb_country'] : ''
