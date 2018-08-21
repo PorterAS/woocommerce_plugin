@@ -72,8 +72,8 @@ function pb_product_display() {
 				}
 				elseif(function_exists('geoip_detect2_get_info_from_ip') && isset($settings['ip_widget']) && $settings['ip_widget'] == 'yes') {
 					$geo = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip());
-					//$geo = geoip_detect2_get_info_from_ip("84.211.129.239");
-
+					//$geo = geoip_detect2_get_info_from_ip("89.221.242.34");
+					
 					$postcode = (string) $geo->postal->code;
 					$country = $geo->country->isoCode;
 
@@ -180,6 +180,7 @@ function pb_product_display() {
 		{
 			// Render widget
 			echo $html;
+
 			// Include shipping calculator to set country and postcode
 			include('porterbuddy-shipping-calc.php');
 			echo '</div>';
