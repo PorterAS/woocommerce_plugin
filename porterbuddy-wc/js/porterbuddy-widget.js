@@ -6,7 +6,7 @@ jQuery( function( $ ) {
 	// scope outside for all functions
 	var availableDates;
 	// set js moment library locale
-	moment.locale("nb_NO");
+	moment.locale("en_GB");
 	/**
 	 * Create a date object for the widget
 	 */
@@ -115,6 +115,8 @@ jQuery( function( $ ) {
 				{
 					if ( response['data']['delivery'] != undefined )
 					{
+						// set js moment library locale from API
+						moment.locale(response['locale_code']);
 						// popuplate available dates from API
 						populateTimeslots( '#timeslots', response['data'] );
 						// set shipping session data if not available already and update navigational control for timeslots
@@ -312,7 +314,7 @@ jQuery( function( $ ) {
 		/**
 		 * On "prev" and "next" click events, change data accordingly and update controls
 		 */
-		$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function()
+		$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function( event )
 		{
 			event.preventDefault();
 
@@ -533,7 +535,7 @@ jQuery( function( $ ) {
 		$( '#porterbuddy-widget' ).on(
 			'click',
 			'label #porterbuddy_return, label #porterbuddy_leave_doorstep, .porterbuddy-widget-timeslot',
-			function () 
+			function ( event ) 
 			{
 				// update timeblock prices
 				updateTimeBlockPrices();
@@ -544,14 +546,14 @@ jQuery( function( $ ) {
 		$( '#porterbuddy-widget' ).on(
 			'blur',
 			'.porterbuddy-widget-comment',
-			function () 
+			function ( event ) 
 			{
 				setShippingSelection();
 			}
 		);
 		$( '.checkout-button, #place_order').on(
 			'click',
-			function() 
+			function( event ) 
 			{
 				setShippingSelection();
 			}
@@ -565,7 +567,7 @@ jQuery( function( $ ) {
 	 * after woo cart updates with ajax, reinitiate widget
 	 */
 
-	 $( document.body ).on( 'updated_cart_totals', function(){
+	 $( document.body ).on( 'updated_cart_totals', function( event ){
 	 	porterbuddy();
 	 });
 
@@ -573,7 +575,7 @@ jQuery( function( $ ) {
 	 /**
 	  * If shipping changes occurs on checkout, hide and show the widget
 	  */
-	 $( '#order_review' ).on( 'click', '#shipping_method > li > input', function() 
+	 $( '#order_review' ).on( 'click', '#shipping_method > li > input', function( event ) 
 	 {
 	 	if ( $(this).val() == "porterbuddy-wc" ) 
 	 	{

@@ -7,9 +7,21 @@
 	padding: 1em;
 	margin-bottom: 1em;
 }
+.porterbuddy-widget.porterbuddy-product {
+    border: 1px solid #CCC; 
+    padding: 1em; 
+    margin-top: 1em;
+}
 .porterbuddy-widget-title {
     line-height: 1.5em;
     margin-top: 0.5em;
+}
+.porterbuddy-widget-logo-wrapper.porterbuddy-product {
+    overflow: auto;
+}
+.porterbuddy-widget-logo-wrapper.porterbuddy-product img {
+    float: right;
+    display: inline;
 }
 
 
@@ -20,8 +32,10 @@
     font-size: 0.8em;
     margin-bottom: 0.5em;
 }
-.porterbuddy-widget-comment textarea {
+.porterbuddy-widget input[type="text"], .porterbuddy-widget textarea {
     background-color: #fdfdfd;
+}
+.porterbuddy-widget-comment textarea{
     margin-top: 0.5em;
 }
 

@@ -6,19 +6,33 @@ function pb_cart_display() {
 	$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 	// enqueue scripts
 	wp_enqueue_script( 'wp-porterbuddy-widget-js' );
+    $type = WC()->session->get('pb_type');
+    $discountbox = '';
+	if(
+		(
+			($type == 'express' && $settings['express_price_override'] == "")
+			|| ($type != 'express' && $settings['price_override'] == "")
+		)
+		&& $settings['delivery_discount'] == 'on'
+		&& is_numeric($settings['discount_threshold'])
+		&& is_numeric($settings['price_discount'])
+		&& WC()->cart->get_cart_contents_total() >= (float) $settings['discount_threshold']
+	) $discountbox = '<div style="border: 1px solid #cdcdcd; padding: 8px; margin-bottom: 10px;">'. sprintf(__( 'The shipping cost is discounted with %d kr.', 'porterbuddy-wc' ), $settings['price_discount'] ) .'</div>';
 
 	// if PorterBuddy shipping is selected, display widget
 	if ( is_checkout() || WC()->session->get('chosen_shipping_methods')[0] == PORTERBUDDY_PLUGIN_NAME ) :
 
 		?>
 
-<div id="porterbuddy-widget" class="porterbuddy-widget" data-wpnonce="<?php echo wp_create_nonce('porterbuddy_widget_options'); ?>">
+<div id="porterbuddy-widget" class="porterbuddy-widget <?php if ( WC()->session->get('chosen_shipping_methods')[0] !== PORTERBUDDY_PLUGIN_NAME ) echo "porterbuddy-hide"; ?>" data-wpnonce="<?php echo wp_create_nonce('porterbuddy_widget_options'); ?>">
 
 	<div class="porterbuddy-widget-logo-wrapper">
 		<img src="<?= plugins_url("../assets/", __FILE__) ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
 	</div>
 	
 	<h3 class="porterbuddy-widget-title"><?= __($settings['title'], 'porterbuddy-wc') ?></h3>
+
+    <?= $discountbox ?>
 	
 	<p class="porterbuddy-widget-description"><?= __($settings['description'], 'porterbuddy-wc') ?></p>
 	

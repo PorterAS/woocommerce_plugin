@@ -159,6 +159,8 @@ function pb_display_order_complete( $order_id ) {
 
 								}
 
+								if($return_on_demand) $type .= '_with_return';
+
 								$api = $buddy->placeOrder(
 									$origin,
 									$destination,

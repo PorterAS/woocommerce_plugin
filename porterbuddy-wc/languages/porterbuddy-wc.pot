@@ -269,6 +269,14 @@ msgstr ""
 msgid "Text above the message to courier box"
 msgstr ""
 
+#: includes/options.php:325
+msgid "Delivery Pricing"
+msgstr ""
+
+#: includes/options.php:326
+msgid "Manage the cost you charge your customers for shipping with Porterbuddy"
+msgstr ""
+
 #: includes/options.php:314
 msgid "Optional message to the courier"
 msgstr ""
@@ -287,6 +295,42 @@ msgstr ""
 
 #: includes/options.php:327
 msgid "Leave empty to use Porterbuddy Express pricing"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Delivery Discount"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Off"
+msgstr ""
+
+#: includes/options.php:327
+msgid "On"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Price Discount"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Subtracted from the price, in NOK"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Threshold"
+msgstr ""
+
+#: includes/options.php:327
+msgid "Order price threshold, in NOK"
+msgstr ""
+
+#: parts/porterbuddy-cart-widget.php:20
+msgid "The shipping cost is discounted with %d kr."
+msgstr ""
+
+#: includes/options.php:327
+msgid "Give your customers discount on shipping when the order is above a certain price. If the prices are overridden in the section above, this setting will not have any effect."
 msgstr ""
 
 #: includes/options.php:346
@@ -467,6 +511,14 @@ msgstr ""
 msgid "API Settings and keys"
 msgstr ""
 
+#: includes/options.php:591
+msgid "Error Reporting E-Mail"
+msgstr ""
+
+#: includes/options.php:593
+msgid "Reports on API-requests that fail will be sent to this email. Leave blank to turn off. Separate with commas to add several addresses."
+msgstr ""
+
 #: includes/options.php:585
 msgid "API Key (Production)"
 msgstr ""
@@ -627,17 +679,31 @@ msgid "Sunday"
 msgstr ""
 
 #: parts/porterbuddy-product-widget.php:144
-msgid "days"
-msgstr ""
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
 
 #: parts/porterbuddy-product-widget.php:145
-msgid "hours"
-msgstr ""
+msgid "%s hour"
+msgid_plural "%s hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #: parts/porterbuddy-product-widget.php:146
-msgid "minutes"
-msgstr ""
+msgid "%s minute"
+msgid_plural "%s minutes"
+msgstr[0] ""
+msgstr[1] ""
 
 #: parts/porterbuddy-product-widget.php:147
 msgid "and"
+msgstr ""
+
+#: PorterBuddyClass.php:367
+msgid "Porterbuddy API generated an error"
+msgstr ""
+
+#: PorterBuddyClass.php:368
+msgid "API Returned:"
 msgstr ""

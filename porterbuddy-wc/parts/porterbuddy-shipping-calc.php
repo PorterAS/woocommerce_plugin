@@ -10,7 +10,7 @@ if( is_product() ):
 				isset($_COOKIE['pb_postcode']) ? $_COOKIE['pb_postcode'] : ''
 			)
 		);
-
+	$form_postcode == null ? $form_postcode = null : str_pad($form_postcode, 4, "0", STR_PAD_LEFT);
 	$form_country = isset($_COOKIE['pb_country']) && $_COOKIE['pb_country'] == 'x' ? null : (
 			WC()->customer->get_shipping_country() != null ? WC()->customer->get_shipping_country() : ( 
 				isset($_COOKIE['pb_country']) ? $_COOKIE['pb_country'] : ''
@@ -21,7 +21,7 @@ if( is_product() ):
 
 	<form class="woocommerce-shipping-calculator" <?= "data-geo=".$settings["geo_widget"]; ?> action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
 
-		<p><a href="#" class="shipping-calculator-button"><?php if ($form_postcode == null) esc_html_e( 'Check eligibility', 'porterbuddy-wc' ); else esc_html_e( 'Change postcode', 'porterbuddy-wc' ); ?></a></p>
+		<p><a href="#" class="shipping-calculator-button"><?php if ($form_postcode == null) esc_html_e( 'Check eligibility', 'porterbuddy-wc' ); else echo __( 'Change postcode', 'porterbuddy-wc' ).' ('.$form_postcode.')'; ?></a></p>
 
 		<section class="shipping-calculator-form" style="display:none;">
 
@@ -54,5 +54,9 @@ if( is_product() ):
 			<?php wp_nonce_field( 'woocommerce-cart' ); ?>
 		</section>
 	</form>
+
+	<div class="porterbuddy-widget-logo-wrapper porterbuddy-product">
+		<img src="<?= plugins_url("../assets/", __FILE__) ?>porterbuddy_logo.svg" class="image porterbuddy-widget-logo" width="118" height="24" alt="Porterbuddy">
+	</div>
 
 <?php endif; ?>

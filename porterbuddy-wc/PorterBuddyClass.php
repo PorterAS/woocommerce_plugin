@@ -354,7 +354,30 @@ class Request
 			'Content-Type: application/json',
 			'Content-Length: '.strlen($this->payload)
 		]);
-		return json_decode(curl_exec($this->_ch));
+
+		$result = curl_exec($this->_ch);
+		$httpcode = curl_getinfo($this->_ch, CURLINFO_HTTP_CODE);
+		if($httpcode != 200)
+		{
+			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
+			$emails = explode(',', $settings['error_email']);
+			if($settings['mode'] != 'production') $emails[] = 'dev@porterbuddy.com';
+			foreach ($emails as $email)
+			{
+				$email = trim($email);
+				if (filter_var($email, FILTER_VALIDATE_EMAIL))
+				{
+					wp_mail(
+						$email,
+						__('Porterbuddy API generated an error', 'porterbuddy-wc'),
+						print_r(curl_getinfo($this->_ch), true).__('API Request:', 'porterbuddy-wc')."\n\n".$this->getPayload()."\n\n".
+						__('API Returned:', 'porterbuddy-wc')."\n\n".$result,
+						$headers = ''
+					);
+				}
+			}
+		}
+		return json_decode($result);
 	}
 
 	/**

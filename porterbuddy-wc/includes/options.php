@@ -3,6 +3,9 @@
 if(!defined('ABSPATH') || ! defined( 'WPINC' )) {
 	die;
 }
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+$geoip = '';
+if(!is_plugin_active('geoip-detect/geoip-detect.php')) $geoip = '<br><span style="color: red"><a href="https://wordpress.org/plugins/geoip-detect/">GeoIP Detection</a> '.__( 'plugin must be installed', 'porterbuddy-wc' ) . '</span>';
 $hour_dropdown = array(
 	'0000' => '00:00',
 	'0015' => '00:15',
@@ -170,17 +173,6 @@ return array(
 		)
 	),
 
-	'geo_widget' => array(
-		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
-		'type' => 'select',
-		'default' => 'yes',
-		'description' => __( 'Ask the customer to use their location when setting delivery postcode', 'porterbuddy-wc' ),
-		'options' => array(
-			'yes' => __( 'Yes', 'porterbuddy-wc' ),
-			'no' => __ ( 'No' , 'porterbuddy-wc' ),
-		)
-	),
-
 	'product_page_widget' => array(
 		'type'        => 'title',
 		'title'       => __( 'Product Page Widget', 'porterbuddy-wc' ),
@@ -193,6 +185,28 @@ return array(
 		'type' => 'checkbox',
 		'description' => __( 'Enable or disable the product page widget.', 'porterbuddy-wc' ),
 		'default' => 'yes'
+	),
+
+	'ip_widget' => array(
+		'title' => __( 'Use IP Geo-Location', 'porterbuddy-wc' ),
+		'type' => 'select',
+		'default' => 'no',
+		'description' => __( 'Use IP location to determine if the widget should be rendered', 'porterbuddy-wc' ) . $geoip,
+		'options' => array(
+			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'no' => __ ( 'No' , 'porterbuddy-wc' ),
+		)
+	),
+
+	'geo_widget' => array(
+		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
+		'type' => 'select',
+		'default' => 'yes',
+		'description' => __( 'Ask the customer to use their location when setting delivery postcode', 'porterbuddy-wc' ),
+		'options' => array(
+			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'no' => __ ( 'No' , 'porterbuddy-wc' ),
+		)
 	),
 
 	'click_to_see' => array(
@@ -320,6 +334,13 @@ return array(
 		'default' => 'Optional message to the courier'
 	),
 
+	'pricing' => array(
+		'type'        => 'title',
+		'title'       => __( 'Delivery Pricing', 'porterbuddy-wc' ),
+		'description' => __( 'Manage the cost you charge your customers for shipping with Porterbuddy', 'porterbuddy-wc' ),
+		'class'       => 'separated_title_tab',
+	),
+
 	'price_override' => array(
 		'title' => __( 'Override porterbuddy price with', 'porterbuddy-wc' ),
 		'type' => 'text',
@@ -334,19 +355,38 @@ return array(
 		'default' => ''
 	),
 
-/*
+	'pricing_discount' => array(
+		'type'        => 'title',
+		'title'       => __( 'Delivery Discount', 'porterbuddy-wc' ),
+		'description' => __( 'Give your customers discount on shipping when the order is above a certain price. If the prices are overridden in the section above, this setting will not have any effect.', 'porterbuddy-wc' ),
+		'class'       => 'separated_title_tab',
+	),
+
 	'delivery_discount' => array(
-		'title' => __( 'Delivery discount', 'porterbuddy-wc' ),
+		'title' => __( 'Delivery Discount', 'porterbuddy-wc' ),
 		'type' => 'select',
-		'description' => __( 'Not entirely sure how this works'),
-		'default' => 'none',
+		'default' => 'off',
 		'options' => array(
-			'none' => __( 'None' ),
-			'fixed' => __( 'Fixed' ),
-			'percentage' => __( 'Percentage' ),
+			'off' => __( 'Off' , 'porterbuddy-wc'),
+			'on' => __( 'On' , 'porterbuddy-wc'),
 		)
 	),
-*/
+
+	'discount_threshold' => array(
+		'title' => __( 'Threshold', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Order price threshold, in NOK', 'porterbuddy-wc'),
+		'default' => '1000'
+	),
+
+	'price_discount' => array(
+		'title' => __( 'Price Discount', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Subtracted from the price, in NOK', 'porterbuddy-wc'),
+		'default' => '99'
+	),
+
+
 	'opening_hours' => array(
 		'type'        => 'title',
 		'title'       => __( 'Opening Hours', 'porterbuddy-wc' ),
@@ -585,6 +625,13 @@ return array(
 		'title'       => __( 'API Settings', 'porterbuddy-wc' ),
 		'description' => __( 'API Settings and keys', 'porterbuddy-wc' ),
 		'class'       => 'separated_title_tab',
+	),
+
+	'error_email' => array(
+		'title' => __( 'Error Reporting E-Mail', 'porterbuddy-wc' ),
+		'type' => 'text',
+		'description' => __( 'Reports on API-requests that fail will be sent to this email. Leave blank to turn off. Separate with commas to add several addresses.', 'porterbuddy-wc' ),
+		'default' => get_option('admin_email', '')
 	),
 
 	'api_key_prod' => array(

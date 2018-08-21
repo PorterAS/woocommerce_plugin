@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PorterBuddy Shipping 0.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/porterbuddy-wc\n"
-"POT-Creation-Date: 2018-08-09 17:32+0200\n"
-"PO-Revision-Date: 2018-08-09 17:35+0200\n"
+"POT-Creation-Date: 2018-08-17 13:17+0200\n"
+"PO-Revision-Date: 2018-08-17 13:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nb_NO\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: includes/display_filters.php:213
 msgid "The order will be delivered between %s and %s on %s"
@@ -283,6 +283,14 @@ msgstr "Melding-til-budet"
 msgid "Text above the message to courier box"
 msgstr "Tekst over melding-til-budet-boksen"
 
+#: includes/options.php:325
+msgid "Delivery Pricing"
+msgstr "Leveringspriser"
+
+#: includes/options.php:326
+msgid "Manage the cost you charge your customers for shipping with Porterbuddy"
+msgstr "Overstyr prisene som dine kunder betaler for leveranse med Porterbuddy"
+
 #: includes/options.php:314
 msgid "Optional message to the courier"
 msgstr "Melding til budet (valgfri)"
@@ -302,6 +310,49 @@ msgstr "Overstyr prisen på ekspressleveranse"
 #: includes/options.php:327
 msgid "Leave empty to use Porterbuddy Express pricing"
 msgstr "Dersom den er tom vil prisene fra porterbuddy bli brukt"
+
+#: includes/options.php:327
+msgid "Delivery Discount"
+msgstr "Leveringsrabatt"
+
+#: includes/options.php:327
+msgid "Off"
+msgstr "Av"
+
+#: includes/options.php:327
+msgid "On"
+msgstr "På"
+
+#: includes/options.php:327
+msgid "Price Discount"
+msgstr "Prisrabatt"
+
+#: includes/options.php:327
+msgid "Subtracted from the price, in NOK"
+msgstr "Trekkes fra leveranseprisen, i NOK"
+
+#: includes/options.php:327
+msgid "Threshold"
+msgstr "Minimumssum"
+
+#: includes/options.php:327
+msgid "Order price threshold, in NOK"
+msgstr ""
+"Minimumssummen som må være i handlekurven for at rabatten skal bli gjeldende"
+
+#: parts/porterbuddy-cart-widget.php:20
+msgid "The shipping cost is discounted with %d kr."
+msgstr "Leveranseprisen er rabattert med %d kr."
+
+#: includes/options.php:327
+msgid ""
+"Give your customers discount on shipping when the order is above a certain "
+"price. If the prices are overridden in the section above, this setting will "
+"not have any effect."
+msgstr ""
+"Gi kundene dine rabatt på levering når orderensummen er over et nivå. Hvis "
+"prisene er overstyrt i seksjonen over, har innstillingene i denne seksjonen "
+"ingen effekt."
 
 #: includes/options.php:346
 msgid "Opening Hours"
@@ -485,6 +536,19 @@ msgstr "API-Innstillinger"
 msgid "API Settings and keys"
 msgstr "API-Innstillinger og nøkler"
 
+#: includes/options.php:591
+msgid "Error Reporting E-Mail"
+msgstr "E-post for error-rapportering"
+
+#: includes/options.php:593
+msgid ""
+"Reports on API-requests that fail will be sent to this email. Leave blank to "
+"turn off. Separate with commas to add several addresses."
+msgstr ""
+"Dersom API-kall feiler vil det bli sendt en mail til denne epostaddressen. "
+"La stå blank for å skru av. Ved behov for flere addresser kan de separerers "
+"med komma."
+
 #: includes/options.php:585
 msgid "API Key (Production)"
 msgstr "API-Nøkkel (Produksjon)"
@@ -651,20 +715,40 @@ msgid "Sunday"
 msgstr "søndag"
 
 #: parts/porterbuddy-product-widget.php:144
-msgid "days"
-msgstr "dager"
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s dag"
+msgstr[1] "%s dager"
 
 #: parts/porterbuddy-product-widget.php:145
-msgid "hours"
-msgstr "timer"
+msgid "%s hour"
+msgid_plural "%s hours"
+msgstr[0] "%s time"
+msgstr[1] "%s timer"
 
 #: parts/porterbuddy-product-widget.php:146
-msgid "minutes"
-msgstr "minutter"
+msgid "%s minute"
+msgid_plural "%s minutes"
+msgstr[0] "%s minutt"
+msgstr[1] "%s minutter"
 
 #: parts/porterbuddy-product-widget.php:147
 msgid "and"
 msgstr "og"
 
-#~ msgid "Can be obtained from _LINK_"
-#~ msgstr "Kan skaffes her: __LINK___"
+#: PorterBuddyClass.php:367
+msgid "Porterbuddy API generated an error"
+msgstr "Porterbuddy API genererte en feilmelding"
+
+#: PorterBuddyClass.php:368
+msgid "API Returned:"
+msgstr "API Returnerte:"
+
+#~ msgid "%s days"
+#~ msgstr "%s dager"
+
+#~ msgid "%s hours"
+#~ msgstr "%s timer"
+
+#~ msgid "%s minutes"
+#~ msgstr "%s minutter"
