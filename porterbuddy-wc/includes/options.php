@@ -204,7 +204,8 @@ return array(
 		'default' => 'yes',
 		'description' => __( 'Ask the customer to use their location when setting delivery postcode', 'porterbuddy-wc' ),
 		'options' => array(
-			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'yes' => __( 'Yes - On product widget', 'porterbuddy-wc' ),
+			'yes-pl' => __ ( 'Yes - On product page load' , 'porterbuddy-wc' ),
 			'no' => __ ( 'No' , 'porterbuddy-wc' ),
 		)
 	),
