@@ -5,8 +5,8 @@ include_once dirname(dirname(__FILE__)).'/PorterBuddyClass.php';
 
 // Fetch the settings
 $settings = get_option( 'woocommerce_porterbuddy-wc_settings');
-
-if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mode'] == 'development') {
+$shipping_postcode = \WC()->customer->get_shipping_postcode();
+if ( false === ( $result = get_transient( 'pb_availability_'.$shipping_postcode ) ) || $settings['mode'] == 'development') {
 	$cart = WC()->cart->get_cart();
 
 	// Result template
@@ -15,7 +15,7 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 		'mode' => $settings['mode'],
 		'cached' => false,
 		'country' => \WC()->customer->get_shipping_country(),
-		'postcode' => \WC()->customer->get_shipping_postcode(),
+		'postcode' => $shipping_postcode,
 		'data' => []
 	];
 
@@ -139,7 +139,7 @@ if ( false === ( $result = get_transient( 'pb_availability' ) ) || $settings['mo
 					$win->price->return = number_format_i18n( $cost + $settings['return_price'], 2 );
 					$result['data'][$win->product][] = $win;
 				}
-				if($settings['mode'] != 'development') set_transient( 'pb_availability', $result, is_numeric($settings['update_delivery']) ? $settings['update_delivery']*60 : 5*60 );
+				if($settings['mode'] != 'development') set_transient( 'pb_availability_'.$shipping_postcode, $result, is_numeric($settings['update_delivery']) ? $settings['update_delivery']*60 : 5*60 );
 			}
 			else
 			{
