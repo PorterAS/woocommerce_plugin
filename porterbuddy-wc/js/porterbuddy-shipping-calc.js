@@ -35,7 +35,7 @@ jQuery( function( $ ) {
 			if ( curloc.length > 5 ) {
 				window.location.assign(window.location.href + " ");
 			}
-			else if ( geoSetting == "yes" && navigator.geolocation ) {
+			else if ( geoSetting.indexOf("yes") >= 0  && navigator.geolocation ) {
 
 				// fetch location data and place in cookie for PHP handling
 
