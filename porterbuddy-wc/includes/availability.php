@@ -7,6 +7,15 @@ include_once dirname(dirname(__FILE__)).'/PorterBuddyClass.php';
 $settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 $shipping_postcode = \WC()->customer->get_shipping_postcode();
 if ( false === ( $result = get_transient( 'pb_availability_'.$shipping_postcode ) ) || $settings['mode'] == 'development') {
+
+	$postcode = WC()->customer->get_shipping_postcode();
+	$zones = $wpdb->get_results( "SELECT zone_id FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE method_id = 'porterbuddy-wc'", ARRAY_A );
+	$ids = [];
+	foreach ($zones as $zone) $ids[] = $zone['zone_id'];
+	$valid_postcode = $wpdb->get_results( "SELECT location_code FROM {$wpdb->prefix}woocommerce_shipping_zone_locations WHERE 
+						zone_id IN (".implode(',',$ids).") AND location_type = 'postcode' AND location_code='".$postcode."'", ARRAY_A );
+
+	if(empty($valid_postcode)) return [];
 	$cart = WC()->cart->get_cart();
 
 	// Result template
@@ -23,9 +32,8 @@ if ( false === ( $result = get_transient( 'pb_availability_'.$shipping_postcode 
 	if($settings['mode'] == 'production') $api_key = $settings['api_key_prod'];
 	else $api_key =  $settings['api_key_testing'];
 
-	// TODO Implement production URL
-	if($settings['mode'] == 'production') $api_url =  'https://api.porterbuddy-test.com/';
-	else $api_url =  'https://api.porterbuddy-test.com/';
+	if($settings['mode'] == 'production') $api_url =  'https://api.porterbuddy.com/';
+	else $api_url =  'https://api.porterbuddy.com/';
 
 	$opening_hours = [
 			'Monday' => ['open' => $settings['monday_open'], 'close' => $settings['monday_close']],

@@ -348,6 +348,7 @@ class Request
 	 */
 	public function execute()
 	{
+		global $wpdb;
 		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($this->_ch, CURLOPT_HTTPHEADER, [
 			'x-api-key: '.$this->_api_key,
@@ -357,6 +358,7 @@ class Request
 
 		$result = curl_exec($this->_ch);
 		$httpcode = curl_getinfo($this->_ch, CURLINFO_HTTP_CODE);
+
 		if($httpcode != 200)
 		{
 			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
