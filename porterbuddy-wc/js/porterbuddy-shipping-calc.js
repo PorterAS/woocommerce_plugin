@@ -200,6 +200,17 @@ jQuery( function( $ ) {
 		}
 	};
 
+	// initiate shipping calculator
 	pb_shipping_calc.init();
+
+	// if plugin option is set to find geo on product page load
+	ready('.woocommerce-shipping-calculator', function() 
+	{
+		if ( $('.woocommerce-shipping-calculator').data('geo') === "yes-pl" )
+		{
+			locationCheck( $('.woocommerce-shipping-calculator'), true );
+		}
+		
+	});
 
 } );
