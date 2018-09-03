@@ -105,7 +105,7 @@ function pb_kill_shipping_cost_cache()
 	{
 
 		$postcode = WC()->customer->get_shipping_postcode();
-		WC()->customer->set_shipping_postcode((int) $postcode + 1);
+		WC()->customer->set_shipping_postcode('x');
 		WC()->cart->calculate_shipping();
 		WC()->customer->set_shipping_postcode($postcode);
 		WC()->cart->calculate_shipping();
