@@ -348,7 +348,6 @@ class Request
 	 */
 	public function execute()
 	{
-		global $wpdb;
 		curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($this->_ch, CURLOPT_HTTPHEADER, [
 			'x-api-key: '.$this->_api_key,
