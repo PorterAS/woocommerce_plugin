@@ -123,6 +123,14 @@ msgstr ""
 msgid "Use HTML5 Geo-Location"
 msgstr ""
 
+#: includes/options.php:168
+msgid "Yes - On product widget"
+msgstr ""
+
+#: includes/options.php:168
+msgid "Yes - On product page load"
+msgstr ""
+
 #: includes/options.php:171
 msgid "Ask the customer to use their location when setting delivery postcode"
 msgstr ""

@@ -35,7 +35,7 @@ jQuery( function( $ ) {
 			if ( curloc.length > 5 ) {
 				window.location.assign(window.location.href + " ");
 			}
-			else if ( geoSetting == "yes" && navigator.geolocation ) {
+			else if ( geoSetting.indexOf("yes") >= 0  && navigator.geolocation ) {
 
 				// fetch location data and place in cookie for PHP handling
 
@@ -200,6 +200,17 @@ jQuery( function( $ ) {
 		}
 	};
 
+	// initiate shipping calculator
 	pb_shipping_calc.init();
+
+	// if plugin option is set to find geo on product page load
+	ready('.woocommerce-shipping-calculator', function() 
+	{
+		if ( $('.woocommerce-shipping-calculator').data('geo') === "yes-pl" )
+		{
+			locationCheck( $('.woocommerce-shipping-calculator'), true );
+		}
+		
+	});
 
 } );

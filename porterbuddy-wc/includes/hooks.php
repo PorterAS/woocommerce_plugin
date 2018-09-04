@@ -103,6 +103,13 @@ function pb_kill_shipping_cost_cache()
 {
 	if(WC()->session->get('chosen_shipping_methods')[0] == PORTERBUDDY_PLUGIN_NAME)
 	{
+
+		$postcode = WC()->customer->get_shipping_postcode();
+		WC()->customer->set_shipping_postcode('x');
+		WC()->cart->calculate_shipping();
+		WC()->customer->set_shipping_postcode($postcode);
+		WC()->cart->calculate_shipping();
+		/*
 		// START    Shipping cost cache killer
 		$contents = WC()->cart->cart_contents;
 		foreach ( $contents as $key => $content ) {
@@ -111,6 +118,7 @@ function pb_kill_shipping_cost_cache()
 		WC()->cart->set_cart_contents( $contents );
 		WC()->cart->calculate_shipping();
 		// END      Shipping cost cache killer
+		*/
 	}
 }
 

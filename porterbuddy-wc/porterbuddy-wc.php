@@ -79,7 +79,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	// Checkout Widget
 	if(
 		isset($settings['enabled']) && $settings['enabled'] == 'yes' 
-	) add_action( 'woocommerce_review_order_before_payment', 'pb_cart_display', 10 );
+	) add_action( 'woocommerce_after_order_notes', 'pb_cart_display', 10 );
 
 	include_once 'includes/display_filters.php';
 }
