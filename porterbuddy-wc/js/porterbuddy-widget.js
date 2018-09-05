@@ -427,7 +427,7 @@ jQuery( function( $ ) {
 					 * it all becomes a bit hacky.
 					 */
 
-					// if in checkout, we need to get order review instead of cart totals
+					// if in woocommerce checkout, we need to get order review instead of cart totals
 					if($('#order_review').length > 0)
 					{
                         $.ajax(
@@ -462,6 +462,41 @@ jQuery( function( $ ) {
                             }
                         );
                     }
+                    // if in klarna checkout
+                    else if($('#kco-order-review').length > 0)
+					{
+						$.ajax(
+                            {
+                                url: pbWidgetPHP['ajaxphp'],
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data:
+                                    {
+                                        action: 'pb_kill_shipping_cost_cache' // as defined in includes/hooks.php
+                                    },
+                                success: function () {
+                                    $.ajax({
+										type: 'POST',
+										url: kco_params.update_cart_url,
+										data: {
+											checkout: $('form.checkout').serialize(),
+											nonce: kco_params.update_cart_nonce
+										},
+										dataType: 'json',
+										success: function(data) {
+										},
+										error: function(data) {
+										},
+										complete: function(data) {
+											$('body').trigger('update_checkout');
+										}
+									});
+                                }
+                            }
+                        );
+					}
+					// if in cart
                     else
                     {
                     	// get shipping part of cart totals
@@ -566,11 +601,30 @@ jQuery( function( $ ) {
 	/**
 	 * after woo cart updates with ajax, reinitiate widget
 	 */
+	$( document.body ).on( 'updated_cart_totals', function( event ){
+		porterbuddy();
+	});
 
-	 $( document.body ).on( 'updated_cart_totals', function( event ){
-	 	porterbuddy();
-	 });
+	/**
+	 * After klarna cart updates, reinitiate widget
+	 */
+	if($('#kco-order-review').length > 0)
+	{
+		$( document.body ).on( 'DOMSubtreeModified', '#kco-order-review .shop_table', function( event ){
 
+			//porterbuddy();
+
+			if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) 
+			{
+				$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+			}
+			else
+			{
+				$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+			}
+
+		});
+	}
 
 	 /**
 	  * If shipping changes occurs on checkout, hide and show the widget
