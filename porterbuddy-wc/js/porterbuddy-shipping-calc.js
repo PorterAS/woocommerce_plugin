@@ -19,7 +19,7 @@ jQuery( function( $ ) {
 
 		// clear out location data if true
 		if ( $clear == true ) {
-			PBsetCookie('pb_country','x',1);
+			//PBsetCookie('pb_country','x',1);
 			PBsetCookie('pb_postcode','x',1);
 			PBsetCookie('pb_location','x',1);
 			currentPostCode.val('');
@@ -53,6 +53,8 @@ jQuery( function( $ ) {
 
 						// set values
 						$(currentPostCode).val(currentPostCodeOldVal);
+						PBsetCookie('pb_postcode',currentPostCodeOldVal,60);
+
 						geosubtn = $('.shipping-calculator-form').find('button[class="use_geo_btn"]');
 
 						// disable button and tell user
@@ -64,6 +66,7 @@ jQuery( function( $ ) {
 
 					} else {
 						console.log( 'Unable to get location.' );
+						PBsetCookie('pb_postcode',currentPostCodeOldVal,60);
 					}
 					// give access to form again
 					unblock( $node );
@@ -73,10 +76,12 @@ jQuery( function( $ ) {
 			}
 			else {
 				console.log( 'Could not get location.' );
+				PBsetCookie('pb_postcode',currentPostCodeOldVal,60);
 				unblock( $node );
 			}
 
 		} else {
+			PBsetCookie('pb_postcode',currentPostCodeOldVal,60);
 			unblock( $node );
 			return false;
 		}
@@ -204,14 +209,14 @@ jQuery( function( $ ) {
 	pb_shipping_calc.init();
 
 	// if neither geo nor postcode is set
-	if ( ! PBgetCookie('pb_location') )
+	if ( PBgetCookie('pb_location') == undefined || PBgetCookie('pb_location') == "x")
 	{
 		// if plugin option is set to find geo on product page load
 		ready('.woocommerce-shipping-calculator', function() 
 		{
 			if ( $('.woocommerce-shipping-calculator').data('geo') === "yes-pl" )
 			{
-				locationCheck( $('.woocommerce-shipping-calculator') );
+				locationCheck( $('.woocommerce-shipping-calculator'), true );
 			}
 			
 		});
