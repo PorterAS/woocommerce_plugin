@@ -65,7 +65,7 @@ function pb_product_display() {
 						// set post code cookie, so we don't have to check the API every time. Use JS because WP..
 						$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
 						echo '<div style="display:none;">';
-						echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', '.$postcode.', 30);</script>';
+						echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', \''.$postcode.'\', 30);</script>';
 						echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
 						echo '</div>';
 					};
@@ -83,7 +83,7 @@ function pb_product_display() {
 					// set post code cookie, so we don't have to check the API every time. Use JS because WP..
 					$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
 					echo '<div style="display:none;">';
-					echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', '.$postcode.', 30);</script>';
+					echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', \''.$postcode.'\', 30);</script>';
 					echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
 					echo '</div>';
 				}
