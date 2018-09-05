@@ -203,14 +203,19 @@ jQuery( function( $ ) {
 	// initiate shipping calculator
 	pb_shipping_calc.init();
 
-	// if plugin option is set to find geo on product page load
-	ready('.woocommerce-shipping-calculator', function() 
+	// if neither geo nor postcode is set
+	if ( ! PBgetCookie('pb_location') )
 	{
-		if ( $('.woocommerce-shipping-calculator').data('geo') === "yes-pl" )
+		// if plugin option is set to find geo on product page load
+		ready('.woocommerce-shipping-calculator', function() 
 		{
-			locationCheck( $('.woocommerce-shipping-calculator'), true );
-		}
-		
-	});
+			if ( $('.woocommerce-shipping-calculator').data('geo') === "yes-pl" )
+			{
+				locationCheck( $('.woocommerce-shipping-calculator') );
+			}
+			
+		});
+	}
+	
 
 } );
