@@ -199,7 +199,7 @@ jQuery( function( $ ) {
 				$('<div/>', 
 				{
 				    "class": 'porterbuddy-widget-timeslot ' + hidden,
-				    html: '<h6>' + moment(this.start).locale("nb_NO").format("LT") + ' - ' + moment(this.end).format("LT") + '</h6>' + 
+				    html: '<h6>' + moment(this.start).format("LT") + ' - ' + moment(this.end).format("LT") + '</h6>' + 
 				    	'<p><span class="price">' + this.price.string + '</span></p>',
 				    click: function() 
 				    {
