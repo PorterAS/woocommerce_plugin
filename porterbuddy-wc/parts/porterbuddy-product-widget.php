@@ -74,7 +74,7 @@ function pb_product_display() {
 					$geo = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip());
 					//$geo = geoip_detect2_get_info_from_ip("89.221.242.34");
 					
-					$postcode = (string) $geo->postal->code;
+					$postcode = str_pad((string) $geo->postal->code, 4, "0", STR_PAD_LEFT);;
 					$country = $geo->country->isoCode;
 
 					// set WC shipping info
