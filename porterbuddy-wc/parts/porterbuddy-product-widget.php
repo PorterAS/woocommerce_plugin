@@ -65,7 +65,7 @@ function pb_product_display() {
 						// set post code cookie, so we don't have to check the API every time. Use JS because WP..
 						$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
 						echo '<div style="display:none;">';
-						echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', '.$postcode.', 30);</script>';
+						echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', \''.$postcode.'\', 30);</script>';
 						echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
 						echo '</div>';
 					};
@@ -74,7 +74,7 @@ function pb_product_display() {
 					$geo = geoip_detect2_get_info_from_ip(geoip_detect2_get_client_ip());
 					//$geo = geoip_detect2_get_info_from_ip("89.221.242.34");
 					
-					$postcode = str_pad((string) $geo->postal->code, 4, "0", STR_PAD_LEFT);;
+					$postcode = (string) $geo->postal->code;
 					$country = $geo->country->isoCode;
 
 					// set WC shipping info
@@ -83,7 +83,7 @@ function pb_product_display() {
 					// set post code cookie, so we don't have to check the API every time. Use JS because WP..
 					$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
 					echo '<div style="display:none;">';
-					echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', '.$postcode.', 30);</script>';
+					echo '<script type="text/javascript">PBsetCookie(\'pb_postcode\', \''.$postcode.'\', 30);</script>';
 					echo '<script type="text/javascript">PBsetCookie(\'pb_country\', "'.$country.'", 30);</script>';
 					echo '</div>';
 				}
