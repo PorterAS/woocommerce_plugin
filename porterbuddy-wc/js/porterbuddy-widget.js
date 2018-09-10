@@ -77,7 +77,7 @@ jQuery( function( $ ) {
 	date.init();
 
 	// due to how woo handles cart updates, we wrap everything into a function
-	function porterbuddy ( $pbinit=false )
+	function porterbuddy ()
 	{
 		/**
 		 * When loaded, check availability
@@ -87,8 +87,8 @@ jQuery( function( $ ) {
 		    getAvailability( this );
 		});
 
-		// if variable is true, initiate availability
-		if ( $pbinit == true )
+		// reinitiate porterbuddy availability
+		function reinit ()
 		{
 			getAvailability( $('#porterbuddy-widget') );
 		}
@@ -598,16 +598,21 @@ jQuery( function( $ ) {
 				setShippingSelection();
 			}
 		);
+
+		// make reinit available
+		return {
+			reinit: reinit
+		};
 	}
 
-	// initiate porterbuddy widget
-	porterbuddy();
+	// initiate porterbuddy widget as a single instance variable
+	var pb_widget = porterbuddy();
 	
 	/**
 	 * after woo cart updates with ajax, reinitiate widget
 	 */
 	$( document.body ).on( 'updated_cart_totals', function( event ){
-		porterbuddy();
+		pb_widget.reinit();
 	});
 
 	/**
@@ -623,7 +628,7 @@ jQuery( function( $ ) {
 				// if no timeslots available, fetch them
 				if ( $('#timeslots > div.porterbuddy-widget-timeslot').length < 1 )
 				{
-					porterbuddy( true );
+					pb_widget.reinit();
 				}
 				// display widget
 				$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
