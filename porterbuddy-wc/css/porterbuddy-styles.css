@@ -107,6 +107,7 @@
 .porterbuddy-widget-timeslot {
 	border: 1px solid #cdcdcd;
     flex-basis: 7em;
+    flex-grow: 1;
     height: 4.5em;
     text-align: center;
     margin: 0.2em;

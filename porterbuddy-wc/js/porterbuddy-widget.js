@@ -77,7 +77,7 @@ jQuery( function( $ ) {
 	date.init();
 
 	// due to how woo handles cart updates, we wrap everything into a function
-	function porterbuddy ()
+	function porterbuddy ( $pbinit=false )
 	{
 		/**
 		 * When loaded, check availability
@@ -86,6 +86,12 @@ jQuery( function( $ ) {
 		{
 		    getAvailability( this );
 		});
+
+		// if variable is true, initiate availability
+		if ( $pbinit == true )
+		{
+			getAvailability( $('#porterbuddy-widget') );
+		}
 
 
 		/**
@@ -131,7 +137,7 @@ jQuery( function( $ ) {
 				{
 					return false;
 				},
-			})
+			});
 		};
 
 		
@@ -377,7 +383,7 @@ jQuery( function( $ ) {
 				{
 					return false;
 				},
-			})
+			});
 		 }
 
 
@@ -522,10 +528,9 @@ jQuery( function( $ ) {
 				},
 				error: function ( error )
 				{
-					//console.log( error );
 					return false;
 				},
-			})
+			});
 		}
 
 		/**
@@ -606,20 +611,26 @@ jQuery( function( $ ) {
 	});
 
 	/**
-	 * After klarna cart updates, reinitiate widget
+	 * Display widget on klarna checkout updates
+	 * Necessary due to how Klarna handles events (if using correct event, it overwrites Klarna's own)
 	 */
 	if($('#kco-order-review').length > 0)
 	{
 		$( document.body ).on( 'DOMSubtreeModified', '#kco-order-review .shop_table', function( event ){
 
-			//porterbuddy();
-
 			if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) 
 			{
+				// if no timeslots available, fetch them
+				if ( $('#timeslots > div.porterbuddy-widget-timeslot').length < 1 )
+				{
+					porterbuddy( true );
+				}
+				// display widget
 				$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
 			}
 			else
-			{
+			{	
+				// hide widget
 				$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
 			}
 
