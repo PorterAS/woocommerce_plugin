@@ -202,7 +202,7 @@ return array(
 		'title' => __( 'Hide widget when location can\'t be resolved', 'porterbuddy-wc' ),
 		'type' => 'select',
 		'default' => 'yes',
-		'description' => __( 'Hide the PorterBuddy product widget when the customers location can\'t be resolved', 'porterbuddy-wc' ) . $geoip,
+		'description' => __( 'Hide the PorterBuddy product widget when the customers location can\'t be resolved', 'porterbuddy-wc' ),
 		'options' => array(
 			'yes' => __( 'Yes', 'porterbuddy-wc' ),
 			'no' => __ ( 'No' , 'porterbuddy-wc' ),
