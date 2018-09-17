@@ -230,11 +230,12 @@ class Origin
 		$pickupWindows
 	)
 	{
+		$phone = new PhoneNumber($phoneNumber, $phoneCountryCode);
 		$this->name = $name;
 		$this->address = $address;
 		$this->email = $email;
-		$this->phoneCountryCode = $phoneCountryCode;
-		$this->phoneNumber = $phoneNumber;
+		$this->phoneCountryCode = $phone->getCountryCode();
+		$this->phoneNumber = $phone->getNumber();
 		$this->pickupWindows = $pickupWindows;
 	}
 
@@ -480,5 +481,63 @@ class Window
 		$res->currency = $obj->price->currency;
 
 		return $res;
+	}
+}
+
+/**
+ * Class PhoneNumber
+ */
+class PhoneNumber
+{
+	public $prefix;
+	public $phone;
+
+	public function __construct($number, $prefix) {
+		$number = preg_replace('/\s+/', '', $number);
+		if (strpos(trim($number), "+") === 0) {
+			// Check if number is given with country code with +
+			$this->prefix = substr(trim($number), 0,3);
+			$this->phone = substr(trim($number), 3);
+		}
+		elseif (strpos(trim($number), "00") === 0) {
+			// Check if number is given with country code with 00
+			$this->prefix = substr(trim($number), 0,4);
+			$this->phone = substr(trim($number), 4);
+		}
+		else {
+			// Use the supplied country code (usually PB default)
+			$this->prefix = trim($prefix);
+			$this->phone = trim($number);
+		}
+	}
+
+	/**
+	 * Return the phone number without country code
+	 *
+	 * @return string
+	 */
+	public function getNumber()
+	{
+		return $this->phone;
+	}
+
+	/**
+	 * Return the country code without the number
+	 *
+	 * @return string
+	 */
+	public function getCountryCode()
+	{
+		return $this->prefix;
+	}
+
+	/**
+	 * Return the phone number with country code
+	 *
+	 * @return string
+	 */
+	public function getFull()
+	{
+		return $this->getCountryCode().$this->getNumber();
 	}
 }

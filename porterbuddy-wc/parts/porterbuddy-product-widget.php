@@ -8,8 +8,7 @@ function pb_product_display() {
 
 	if($product->get_stock_status() == 'instock')
 	{
-
-		$html = '<div class="porterbuddy-widget porterbuddy-product">';
+		$html = '';
 
 		if(
 			(
@@ -77,9 +76,18 @@ function pb_product_display() {
 					$postcode = (string) $geo->postal->code;
 					$country = $geo->country->isoCode;
 
-					// set WC shipping info
-					WC()->customer->set_shipping_postcode( $postcode );
-					WC()->customer->set_shipping_country( $country );
+					if($postcode == null || $postcode == '' || $postcode == ' ' || $postcode == 0 || $postcode == false)
+					{
+						// Invalid postcode
+						$postcode = 'x';
+					}
+					else
+					{
+						// set WC shipping info
+						WC()->customer->set_shipping_postcode( $postcode );
+						WC()->customer->set_shipping_country( $country );
+					}
+
 					// set post code cookie, so we don't have to check the API every time. Use JS because WP..
 					$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
 					echo '<div style="display:none;">';
@@ -88,7 +96,7 @@ function pb_product_display() {
 					echo '</div>';
 				}
 			}
-
+			if(in_array($postcode, [null, 'x', '000x', ''])) $postcode = null;
 			if($postcode != null && strlen($postcode) > 0)
 			{
 				global $wp_locale;
@@ -176,15 +184,22 @@ function pb_product_display() {
 
 			$html .= "</p>";
 		}
-		if(!isset($settings['ip_widget']) || $settings['ip_widget'] == 'no' || (!empty($valid_postcode) && !empty($valid_country)))
-		{
-			// Render widget
-			echo $html;
 
-			// Include shipping calculator to set country and postcode
-			include('porterbuddy-shipping-calc.php');
-			echo '</div>';
+		if(!isset($postcode) || $postcode == null) {
+			// Postcode not set
+			if(isset($settings['hide_widget']) && $settings['hide_widget'] == 'no') echo '<div class="porterbuddy-widget porterbuddy-product test1">';
+			else echo '<div class="porterbuddy-widget porterbuddy-product test2" style="display: none">';
 		}
+		else {
+			// Postcode set
+			if(empty($valid_postcode) || empty($valid_country)) echo '<div class="porterbuddy-widget porterbuddy-product test3" style="display: none">';
+			else echo '<div class="porterbuddy-widget porterbuddy-product test4">';
+		}
+		// Render widget
+		echo $html;
+		// Include shipping calculator to set country and postcode
+		include('porterbuddy-shipping-calc.php');
+		echo '</div>';
 	}
 }
 

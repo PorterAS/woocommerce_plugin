@@ -191,7 +191,7 @@ return array(
 		'title' => __( 'Use IP Geo-Location', 'porterbuddy-wc' ),
 		'type' => 'select',
 		'default' => 'no',
-		'description' => __( 'Use IP location to determine if the widget should be rendered', 'porterbuddy-wc' ) . $geoip,
+		'description' => __( 'Use IP location to determine customer location', 'porterbuddy-wc' ) . $geoip,
 		'options' => array(
 			'yes' => __( 'Yes', 'porterbuddy-wc' ),
 			'no' => __ ( 'No' , 'porterbuddy-wc' ),
@@ -202,13 +202,25 @@ return array(
 		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
 		'type' => 'select',
 		'default' => 'yes',
-		'description' => __( 'Ask the customer to use their location when setting delivery postcode', 'porterbuddy-wc' ),
+		'description' => __( 'Ask the customer to use their location', 'porterbuddy-wc' ),
 		'options' => array(
 			'yes' => __( 'Yes - On product widget', 'porterbuddy-wc' ),
 			'yes-pl' => __ ( 'Yes - On product page load' , 'porterbuddy-wc' ),
 			'no' => __ ( 'No' , 'porterbuddy-wc' ),
 		)
 	),
+
+	'hide_widget' => array(
+		'title' => __( 'Hide widget when location can\'t be resolved', 'porterbuddy-wc' ),
+		'type' => 'select',
+		'default' => 'yes',
+		'description' => __( 'Hide the PorterBuddy product widget when the customers location can\'t be <br>resolved automatically', 'porterbuddy-wc' ),
+		'options' => array(
+			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'no' => __ ( 'No' , 'porterbuddy-wc' ),
+		)
+	),
+
 
 	'click_to_see' => array(
 		'title' => __( 'Click to see text', 'porterbuddy-wc' ),

@@ -72,8 +72,7 @@ function pb_display_order_complete( $order_id ) {
 					if($settings['mode'] == 'production') $api_key = $settings['api_key_prod'];
 					else $api_key =  $settings['api_key_testing'];
 
-					// TODO Implement production URL
-					if($settings['mode'] == 'production') $api_url =  'https://api.porterbuddy-test.com/';
+					if($settings['mode'] == 'production') $api_url =  'https://api.porterbuddy.com/';
 					else $api_url =  'https://api.porterbuddy-test.com/';
 
 					// Call PB
