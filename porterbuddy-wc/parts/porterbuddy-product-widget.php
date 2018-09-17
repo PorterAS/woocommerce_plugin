@@ -188,7 +188,7 @@ function pb_product_display() {
 		{
 			echo '<div class="porterbuddy-widget porterbuddy-product">';
 		}
-		elseif((!isset($postcode) || $postcode == null) && (!isset($settings['hide_widget']) || $settings['hide_widget'] == 'no')) echo '<div class="porterbuddy-widget porterbuddy-product">';
+		elseif((!isset($postcode) || $postcode == null) && (isset($settings['hide_widget']) && $settings['hide_widget'] == 'no')) echo '<div class="porterbuddy-widget porterbuddy-product">';
 		else echo '<div class="porterbuddy-widget porterbuddy-product" style="display: none">';
 		// Render widget
 		echo $html;
