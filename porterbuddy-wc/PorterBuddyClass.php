@@ -493,6 +493,7 @@ class PhoneNumber
 	public $phone;
 
 	public function __construct($number, $prefix) {
+		$number = preg_replace('/\s+/', '', $number);
 		if (strpos(trim($number), "+") === 0) {
 			// Check if number is given with country code with +
 			$this->prefix = substr(trim($number), 0,3);
