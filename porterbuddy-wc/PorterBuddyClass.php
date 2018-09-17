@@ -363,7 +363,7 @@ class Request
 		{
 			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 			$emails = explode(',', $settings['error_email']);
-			if($settings['mode'] != 'production') $emails[] = 'dev@porterbuddy.com';
+			if($settings['mode'] == 'production') $emails[] = 'dev@porterbuddy.com';
 			foreach ($emails as $email)
 			{
 				$email = trim($email);
