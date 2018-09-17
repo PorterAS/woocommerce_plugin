@@ -184,12 +184,17 @@ function pb_product_display() {
 
 			$html .= "</p>";
 		}
-		if(!isset($settings['ip_widget']) || $settings['ip_widget'] == 'no' || (!empty($valid_postcode) && !empty($valid_country)))
-		{
-			echo '<div class="porterbuddy-widget porterbuddy-product">';
+
+		if(!isset($postcode) || $postcode == null) {
+			// Postcode not set
+			if(isset($settings['hide_widget']) && $settings['hide_widget'] == 'no') echo '<div class="porterbuddy-widget porterbuddy-product test1">';
+			else echo '<div class="porterbuddy-widget porterbuddy-product test2" style="display: none">';
 		}
-		elseif((!isset($postcode) || $postcode == null) && (isset($settings['hide_widget']) && $settings['hide_widget'] == 'no')) echo '<div class="porterbuddy-widget porterbuddy-product">';
-		else echo '<div class="porterbuddy-widget porterbuddy-product" style="display: none">';
+		else {
+			// Postcode set
+			if(empty($valid_postcode) || empty($valid_country)) echo '<div class="porterbuddy-widget porterbuddy-product test3" style="display: none">';
+			else echo '<div class="porterbuddy-widget porterbuddy-product test4">';
+		}
 		// Render widget
 		echo $html;
 		// Include shipping calculator to set country and postcode
