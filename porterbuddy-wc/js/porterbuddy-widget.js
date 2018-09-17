@@ -184,7 +184,7 @@ jQuery( function( $ ) {
 				    click: function() 
 				    {
 				    	// set active class on click
-				    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
+				    	$( this ).addClass( "active" ).siblings().removeClass( "active" );
 				    }
 				}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
 					.attr('timeslot', this.start)
@@ -210,7 +210,7 @@ jQuery( function( $ ) {
 				    click: function() 
 				    {
 				    	// set active class on click
-				    	$( this ).toggleClass( "active" ).siblings().removeClass( "active" );
+				    	$( this ).addClass( "active" ).siblings().removeClass( "active" );
 				    }
 				}).attr('data-value', 'pbdelivery_'+this.start+'_'+this.end)
 					.attr('timeslot', this.start)
