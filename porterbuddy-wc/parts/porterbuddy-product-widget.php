@@ -77,9 +77,20 @@ function pb_product_display() {
 					$postcode = (string) $geo->postal->code;
 					$country = $geo->country->isoCode;
 
-					// set WC shipping info
-					WC()->customer->set_shipping_postcode( $postcode );
-					WC()->customer->set_shipping_country( $country );
+					if($postcode == null || $postcode == '' || $postcode == ' ' || $postcode == 0 || $postcode == false)
+					{
+						// Invalid postcode
+						$postcode = 'x';
+						WC()->customer->set_shipping_postcode( null );
+						WC()->customer->set_shipping_country( null );
+					}
+					else
+					{
+						// set WC shipping info
+						WC()->customer->set_shipping_postcode( $postcode );
+						WC()->customer->set_shipping_country( $country );
+					}
+
 					// set post code cookie, so we don't have to check the API every time. Use JS because WP..
 					$_COOKIE['pb_postcode'] = $postcode; $_COOKIE['pb_country'] = $country;
 					echo '<div style="display:none;">';
