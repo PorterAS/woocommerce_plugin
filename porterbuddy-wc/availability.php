@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 if(1==0)
 {
 	// Test Code
-	$result['data']['express'] = [
+	$result['data']['express'] = array([
 		'product' => 'express',
 		'start' => "2018-09-17T18:00:00+02:00",
 		'end' => "2018-09-17T19:30:00+02:00",
@@ -16,7 +16,7 @@ if(1==0)
 			'string' => '249,00',
 			'return' => '328,00'
 		]
-	];
+	]);
 }
 
 echo json_encode($result);

@@ -150,7 +150,7 @@ jQuery( function( $ ) {
 			if ( data.express == undefined ) data.express = [];
 			if ( data.delivery == undefined ) data.delivery = [];
 			// merge express and regular deliveries
-			var deliveryDates = $.merge($.merge([], data.express), data.delivery);
+			var deliveryDates = $.merge( $.merge([''], data.express), data.delivery );
 
 			deliveryDates.shift();
 
@@ -171,6 +171,8 @@ jQuery( function( $ ) {
 			
 			// set date object to available
 			date.set( moment(availableDates['firstAvailableDate']).format('YYYY-MM-DD') );
+
+			console.log(deliveryDates);
 
 
 			// add available express timeslots
