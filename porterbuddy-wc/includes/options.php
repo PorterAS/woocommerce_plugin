@@ -198,6 +198,17 @@ return array(
 		)
 	),
 
+	'hide_widget' => array(
+		'title' => __( 'Hide widget when location can\'t be resolved', 'porterbuddy-wc' ),
+		'type' => 'select',
+		'default' => 'no',
+		'description' => __( 'Hide the PorterBuddy product widget when the customers location can\'t be resolved', 'porterbuddy-wc' ) . $geoip,
+		'options' => array(
+			'yes' => __( 'Yes', 'porterbuddy-wc' ),
+			'no' => __ ( 'No' , 'porterbuddy-wc' ),
+		)
+	),
+
 	'geo_widget' => array(
 		'title' => __( 'Use HTML5 Geo-Location', 'porterbuddy-wc' ),
 		'type' => 'select',
