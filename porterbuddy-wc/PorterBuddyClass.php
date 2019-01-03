@@ -359,7 +359,7 @@ class Request
 		$result = curl_exec($this->_ch);
 		$httpcode = curl_getinfo($this->_ch, CURLINFO_HTTP_CODE);
 
-		if($httpcode != 200)
+		if(($httpcode != 200 && $this->url.$endpoint == 'order') || $httpcode >= 500)
 		{
 			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 			$emails = explode(',', $settings['error_email']);
