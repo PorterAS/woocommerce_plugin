@@ -309,6 +309,7 @@ class Request
 
 	public $url;
 	public $payload;
+	public $endpoint;
 
 	public function __construct($api_key, $url)
 	{
@@ -326,6 +327,7 @@ class Request
 	 */
 	public function setEndpoint($endpoint)
 	{
+		$this->endpoint = $endpoint;
 		curl_setopt($this->_ch, CURLOPT_URL, $this->url.$endpoint);
 	}
 
@@ -359,7 +361,7 @@ class Request
 		$result = curl_exec($this->_ch);
 		$httpcode = curl_getinfo($this->_ch, CURLINFO_HTTP_CODE);
 
-		if($httpcode != 200)
+		if($httpcode >= 500 || ($this->endpoint == 'order' && $httpcode != 200))
 		{
 			$settings = get_option( 'woocommerce_porterbuddy-wc_settings');
 			$emails = explode(',', $settings['error_email']);
