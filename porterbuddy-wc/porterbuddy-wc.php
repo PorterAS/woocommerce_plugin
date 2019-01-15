@@ -83,3 +83,24 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	include_once 'includes/display_filters.php';
 }
+
+/**
+ * Hide PorterBuddy when API returns false on shipping request.
+ *
+ * @param array $rates Array of rates found for the package.
+ * @return array
+ */
+function pb_hide_shipping_method_if_not_available( $rates ) {
+	
+	$api_result = include dirname(__FILE__).'/includes/availability.php';	
+	
+	foreach ( $rates as $rate_id => $rate ) {
+		if ( 'porterbuddy-wc' === $rate->method_id ) {
+			if ($api_result["success"] === false ) {
+				unset($rates[ $rate_id ]);
+			}
+		}
+	}
+	return $rates;
+}
+add_filter( 'woocommerce_package_rates', 'pb_hide_shipping_method_if_not_available', 100 );
