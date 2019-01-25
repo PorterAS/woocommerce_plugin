@@ -618,6 +618,25 @@ jQuery( function( $ ) {
 	});
 
 	/**
+	 * after woo checkout updates with ajax, except initial page load, reinitiate widget and show/hide depending availability
+	 */
+	$(window).load(function() {
+		$( '.woocommerce-checkout' ).on( 'update_checkout', function( event ){
+
+			ready('#shipping_method', function() {
+			    $( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+			    pb_widget.reinit();
+			});
+			
+			if ( $('#shipping_method').length ) {
+				$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+			}
+
+		});
+	});
+
+
+	/**
 	 * Display widget on klarna checkout updates
 	 * Necessary due to how Klarna handles events (if using correct event, it overwrites Klarna's own)
 	 */
