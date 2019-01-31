@@ -602,56 +602,17 @@ jQuery( function( $ ) {
 				},
 				success: function ( response )
 				{
-					/** 
-					 * When successfully updated shipping cost, force update cart shipping cache.
-					 * This is due to how WooCommerce handles shipping and carts, and why
-					 * it all becomes a bit hacky.
-					 */
-
-					// if in woocommerce checkout, we need to get order review instead of cart totals
-					if($('#kco-order-review').length > 0)
-					{
-						$.ajax(
-                            {
-                                url: pbWidgetPHP['ajaxphp'],
-                                type: 'POST',
-                                dataType: 'json',
-                                cache: false,
-                                data:
-                                    {
-                                        action: 'pb_kill_shipping_cost_cache' // as defined in includes/hooks.php
-                                    },
-                                success: function () {
-                                    $.ajax({
-										type: 'POST',
-										url: kco_params.update_cart_url,
-										data: {
-											checkout: $('form.checkout').serialize(),
-											nonce: kco_params.update_cart_nonce
-										},
-										dataType: 'json',
-										success: function(data) {
-										},
-										error: function(data) {
-										},
-										complete: function(data) {
-											// update checkout
-											$('body').trigger('update_checkout');
-											// and display or hide PB widget
-											if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) {
-												// display widget
-												$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
-											} else{	
-												// hide widget
-												$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
-											}
-										}
-									});
-                                }
-                            }
-                        );
+					// if in Klarna
+					if($('#kco-order-review').length > 0){
+						// check if PB shiping is chosen
+						if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) {
+							// display widget
+							$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+						} else{	
+							// hide widget
+							$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+						}
 					}
-
 					return true;
 				},
 				error: function ( error )
@@ -748,8 +709,6 @@ jQuery( function( $ ) {
 					
 					// foce update with post code set in Klarna
 					pb_widget.forceKlarnaPostCode( postal_code );
-
-					//pb_widget.reinit();
 
 					if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) {
 						// display widget
