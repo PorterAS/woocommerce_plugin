@@ -93,6 +93,32 @@ function getShippingSelection()
 }
 
 /**
+ * Add AJAX endpoint to update post code
+ */
+add_action( 'wp_ajax_forceKlarnaPostCode', 'forceKlarnaPostCode' );
+add_action( 'wp_ajax_nopriv_forceKlarnaPostCode', 'forceKlarnaPostCode' );
+function forceKlarnaPostCode()
+{
+	// validate nonce and sanitize input
+	if ( 
+		isset( $_POST['pb_nonce'] ) &&
+		wp_verify_nonce($_POST['pb_nonce'], 'porterbuddy_widget_options') 
+	) {
+		WC()->customer->set_billing_postcode(sanitize_text_field( $_POST['pb_postcode'] ));
+		WC()->customer->set_shipping_postcode(sanitize_text_field( $_POST['pb_postcode'] ));
+
+		return true;
+	}
+	else
+	{
+		echo json_encode( "Nonce could not be validated!" );
+	}
+	
+	// required to terminate immediately after returning a proper response
+	wp_die(); 
+}
+
+/**
  * Woocommerce Shipping Cost Cache Killer
  */
 

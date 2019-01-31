@@ -172,8 +172,6 @@ jQuery( function( $ ) {
 			// set date object to available
 			date.set( moment(availableDates['firstAvailableDate']).format('YYYY-MM-DD') );
 
-			console.log(deliveryDates);
-
 
 			// add available express timeslots
 			$.each( data.express, function() 
@@ -572,6 +570,99 @@ jQuery( function( $ ) {
 
 
 		/**
+		 * Force update woo session with PorterBuddy shipping selection
+		 * width post code from Klarna checkout
+		 */
+		function forceKlarnaPostCode ( postcode=false )
+		{
+			if ( ! postcode ) return false;
+
+			var nonce = $('#porterbuddy-widget').data('wpnonce');
+
+			// first set variables in cart session for reusability
+			$.ajax(
+			{
+				url: pbWidgetPHP['ajaxphp'],
+				type: 'POST',
+				dataType: 'json',
+				cache: false,
+				data:
+				{
+					action: 'forceKlarnaPostCode', // as defined in includes/hooks.php
+					pb_nonce: nonce,
+					pb_postcode: postcode,
+				},
+				beforeSend: function () 
+				{
+					block( $( 'div.porterbuddy-widget' ) );
+				},
+				complete: function ()
+				{
+					unblock( $( 'div.porterbuddy-widget' ) );
+				},
+				success: function ( response )
+				{
+					/** 
+					 * When successfully updated shipping cost, force update cart shipping cache.
+					 * This is due to how WooCommerce handles shipping and carts, and why
+					 * it all becomes a bit hacky.
+					 */
+
+					// if in woocommerce checkout, we need to get order review instead of cart totals
+					if($('#kco-order-review').length > 0)
+					{
+						$.ajax(
+                            {
+                                url: pbWidgetPHP['ajaxphp'],
+                                type: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data:
+                                    {
+                                        action: 'pb_kill_shipping_cost_cache' // as defined in includes/hooks.php
+                                    },
+                                success: function () {
+                                    $.ajax({
+										type: 'POST',
+										url: kco_params.update_cart_url,
+										data: {
+											checkout: $('form.checkout').serialize(),
+											nonce: kco_params.update_cart_nonce
+										},
+										dataType: 'json',
+										success: function(data) {
+										},
+										error: function(data) {
+										},
+										complete: function(data) {
+											// update checkout
+											$('body').trigger('update_checkout');
+											// and display or hide PB widget
+											if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) {
+												// display widget
+												$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+											} else{	
+												// hide widget
+												$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+											}
+										}
+									});
+                                }
+                            }
+                        );
+					}
+
+					return true;
+				},
+				error: function ( error )
+				{
+					return false;
+				},
+			});
+		}
+
+
+		/**
 		 * Update woo session with PorterBuddy shipping selection
 		 */
 		$( '#porterbuddy-widget' ).on(
@@ -603,7 +694,8 @@ jQuery( function( $ ) {
 
 		// make reinit available
 		return {
-			reinit: reinit
+			reinit: reinit,
+			forceKlarnaPostCode: forceKlarnaPostCode
 		};
 	}
 
@@ -622,49 +714,57 @@ jQuery( function( $ ) {
 	 */
 	$(window).load(function() {
 		$( '.woocommerce-checkout' ).on( 'update_checkout', function( event ){
-
+			// when shipping method has loaded fully
 			ready('#shipping_method', function() {
-			    $( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
-			    pb_widget.reinit();
+				// check if PorterBuddy is chosen shipping option
+			    if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) {
+			    	// reinitiate and display widget
+			    	pb_widget.reinit();
+			 		$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+			 	} else {
+			 		// hide widget
+			 		$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+			 	}
 			});
-			
-			if ( $('#shipping_method').length ) {
-				$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
-			}
-
 		});
 	});
 
-
 	/**
-	 * Display widget on klarna checkout updates
+	 * Display widget on Klarna checkout updates
+	 * and force update with Klarna post code
 	 * Necessary due to how Klarna handles events (if using correct event, it overwrites Klarna's own)
 	 */
-	if($('#kco-order-review').length > 0)
-	{
-		$( document.body ).on( 'DOMSubtreeModified', '#kco-order-review .shop_table', function( event ){
+	if($('#kco-order-review').length > 0){
+		window._klarnaCheckout(function(api) {
+			api.on({
+				'change': function(data) {
 
-			if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) 
-			{
-				// if no timeslots available, fetch them
-				if ( $('#timeslots > div.porterbuddy-widget-timeslot').length < 1 )
-				{
-					pb_widget.reinit();
+					var postal_code = PBgetCookie('pb_postcode') ? PBgetCookie('pb_postcode') : false;
+
+					if (data.postal_code) {
+						postal_code = data.postal_code;
+						PBsetCookie('pb_postcode',postal_code,60);
+					}
+					
+					// foce update with post code set in Klarna
+					pb_widget.forceKlarnaPostCode( postal_code );
+
+					//pb_widget.reinit();
+
+					if ( $('#shipping_method > li > input:checked').val() == "porterbuddy-wc" ) {
+						// display widget
+						$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
+					} else{	
+						// hide widget
+						$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
+					}
 				}
-				// display widget
-				$( '#porterbuddy-widget' ).removeClass('porterbuddy-hide');
-			}
-			else
-			{	
-				// hide widget
-				$( '#porterbuddy-widget' ).addClass('porterbuddy-hide');
-			}
-
+			});
 		});
 	}
 
 	 /**
-	  * If shipping changes occurs on checkout, hide and show the widget
+	  * If shipping option change occurs on checkout, hide and show the widget
 	  */
 	 $( '#order_review' ).on( 'click', '#shipping_method > li > input', function( event ) 
 	 {

@@ -96,7 +96,7 @@ function pb_hide_shipping_method_if_not_available( $rates ) {
 	
 	foreach ( $rates as $rate_id => $rate ) {
 		if ( 'porterbuddy-wc' === $rate->method_id ) {
-			if ($api_result["success"] === false ) {
+			if ($api_result["success"] === false || ! isset($api_result['data']['delivery']) ) {
 				unset($rates[ $rate_id ]);
 			}
 		}
