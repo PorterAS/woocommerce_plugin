@@ -93,6 +93,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 function pb_hide_shipping_method_if_not_available( $rates ) {
 	
 	$api_result = include dirname(__FILE__).'/includes/availability.php';	
+
+	if ( ! isset($api_result["success"]) ) return $rates;
 	
 	foreach ( $rates as $rate_id => $rate ) {
 		if ( 'porterbuddy-wc' === $rate->method_id ) {
