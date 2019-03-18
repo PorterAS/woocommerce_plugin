@@ -320,7 +320,7 @@ jQuery( function( $ ) {
 		/**
 		 * On "prev" and "next" click events, change data accordingly and update controls
 		 */
-		$( '.porterbuddy-widget-date-selectors' ).on("click", "a", function( event )
+		$( '.woocommerce' ).on("click", ".porterbuddy-widget-date-selectors a", function( event )
 		{
 			event.preventDefault();
 
@@ -626,9 +626,9 @@ jQuery( function( $ ) {
 		/**
 		 * Update woo session with PorterBuddy shipping selection
 		 */
-		$( '#porterbuddy-widget' ).on(
+		$( '.woocommerce' ).on(
 			'click',
-			'label #porterbuddy_return, label #porterbuddy_leave_doorstep, .porterbuddy-widget-timeslot',
+			'#porterbuddy-widget label #porterbuddy_return, #porterbuddy-widget label #porterbuddy_leave_doorstep, #porterbuddy-widget .porterbuddy-widget-timeslot',
 			function ( event ) 
 			{
 				// update timeblock prices
@@ -637,16 +637,17 @@ jQuery( function( $ ) {
 				setShippingSelection();	
 			}
 		);
-		$( '#porterbuddy-widget' ).on(
+		$( '.woocommerce' ).on(
 			'blur',
-			'.porterbuddy-widget-comment',
+			'#porterbuddy-widget .porterbuddy-widget-comment',
 			function ( event ) 
 			{
 				setShippingSelection();
 			}
 		);
-		$( '.checkout-button, #place_order').on(
+		$( '.woocommerce').on(
 			'click',
+			'.checkout-button, #place_order',
 			function( event ) 
 			{
 				setShippingSelection();
