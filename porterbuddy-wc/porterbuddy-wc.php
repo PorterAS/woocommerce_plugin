@@ -7,7 +7,7 @@
  * Author:                  Ellera AS
  * Author URI:              https://ellera.no/
  *
- * Version:                 1.0.0
+ * Version:                 1.3.0
  * Requires at least:       4.9.8
  * Tested up to:            4.9.8
  *
